@@ -21,7 +21,7 @@
   <main>
     <div class="container">
         <div class="item1">
-            <p id="longitude">Longitude [NEW]: </p>
+            <p id="longitude">Longitude: </p>
             <p id="latitude">Latitude: </p>
             <p id="altitude">Altitude: </p>
             <p id="date">Date: </p>
