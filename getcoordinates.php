@@ -19,7 +19,7 @@ try {
     $row = $pgsql_statement->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
-	 // echo "Coordinates obtained:";
+	 
 	file_put_contents('output.json', json_encode($row));
         echo json_encode($row);
     } else {
