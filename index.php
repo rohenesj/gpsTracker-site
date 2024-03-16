@@ -16,7 +16,7 @@
 </head>
 <body>
   <header>
-    <h1>GPS Tracker!</h1>
+    <h1>GPS Tracker</h1>
   </header>
   <main>
     <div class="container">
