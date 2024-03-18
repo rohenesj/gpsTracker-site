@@ -19,8 +19,6 @@ try {
     $row = $pgsql_statement->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
-	 
-	file_put_contents('output.json', json_encode($row));
         echo json_encode($row);
     } else {
         echo "No se encontraron coordenadas en la base de datos PostgreSQL.";
