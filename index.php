@@ -43,7 +43,7 @@
     <script>
 
         var map = L.map('map').setView([10.983594, -74.804334], 15);
-
+        let coordinateArray = [];
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -66,7 +66,10 @@
 		success: function(response){
 		    console.log(response)
                     var data = JSON.parse(response);
-		    let hour = data.date.split(" ");
+		            let hour = data.date.split(" ");
+                    let coordinate = [data.latitude, data.longitute];
+                    coordinateArray.push(coordinate);
+                    console.log(coordinateArray)
                     $("#longitude").text("Longitude: " + data.longitute);
                     $("#latitude").text("Latitude: " + data.latitude);
                     $("#altitude").text("Altitude: " + data.altitude);
