@@ -1,0 +1,14 @@
+name: Auto pull
+
+on:
+  push:
+    branches: [ master ]
+     
+
+jobs:
+  pull:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
