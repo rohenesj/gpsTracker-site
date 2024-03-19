@@ -14,4 +14,23 @@ jobs:
         uses: actions/checkout@v2
       - name: Copy credentials.json
         run: sudo cp /var/www/credentials.json ${{ github.workspace }}
+  
+  pull2:
+    runs-on: luis
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Copy credentials.json
+        run: sudo cp /var/www/credentials.json ${{ github.workspace }}
+
+  pull3:
+    runs-on: carlos
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Copy credentials.json
+        run: sudo cp /var/www/credentials.json ${{ github.workspace }}
+    
         
