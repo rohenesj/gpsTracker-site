@@ -133,6 +133,7 @@
                         } else {
                             route.addLatLng(latLng);
                         }
+                        map.setView(latLng);
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
