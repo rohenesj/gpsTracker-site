@@ -12,4 +12,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Copy credentials.json
+        run: sudo cp /var/www/credentials.json ${{ github.workspace }}
         
