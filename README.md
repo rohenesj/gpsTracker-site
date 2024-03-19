@@ -9,3 +9,4 @@ This is the repository for the GPS Tracker website. In this repo you can find th
     "pg_db": ""
 }
 ```
+You will also need a working postgresSQL
