@@ -24,7 +24,7 @@ def connectToDatabasepg():
     return conn
 
 def sqlInstructionpg(conn,cur,coordinates):
-    cur.execute(f""" INSERT INTO coordinates (longitute, latitude , altitude, date, timestamp)
+    cur.execute(f""" INSERT INTO coordinates (longitude, latitude , altitude, date, timestamp)
                     values ('{coordinates.long}','{coordinates.lat}','{coordinates.alt}',to_timestamp({coordinates.tstamp}),{coordinates.tstamp})
                     on conflict ("timestamp") do nothing;
 """)

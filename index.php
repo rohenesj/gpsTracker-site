@@ -67,18 +67,18 @@
 		    console.log(response)
                     var data = JSON.parse(response);
 		            let hour = data.date.split(" ");
-                    let coordinate = [data.latitude, data.longitute];
+                    let coordinate = [data.latitude, data.longitude];
                     coordinateArray.push(coordinate);
                     console.log(coordinateArray)
-                    $("#longitude").text("Longitude: " + data.longitute);
+                    $("#longitude").text("Longitude: " + data.longitude);
                     $("#latitude").text("Latitude: " + data.latitude);
                     $("#altitude").text("Altitude: " + data.altitude);
                     $("#date").text("Date: " + hour[0]);
                     $("#hour").text("Time: " + hour[1])
                     $("#timestamp").text("Timestamp: " + data.timestamp);
-                    var latlng = [parseFloat(data.latitude), parseFloat(data.longitute)];
+                    var latlng = [parseFloat(data.latitude), parseFloat(data.longitude)];
                     marker.setLatLng(latlng);
-                    marker.bindPopup('Latitude: ' + data.latitude + '<br>Longitude: ' + data.longitute).openPopup();
+                    marker.bindPopup('Latitude: ' + data.latitude + '<br>Longitude: ' + data.longitude).openPopup();
                     map.setView(latlng);
                 }
             });

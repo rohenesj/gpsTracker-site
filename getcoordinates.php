@@ -14,7 +14,7 @@ try {
     $pgsql_connection = new PDO("pgsql:host=$pgsql_server;dbname=$pgsql_db", $pgsql_user, $pgsql_password);
     $pgsql_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $pgsql_query = "SELECT longitute, latitude, altitude, date, timestamp FROM coordinates ORDER BY timestamp DESC LIMIT 1";
+    $pgsql_query = "SELECT longitude, latitude, altitude, date, timestamp FROM coordinates ORDER BY timestamp DESC LIMIT 1";
     $pgsql_statement = $pgsql_connection->query($pgsql_query);
     $row = $pgsql_statement->fetch(PDO::FETCH_ASSOC);
 
