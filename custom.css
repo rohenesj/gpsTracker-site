@@ -13,3 +13,7 @@
     grid-column: 2;
     grid-row: 1 / span 4;
 }
+
+.error-message {
+    color: red;
+}

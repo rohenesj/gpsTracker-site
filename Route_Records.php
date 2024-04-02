@@ -42,6 +42,7 @@
             </form>
 
             <div id="timestamps"></div>
+	    <div id="Error"></div>
         </div>
         <div class="item2">
             <div id="map"></div>
