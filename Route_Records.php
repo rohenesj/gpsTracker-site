@@ -156,5 +156,6 @@
             });
         });
     </script>
+    <script src="src/maxTime.js"></script>
 </body>
 </html>
