@@ -9,7 +9,9 @@
       display: flex;
       align-items: center;
     }
-    h1 {margin-right: 100px;}
+    h1 {
+      margin-right: 100px; 
+    }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="custom.css">
@@ -25,30 +27,31 @@
 <body>
   <header>
     <h1>GPS Tracker</h1>
-    <a href="/Route_Records.php">Fetch Route</a>
+    <a href="/">Real-Time Route</a>
   </header>
   <main>
     <div class="container">
         <div class="item1">
-            <p id="longitude">Longitude: </p>
-            <p id="latitude">Latitude: </p>
-            <p id="altitude">Altitude: </p>
-            <p id="date">Date: </p>
-            <p id="time">Time: </p>
-            <p id="timestamp">Timestamp: </p>
-            <button type="button" id="gpsTrackerButton">Erase Route</button>
+            <h2>Track vehicle in a given time:</h2>
+            <form id="searchForm" method="post" action="getcoordinates2.php">
+                <label for="startTime">Start Date & Time:</label>
+                <input type="datetime-local" id="startTime" name="startTime" required><br><br>
+                <label for="endTime">End Date & Time:</label>
+                <input type="datetime-local" id="endTime" name="endTime" required><br><br>
+                <button type="button" id="fetchButton">Fetch Route</button>
+            </form>
+
+            <div id="timestamps"></div>
         </div>
         <div class="item2">
             <div id="map"></div>
         </div>
     </div>
   </main>
-  
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="src/index.js"></script>
-
-
+    <script src="src/Route_Records.js"></script>
+    <script src="src/maxTime.js"></script>
 </body>
 </html>
-
