@@ -108,20 +108,14 @@
         }
 
         var route = null; 
-        //var markerInterval = null;
 
         $('#fetchButton').click(function() {
-            //clearInterval(markerInterval);
+
             var startTime = $('#startTime').val();
             var endTime = $('#endTime').val();
             var startTimestamp = Math.floor(new Date(startTime).getTime() / 1000);
             var endTimestamp = Math.floor(new Date(endTime).getTime() / 1000);
-            
-            //if (marker !== null) {
-            //    map.removeLayer(marker);
-            //    marker = null;
-            //}
-            
+
             $.ajax({
                 url: 'getcoordinates2.php',
                 method: 'POST',
@@ -138,18 +132,6 @@
                         var coords = feature.geometry.coordinates;
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-// salen los marcadores de todas las coordenadas uwu
-//                        var marker = null;
-//
-//                        if (marker === null) {
-//                            marker = L.marker(L.latLng(coords[1], coords[0]), { icon: APPicon }).addTo(map)
-//                                .bindPopup('This is a default location. <br> Connecting to Data Base...')
-//                                .openPopup();
-//                        } else {
-//                            marker.setLatLng(L.latLng(coords[1], coords[0]));
-//                            marker.bindPopup('Latitude:').openPopup();
-//                        }
-
                     });
 
                     if (route !== null) {
@@ -173,14 +155,6 @@
                 }
             });
         });
-
-        //$('#gpsTrackerButton').click(function() {
-        //    updateMarker();
-        //    setInterval(updateMarker, 3000);
-        //    if (route !== null) {
-        //                route.remove();
-        //    }
-        //});
     </script>
 </body>
 </html>
