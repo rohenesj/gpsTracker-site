@@ -38,7 +38,7 @@
   <main>
     <div class="container-fluid">
         <div class="row custom-row">
-            <div class="col-sm-12 col-md-3 col-lg-3">
+            <div class="col-sm-12 col-md-2 col-lg-2">
                 <p id="longitude">Longitude: </p>
                 <p id="latitude">Latitude: </p>
                 <p id="altitude">Altitude: </p>
@@ -47,7 +47,7 @@
                 <p id="timestamp">Timestamp: </p>
                 <button type="button" id="gpsTrackerButton">Erase Route</button>
             </div>
-            <div class="col-sm-12 col-md-9 col-lg-9">
+            <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
             </div>
         </div>
