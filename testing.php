@@ -26,7 +26,7 @@
   <header>
     <h1>GPS Tracker</h1>
     <a href="/Route_Records.php">Fetch Route</a>
-    <a href="/testing.php">Testing</a>
+    <a href="/index.php">Index</a>
   </header>
   <main>
     <div class="container">
@@ -52,4 +52,3 @@
 
 </body>
 </html>
-
