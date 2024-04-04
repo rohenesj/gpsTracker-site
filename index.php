@@ -31,8 +31,12 @@
 
 <body>
   <header>
-    <h1>GPS Tracker</h1>
-    <a href="/Route_Records.php">Fetch Route</a>
+    <div class="container">
+      <div class="row">
+        <h1>GPS Tracker</h1>
+      </div>
+      <a href="/Route_Records.php">Fetch Route</a>
+    </div>
   </header>
   <main>
     <div class="container-fluid">
