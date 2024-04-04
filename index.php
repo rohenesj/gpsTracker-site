@@ -18,12 +18,21 @@
         width: 100%;
         height: 100%;
         }
-
         .custom-row {
             height: 85vh
         }
-        h1 {
-            text-align: center;
+        .custom-header {
+          background-color: #599bfe
+        }
+        .header-link-style {
+            color: white;
+            text-decoration: none !important;
+            font-weight: bold !important;
+        }
+        .header-link-style:visited {
+            color: white;
+            text-decoration: none !important;
+            font-weight: bold !important;
         }
     </style>
 
@@ -33,26 +42,18 @@
 </head>
 
 <body>
-  <header>
+  <div class="d-block p-2 bg-primary text-white">
+    <h1><img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">GPS Tracker</h1>
+  </div>
+ 
+  
     <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-          <h1>GPS Tracker</h1>
+        <div class="row custom-header">
+            <div class="col-sm-1 col-md-1 col-lg-1">
+                <a href="/Route_Records.php" class="btn btn-link header-link-style" role="button">Fetch Data</a>
+            </div>
         </div>
-      </div>
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Index</a></li>
-            <li><a href="/Route_Records.php">Fetch Route 1</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </header>
-  <main>
-    <div class="container-fluid">
-        <div class="row custom-row">
+        <div class="row custom-row pt-2">
             <div class="col-sm-12 col-md-2 col-lg-2">
                 <p id="longitude">Longitude: </p>
                 <p id="latitude">Latitude: </p>
@@ -67,7 +68,7 @@
             </div>
         </div>
     </div>
-  </main>
+
   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
