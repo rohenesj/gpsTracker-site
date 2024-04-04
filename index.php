@@ -33,7 +33,7 @@
   <header>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-2 col-md-2 col-lg-2">
           <h1>GPS Tracker</h1>
         </div>
       </div>
