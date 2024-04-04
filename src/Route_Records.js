@@ -33,8 +33,8 @@ $(function() {
       }
     }, function(start, end, label){
 
-      startTimestamp = (start.unix() / 1000).toFixed(3);
-      endTimestamp = (end.unix() / 1000).toFixed(3);
+      startTimestamp = start.unix();
+      endTimestamp = end.unix();
       console.log("Start", startTimestamp);
       console.log("End",endTimestamp);
       
