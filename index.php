@@ -32,10 +32,16 @@
 <body>
   <header>
     <div class="container">
-      <div class="row">
+      <div class="row justify-content-center">
         <h1>GPS Tracker</h1>
       </div>
-      <a href="/Route_Records.php">Fetch Route</a>
+      <div class="row justify-content-center">
+        <div class="col-sm-1 col-md-1 col-lg-1">
+          <a href="/Route_Records.php">
+            <h2>Fetch Route</h2>
+          </a>
+        </div>
+      </div>
     </div>
   </header>
   <main>
