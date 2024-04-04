@@ -22,6 +22,9 @@
         .custom-row {
             height: 90vh
         }
+        h1 {
+            text-align: center;
+        }
     </style>
 
     <meta name="timezone" content="America/Bogota">
@@ -33,7 +36,7 @@
   <header>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="col-sm-12 col-md-12 col-lg-12">
           <h1>GPS Tracker</h1>
         </div>
       </div>
