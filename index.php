@@ -40,7 +40,7 @@
           <h1>GPS Tracker</h1>
         </div>
       </div>
-      <div class="row justify-content-center">
+      <div class="row">
         <div class="col-sm-2 col-md-2 col-lg-2">
           <a href="/Route_Records.php">
             <h2>Fetch Route</h2>
@@ -59,7 +59,7 @@
                 <p id="date">Date: </p>
                 <p id="time">Time: </p>
                 <p id="timestamp">Timestamp: </p>
-                <button type="button" id="gpsTrackerButton">Erase Route</button>
+                <button type="button" id="gpsTrackerButton" class="btn btn-outline-primary">Erase Route</button>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
