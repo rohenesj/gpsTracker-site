@@ -20,7 +20,7 @@
         }
 
         .custom-row {
-            height: 90vh
+            height: 85vh
         }
         h1 {
             text-align: center;
@@ -34,19 +34,20 @@
 
 <body>
   <header>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12">
           <h1>GPS Tracker</h1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-2 col-md-2 col-lg-2">
-          <a href="/Route_Records.php">
-            <h2>Fetch Route</h2>
-          </a>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Index</a></li>
+            <li><a href="/Route_Records.php">Fetch Route 1</a></li>
+          </ul>
         </div>
-      </div>
+      </nav>
     </div>
   </header>
   <main>
