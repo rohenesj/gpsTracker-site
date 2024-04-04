@@ -52,7 +52,7 @@
                 <h1 style="color:white;"><img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">GPS Tracker</h1>
             </div>
             <div class="col-sm-1 col-md-1 col-lg-1">
-                <a href="/index.php" class="btn btn-link header-link-style" role="button">Real-time </a>
+                <a href="/index.php" class="btn btn-link header-link-style" role="button">Real-time</a>
             </div>
         </div>
         <div class="row custom-row pt-3">
@@ -70,6 +70,8 @@
             </div>
         </div>
     </div>
+
+  
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="src/Route_Records.js"></script>
