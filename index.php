@@ -19,10 +19,10 @@
         height: 100%;
         }
         .custom-row {
-            height: 85vh
+            height: 90vh
         }
         .custom-header {
-          background-color: #599bfe
+          background-color: #0d6efd
         }
         .header-link-style {
             color: white;
@@ -42,18 +42,16 @@
 </head>
 
 <body>
-  <div class="d-block p-2 bg-primary text-white">
-    <h1><img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">GPS Tracker</h1>
-  </div>
- 
-  
     <div class="container-fluid">
-        <div class="row custom-header">
+        <div class="row custom-header align-items-center">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <h1 style="color:white;"><img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">GPS Tracker</h1>
+            </div>
             <div class="col-sm-1 col-md-1 col-lg-1">
                 <a href="/Route_Records.php" class="btn btn-link header-link-style" role="button">Fetch Data</a>
             </div>
         </div>
-        <div class="row custom-row pt-2">
+        <div class="row custom-row pt-3">
             <div class="col-sm-12 col-md-2 col-lg-2">
                 <p id="longitude">Longitude: </p>
                 <p id="latitude">Latitude: </p>
@@ -81,4 +79,3 @@
 
 </body>
 </html>
-
