@@ -21,14 +21,28 @@ if (seed === null) {
         .openPopup();
 }
 
+var startTimestamp = 0.0;
+var endTimestamp = 0.0;
+$(function() {
+    $('input[name="datetimes"]').daterangepicker({
+      timePicker: true,
+      startDate: moment().startOf('hour'),
+      endDate: moment().startOf('hour').add(32, 'hour'),
+      locale: {
+        format: 'M/DD hh:mm A'
+      }
+    }, function(start, end, label){
+
+      startTimestamp = (start.unix() / 1000).toFixed(3);
+      endTimestamp = (end.unix() / 1000).toFixed(3);
+      console.log("Start", startTimestamp);
+      console.log("End",endTimestamp);
+      
+    });
+});
 
 $('#fetchButton').click(function() {
-
-    var startTime = $('#startTime').val();
-    var endTime = $('#endTime').val();
-    var startTimestamp = Math.floor(new Date(startTime).getTime() / 1000);
-    var endTimestamp = Math.floor(new Date(endTime).getTime() / 1000);
-    
+    console.log("It works?",startTimestamp,endTimestamp)
     $.ajax({
         url: 'getcoordinates2.php',
         method: 'POST',
