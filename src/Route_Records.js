@@ -2,6 +2,7 @@ var map = L.map('map').setView([10.983594, -74.804334], 15);
 var seed = null;
 var route = null; 
 var Errormarker = null;
+const fetchButton = document.getElementById("fetchButton");
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -28,6 +29,7 @@ $(function() {
       timePicker: true,
       startDate: moment().startOf('hour'),
       endDate: moment().startOf('hour').add(32, 'hour'),
+      maxDate: new Date(),
       locale: {
         format: 'M/DD hh:mm A'
       }
@@ -37,12 +39,12 @@ $(function() {
       endTimestamp = end.unix();
       console.log("Start", startTimestamp);
       console.log("End",endTimestamp);
+      fetchButton.disabled = false;
       
     });
 });
 
 $('#fetchButton').click(function() {
-    console.log("It works?",startTimestamp,endTimestamp)
     $.ajax({
         url: 'getcoordinates2.php',
         method: 'POST',

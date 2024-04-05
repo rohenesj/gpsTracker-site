@@ -60,7 +60,7 @@
                 <h2>Track vehicle in a given time:</h2>
                 <form id="searchForm" method="post" action="getcoordinates2.php">
                     <input type="text" name="datetimes" />
-                    <button type="button" id="fetchButton">Fetch Route</button>
+                    <button type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
                 </form>
                 <div id="timestamps"></div>
                 <div id="Error"></div>
