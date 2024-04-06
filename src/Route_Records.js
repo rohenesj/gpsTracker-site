@@ -2,6 +2,7 @@ var map = L.map('map').setView([10.983594, -74.804334], 15);
 var seed = null;
 var route = null; 
 var Errormarker = null;
+const fetchButton = document.getElementById("fetchButton");
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -21,14 +22,29 @@ if (seed === null) {
         .openPopup();
 }
 
+var startTimestamp = 0.0;
+var endTimestamp = 0.0;
+$(function() {
+    $('input[name="datetimes"]').daterangepicker({
+      timePicker: true,
+      startDate: moment().startOf('hour'),
+      endDate: moment().startOf('hour').add(32, 'hour'),
+      maxDate: new Date(),
+      locale: {
+        format: 'M/DD hh:mm A'
+      }
+    }, function(start, end, label){
+
+      startTimestamp = start.unix();
+      endTimestamp = end.unix();
+      console.log("Start", startTimestamp);
+      console.log("End",endTimestamp);
+      fetchButton.disabled = false;
+      
+    });
+});
 
 $('#fetchButton').click(function() {
-
-    var startTime = $('#startTime').val();
-    var endTime = $('#endTime').val();
-    var startTimestamp = Math.floor(new Date(startTime).getTime() / 1000);
-    var endTimestamp = Math.floor(new Date(endTime).getTime() / 1000);
-    
     $.ajax({
         url: 'getcoordinates2.php',
         method: 'POST',
