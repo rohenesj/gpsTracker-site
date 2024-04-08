@@ -25,12 +25,12 @@
           background-color: #0d6efd
         }
         .header-link-style {
-            color: white;
+            color: white !important;
             text-decoration: none !important;
             font-weight: bold !important;
         }
         .header-link-style:visited {
-            color: white;
+            color: white !important;
             text-decoration: none !important;
             font-weight: bold !important;
         }
