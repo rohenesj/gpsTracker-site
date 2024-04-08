@@ -48,7 +48,7 @@ function updateMarker() {
                     .openPopup();
             } else {
                 marker.setLatLng(latlng);
-                marker.bindPopup('Latitude: ' + data.latitude + '<br>Longitude: ' + data.longitude).openPopup();
+                marker.closePopup().bindPopup('Latitude: ' + data.latitude + '<br>Longitude: ' + data.longitude);
             }
             map.setView(latlng);
 
