@@ -1,7 +1,9 @@
 var map = L.map('map').setView([10.983594, -74.804334], 15);
 var seed = null;
-var route = null; 
+var route = null;
 var Errormarker = null;
+var Startmarker = null;
+var Endmarker = null;
 const fetchButton = document.getElementById("fetchButton");
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -40,7 +42,7 @@ $(function() {
       console.log("Start", startTimestamp);
       console.log("End",endTimestamp);
       fetchButton.disabled = false;
-      
+
     });
 });
 
@@ -54,41 +56,42 @@ $('#fetchButton').click(function() {
         },
         success: function(response) {
             $('#timestamps').html("<p>Start Timestamp: " + startTimestamp + "</p><p>End Timestamp: " + endTimestamp + "</p>");
+            $('#Error').empty();
             var coordinates = response;
             var latLngs = [];
-            var marker = null;
-            var Errormarker = null;
-            $('#Error').empty();
 
-            if (!coordinates || coordinates.features.length === 0) {
-                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
-                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
-                .bindPopup('No coordinates in the selected time range')
-                .openPopup();
-
-            map.eachLayer(function(layer) {
-                if (layer instanceof L.Polyline) {
-                    map.setView([10.983594, -74.804334], 15)
-                    map.removeLayer(layer);
-                    map.removeLayer(Startmarker);
-                    map.removeLayer(Endmarker);
-                    map.removeLayer(marker);
-                    map.removeLayer(Errormarker);
-                }
-            });
-
-            return; 
-
-            }
-
-            if (Errormarker) {
+            if (Errormarker !== null) {
                 map.removeLayer(Errormarker);
             }
 
             if (seed !== null) {
                 map.removeLayer(seed);
-                seed = null;
             }
+            
+            if (Startmarker !== null) {
+                map.removeLayer(Startmarker);
+            }
+
+            if (Endmarker !== null) {
+                map.removeLayer(Endmarker);
+            }
+
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Polyline) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            if (!coordinates || coordinates.features.length === 0) {
+                map.setView([10.983594, -74.804334], 15)
+                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                .bindPopup('No coordinates in the selected time range')
+                .openPopup();
+                
+            return; 
+            }
+
 
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
