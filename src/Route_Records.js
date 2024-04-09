@@ -194,7 +194,7 @@ $('#fetchButton').click(function() {
     let isSearchEnabled = true;
 
     document.getElementById('toggleButton').addEventListener('click', function() {
-        if (isSearchEnabled) {
+        if (isSearchEnabled && !toggleButton.disabled) {
 
             removeMarkers();
             map.on('click', addMarker);
