@@ -13,6 +13,7 @@
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <!-- <link rel="stylesheet" href="custom.css"> -->
     <style>
         #map {
@@ -26,12 +27,12 @@
           background-color: #0d6efd
         }
         .header-link-style {
-            color: white;
+            color: white !important;
             text-decoration: none !important;
             font-weight: bold !important;
         }
         .header-link-style:visited {
-            color: white;
+            color: white !important;
             text-decoration: none !important;
             font-weight: bold !important;
         }
@@ -61,12 +62,14 @@
                 <form id="searchForm" method="post" action="getcoordinates2.php">
                     <input type="text" name="datetimes" class="form-control" />
                     <button disabled type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
-                </form>
+                </form> 
+                <button disabled id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
                 <div id="timestamps"></div>
                 <div id="Error"></div>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
+                
             </div>
         </div>
     </div>
@@ -74,6 +77,7 @@
   
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="src/Route_Records.js"></script>
     <!--<script src="src/maxTime.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
