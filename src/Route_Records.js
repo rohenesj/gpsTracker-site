@@ -128,20 +128,21 @@ var toggleButton = document.getElementById('toggleButton');
             map.setView([latitude, longitude], 16);
         }
 
-        if (circle === null) {
-            circle = L.circle([latitude, longitude], { 
-                color: 'blue',
-                fillColor: 'blue',
-                fillOpacity: 0.2,
-                radius: 250 
-            }).addTo(map)
-            map.setView([latitude, longitude]);
-        }
-        
-
         console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
         latRange = latitude;
         longRange = longitude;
+
+        leftCorner = [latRange - 0.00225, longRange - 0.00225];
+        rightCorner = [latRange + 0.00225, longRange + 0.00225];
+        var bounds = [leftCorner, rightCorner]
+
+        L.rectangle(bounds, {
+            color: "blue", 
+            fillColor:"blue",
+            fillOpacity: 0.2
+        }).addTo(map);
+        map.fitBounds(bounds);
+
         $.ajax({
         url: 'getcoordinates2.php',
         method: 'POST',
@@ -173,11 +174,12 @@ var toggleButton = document.getElementById('toggleButton');
                         console.log("In Latitud Range",coords[1]);
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
+                        var marker = L.marker([coords[1],coords[0]]).addTo(map);
                     }
                 }
             });
-            route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
-            map.fitBounds(route.getBounds());
+
+
         }
     });
 });
