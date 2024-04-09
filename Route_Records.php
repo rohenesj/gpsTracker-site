@@ -59,18 +59,17 @@
         </div>
         <div class="row custom-row pt-3">
             <div class="col-sm-12 col-md-2 col-lg-2">
+                <button id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
                 <h2>Track vehicle in a given time:</h2>
                 <form id="searchForm" method="post" action="getcoordinates2.php">
                     <input type="text" name="datetimes" class="form-control" />
                     <button disabled type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
-                </form>
-                <button id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
+                </form> 
                 <div id="timestamps"></div>
                 <div id="Error"></div>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
-                
             </div>
         </div>
     </div>
