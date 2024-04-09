@@ -36,7 +36,6 @@
             text-decoration: none !important;
             font-weight: bold !important;
         }
-        #toggleButton { position: absolute; top: 2%; right: 1%; z-index: 1000; }
     </style>
 
     <meta name="timezone" content="America/Bogota">
