@@ -79,9 +79,10 @@ $('#fetchButton').click(function() {
             removeMarkers();
             map.eachLayer(function(layer) {
                 if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
+                    map.removeLayer(layer);
                 }
-            });
+            });            
+
             if (!coordinates || coordinates.features.length === 0) {
                 map.setView([10.983594, -74.804334], 15)
                 $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
@@ -207,12 +208,22 @@ $('#fetchButton').click(function() {
         if (isSearchEnabled) {
 
             removeMarkers();
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });            
             map.on('click', addMarker);
             map.removeControl(control);
             this.textContent = 'Type place';
         } else {
 
             removeMarkers();
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
             map.addControl(control);
             map.on('click', addMarker); 
             map.off('click');
