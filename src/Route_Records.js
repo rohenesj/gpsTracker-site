@@ -168,6 +168,11 @@ $('#fetchButton').click(function() {
             return; 
             }
             latLngs = []
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+                }
+            });
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
                 var tstamp = parseFloat(feature.properties.timestamp);
@@ -266,6 +271,11 @@ $('#fetchButton').click(function() {
             return; 
             }
             latLngs = []
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+                }
+            });
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
                 var tstamp = parseFloat(feature.properties.timestamp);
