@@ -144,7 +144,7 @@ var toggleButton = document.getElementById('toggleButton');
         map.fitBounds(bounds);
 
         $.ajax({
-        url: 'getcoordinates2.php',
+        url: 'getcoordinates3.php',
         method: 'POST',
         data: {
             startTime: startTimestamp,
@@ -154,7 +154,7 @@ var toggleButton = document.getElementById('toggleButton');
             $('#timestamps').html("<p>Start Timestamp: " + startTimestamp + "</p><p>End Timestamp: " + endTimestamp + "</p>");
             $('#Error').empty();
             var coordinates = response;
-
+            console.log(coordinates);
             if (!coordinates || coordinates.features.length === 0) {
                 map.setView([10.983594, -74.804334], 15)
                 $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
