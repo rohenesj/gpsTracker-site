@@ -167,7 +167,7 @@ var toggleButton = document.getElementById('toggleButton');
             latLngs = []
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
-                var tstamp = feature.properties.timestamp;
+                var tstamp = parseFloat(feature.properties.timestamp);
                 console.log(coords);
                 if ((coords[0] >= (longRange - 0.00225)) && (coords[0] <= (longRange + 0.00225))) {
                     console.log("In Longitud Range",coords[0]);
@@ -175,7 +175,8 @@ var toggleButton = document.getElementById('toggleButton');
                         console.log("In Latitud Range",coords[1]);
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-                        var marker = L.marker([coords[1],coords[0]]).addTo(map);
+                        var marker = L.marker([coords[1],coords[0]]).addTo(map)
+                        .bindPopup('Marked' + tstamp);
                     }
                 }
             });
