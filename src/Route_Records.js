@@ -163,6 +163,7 @@ var toggleButton = document.getElementById('toggleButton');
                 
             return; 
             }
+            latLngs = []
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
                 console.log(coords);
@@ -170,9 +171,13 @@ var toggleButton = document.getElementById('toggleButton');
                     console.log("In Longitud Range",coords[0]);
                     if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
                         console.log("In Latitud Range",coords[1]);
+                        var latLng = L.latLng(coords[1], coords[0]);
+                        latLngs.push(latLng);
                     }
                 }
             });
+            route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
+            map.fitBounds(route.getBounds());
         }
     });
 });
