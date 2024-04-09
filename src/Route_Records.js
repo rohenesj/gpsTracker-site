@@ -276,7 +276,7 @@ $('#fetchButton').click(function() {
                         console.log("In Latitud Range",coords[1]);
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-                        var marker = L.marker([coords[1],coords[0]]).addTo(map)
+                        var timeMarker = L.marker([coords[1],coords[0]]).addTo(map)
                         .bindPopup('Marked at ' + date);
                     }
                 }
@@ -324,9 +324,11 @@ $('#fetchButton').click(function() {
                 if (layer instanceof L.Polyline) {
                     map.removeLayer(layer);
                 }
-            
-            if (marker !== null){
-                map.removeLayer(marker);
-            }
+            });
+
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.timeMarker) {
+                    map.removeLayer(layer)
+                }
             });
         }
