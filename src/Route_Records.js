@@ -10,6 +10,7 @@ var circle = null;
 const fetchButton = document.getElementById("fetchButton");
 var latRange = 0.0;
 var longRange = 0.0;
+const toggleButton = document.getElementById('toggleButton');
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -56,6 +57,7 @@ $(function() {
       console.log("Start", startTimestamp);
       console.log("End",endTimestamp);
       fetchButton.disabled = false;
+      toggleButton.disabled = false;
 
     });
 });
@@ -113,7 +115,7 @@ $('#fetchButton').click(function() {
     });
 });
 
-var toggleButton = document.getElementById('toggleButton');
+
 
     control.on('markgeocode', function(e) {
         var location = e.geocode.center;

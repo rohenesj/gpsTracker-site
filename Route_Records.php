@@ -59,7 +59,6 @@
         </div>
         <div class="row custom-row pt-3">
             <div class="col-sm-12 col-md-2 col-lg-2">
-                <button id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
                 <h2>Track vehicle in a given time:</h2>
                 <form id="searchForm" method="post" action="getcoordinates2.php">
                     <input type="text" name="datetimes" class="form-control" />
@@ -70,6 +69,7 @@
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
+                <button disabled type="button" id="toggleButton" class="btn btn-warning mt-3">Select on map</button>
             </div>
         </div>
     </div>
