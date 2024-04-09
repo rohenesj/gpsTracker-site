@@ -165,9 +165,10 @@ var toggleButton = document.getElementById('toggleButton');
             }
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
-                if (coords[0] >= latRange - 0.00225 && coords[0] <= latRange + 0.00225
-                && coords[1] >= longRange - 0.00225 && coords[1] <= longRange - 0.00225) {
-                    print(coords)
+                console.log(coords);
+                if (coords[0] >= (latRange - 0.00225) && coords[0] <= (latRange + 0.00225)
+                && coords[1] >= (longRange - 0.00225) && coords[1] <= (longRange - 0.00225)) {
+                    console.log("In Range",coords);
                 }
             });
 
