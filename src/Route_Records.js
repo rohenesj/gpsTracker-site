@@ -225,23 +225,62 @@ var toggleButton = document.getElementById('toggleButton');
         console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
         removeMarkers();
 
-        if (selectMarker === null) {
-            selectMarker = L.marker([latitude, longitude], { icon: APPicon }).addTo(map)
-                .bindPopup('Latitude: ' + latitude + '<br>Longitude: ' + longitude)
+        latRange = latitude;
+        longRange = longitude;
+
+        leftCorner = [latRange - 0.00225, longRange - 0.00225];
+        rightCorner = [latRange + 0.00225, longRange + 0.00225];
+        var bounds = [leftCorner, rightCorner]
+
+        L.rectangle(bounds, {
+            color: "blue", 
+            fillColor:"blue",
+            fillOpacity: 0.2
+        }).addTo(map);
+        map.fitBounds(bounds);
+
+        $.ajax({
+        url: 'getcoordinates3.php',
+        method: 'POST',
+        data: {
+            startTime: startTimestamp,
+            endTime: endTimestamp
+        },
+        success: function(response) {
+            $('#timestamps').html("<p>Start Timestamp: " + startTimestamp + "</p><p>End Timestamp: " + endTimestamp + "</p>");
+            $('#Error').empty();
+            var coordinates = response;
+            console.log(coordinates);
+            if (!coordinates || coordinates.features.length === 0) {
+                map.setView([10.983594, -74.804334], 15)
+                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                .bindPopup('No coordinates in the selected time range')
                 .openPopup();
-            map.setView([latitude, longitude]);
-        }
+                
+            return; 
+            }
+            latLngs = []
+            coordinates.features.forEach(function(feature, index) {
+                var coords = feature.geometry.coordinates;
+                var tstamp = parseFloat(feature.properties.timestamp);
+                var date = feature.properties.date;
+                console.log(coords);
+                if ((coords[0] >= (longRange - 0.00225)) && (coords[0] <= (longRange + 0.00225))) {
+                    console.log("In Longitud Range",coords[0]);
+                    if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
+                        console.log("In Latitud Range",coords[1]);
+                        var latLng = L.latLng(coords[1], coords[0]);
+                        latLngs.push(latLng);
+                        var marker = L.marker([coords[1],coords[0]]).addTo(map)
+                        .bindPopup('Marked at ' + date);
+                    }
+                }
+            });
 
 
-        if (circle === null) {
-            circle = L.circle([latitude, longitude], { 
-                color: 'blue',
-                fillColor: 'blue',
-                fillOpacity: 0.2,
-                radius: 250 
-            }).addTo(map)
-            map.setView([latitude, longitude]);
         }
+    });
 
     }
 
