@@ -319,11 +319,6 @@ $('#fetchButton').click(function() {
                 map.removeLayer(circle);
                 circle = null;
             }
-
-            if (marker != null) {
-                map.removeLayer(marker);
-                marker = null;
-            }
     
             map.eachLayer(function(layer) {
                 if (layer instanceof L.Polyline) {
