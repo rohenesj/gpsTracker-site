@@ -63,8 +63,8 @@
                 <form id="searchForm" method="post" action="getcoordinates2.php">
                     <input type="text" name="datetimes" class="form-control" />
                     <button disabled type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
-                    <button id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
                 </form>
+                <button id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
                 <div id="timestamps"></div>
                 <div id="Error"></div>
             </div>
