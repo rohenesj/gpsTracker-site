@@ -66,10 +66,11 @@
                 </form> 
                 <div id="timestamps"></div>
                 <div id="Error"></div>
+                <button disabled id="toggleButton">Select on map</button>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
-                <button disabled type="button" id="toggleButton" class="btn btn-warning mt-3">Select on map</button>
+                
             </div>
         </div>
     </div>
