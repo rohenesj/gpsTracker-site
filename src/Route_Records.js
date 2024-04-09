@@ -327,7 +327,7 @@ $('#fetchButton').click(function() {
             });
 
             map.eachLayer(function(layer) {
-                if (layer instanceof L.timeMarker) {
+                if (layer instanceof L.marker) {
                     map.removeLayer(layer)
                 }
             });
