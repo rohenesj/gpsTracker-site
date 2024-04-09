@@ -8,6 +8,8 @@ var Endmarker = null;
 var selectMarker = null;
 var circle = null;
 const fetchButton = document.getElementById("fetchButton");
+var latRange = 0.0;
+var longRange = 0.0;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -115,8 +117,8 @@ var toggleButton = document.getElementById('toggleButton');
 
     control.on('markgeocode', function(e) {
         var location = e.geocode.center;
-        var latitude = location.lat;
-        var longitude = location.lng;
+        latitude = location.lat;
+        longitude = location.lng;
         removeMarkers();
     
         if (selectMarker === null) {
@@ -138,7 +140,40 @@ var toggleButton = document.getElementById('toggleButton');
         
 
         console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
+        latRange = latitude;
+        longRange = longitude;
+        $.ajax({
+        url: 'getcoordinates2.php',
+        method: 'POST',
+        data: {
+            startTime: startTimestamp,
+            endTime: endTimestamp
+        },
+        success: function(response) {
+            $('#timestamps').html("<p>Start Timestamp: " + startTimestamp + "</p><p>End Timestamp: " + endTimestamp + "</p>");
+            $('#Error').empty();
+            var coordinates = response;
+
+            if (!coordinates || coordinates.features.length === 0) {
+                map.setView([10.983594, -74.804334], 15)
+                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                .bindPopup('No coordinates in the selected time range')
+                .openPopup();
+                
+            return; 
+            }
+            coordinates.features.forEach(function(feature, index) {
+                var coords = feature.geometry.coordinates;
+                if (coords[0] >= latRange - 0.00225 && coords[0] <= latRange + 0.00225
+                && coords[1] >= longRange - 0.00225 && coords[1] <= longRange - 0.00225) {
+                    print(coords)
+                }
+            });
+
+        }
     });
+});
 
     let isSearchEnabled = true;
 
