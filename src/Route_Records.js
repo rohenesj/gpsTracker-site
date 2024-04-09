@@ -11,6 +11,7 @@ const fetchButton = document.getElementById("fetchButton");
 var latRange = 0.0;
 var longRange = 0.0;
 const toggleButton = document.getElementById('toggleButton');
+var timeMarker = null;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -167,6 +168,11 @@ $('#fetchButton').click(function() {
             return; 
             }
             latLngs = []
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+                }
+            });
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
                 var tstamp = parseFloat(feature.properties.timestamp);
@@ -265,6 +271,11 @@ $('#fetchButton').click(function() {
             return; 
             }
             latLngs = []
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+                }
+            });
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
                 var tstamp = parseFloat(feature.properties.timestamp);
@@ -276,7 +287,7 @@ $('#fetchButton').click(function() {
                         console.log("In Latitud Range",coords[1]);
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-                        var marker = L.marker([coords[1],coords[0]]).addTo(map)
+                        var timeMarker = L.marker([coords[1],coords[0]]).addTo(map)
                         .bindPopup('Marked at ' + date);
                     }
                 }
@@ -323,6 +334,12 @@ $('#fetchButton').click(function() {
             map.eachLayer(function(layer) {
                 if (layer instanceof L.Polyline) {
                     map.removeLayer(layer);
+                }
+            });
+
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.marker) {
+                    map.removeLayer(timeMarker)
                 }
             });
         }
