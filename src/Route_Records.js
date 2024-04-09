@@ -11,6 +11,7 @@ const fetchButton = document.getElementById("fetchButton");
 var latRange = 0.0;
 var longRange = 0.0;
 const toggleButton = document.getElementById('toggleButton');
+var timeMarker = null;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
