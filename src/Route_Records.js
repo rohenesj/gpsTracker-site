@@ -1,9 +1,12 @@
 var map = L.map('map').setView([10.983594, -74.804334], 15);
 var seed = null;
+var seed2 = null;
 var route = null;
 var Errormarker = null;
 var Startmarker = null;
 var Endmarker = null;
+var selectMarker = null;
+var circle = null;
 const fetchButton = document.getElementById("fetchButton");
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -17,10 +20,19 @@ var APPicon = L.icon({
     popupAnchor: [0, -38]
 });
 
+var control = L.Control.geocoder({
+    defaultMarkGeocode: false
+}).addTo(map);
 
 if (seed === null) {
-    seed = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+    seed = L.marker([10.991865,  -74.833637], { icon: APPicon }).addTo(map)
         .bindPopup('Select time range <br>' + 'and click the <br>' + 'Fetch Route Button.')
+        .openPopup();
+}
+
+if (seed2 === null) {
+    seed2 = L.marker([10.991865,  -74.773420], { icon: APPicon }).addTo(map)
+        .bindPopup('To search a place, click <br>' + 'on the search button. <br>' + 'Or you can click on <br>' + 'Select on map.')
         .openPopup();
 }
 
@@ -59,28 +71,7 @@ $('#fetchButton').click(function() {
             $('#Error').empty();
             var coordinates = response;
             var latLngs = [];
-
-            if (Errormarker !== null) {
-                map.removeLayer(Errormarker);
-            }
-
-            if (seed !== null) {
-                map.removeLayer(seed);
-            }
-            
-            if (Startmarker !== null) {
-                map.removeLayer(Startmarker);
-            }
-
-            if (Endmarker !== null) {
-                map.removeLayer(Endmarker);
-            }
-
-            map.eachLayer(function(layer) {
-                if (layer instanceof L.Polyline) {
-                    map.removeLayer(layer);
-                }
-            });
+            removeMarkers();
 
             if (!coordinates || coordinates.features.length === 0) {
                 map.setView([10.983594, -74.804334], 15)
@@ -119,3 +110,129 @@ $('#fetchButton').click(function() {
         }
     });
 });
+
+var toggleButton = document.getElementById('toggleButton');
+
+    control.on('markgeocode', function(e) {
+        var location = e.geocode.center;
+        var latitude = location.lat;
+        var longitude = location.lng;
+        removeMarkers();
+    
+        if (selectMarker === null) {
+            selectMarker = L.marker([latitude, longitude], { icon: APPicon }).addTo(map)
+                .bindPopup('Latitude: ' + latitude + '<br>Longitude: ' + longitude)
+                .openPopup();
+            map.setView([latitude, longitude], 16);
+        }
+
+        if (circle === null) {
+            circle = L.circle([latitude, longitude], { 
+                color: 'blue',
+                fillColor: 'blue',
+                fillOpacity: 0.2,
+                radius: 250 
+            }).addTo(map)
+            map.setView([latitude, longitude]);
+        }
+        
+
+        console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
+    });
+
+    let isSearchEnabled = true;
+
+    document.getElementById('toggleButton').addEventListener('click', function() {
+        if (isSearchEnabled) {
+
+            removeMarkers();
+            map.on('click', addMarker);
+            map.removeControl(control);
+            this.textContent = 'Type place';
+        } else {
+
+            removeMarkers();
+            map.addControl(control);
+            map.on('click', addMarker); 
+            map.off('click');
+            this.textContent = 'Select on map';
+
+            map.setView([10.983594, -74.804334], 15);
+
+            seed = L.marker([10.991865,  -74.833637], { icon: APPicon }).addTo(map)
+            .bindPopup('Select time range <br>' + 'and click the <br>' + 'Fetch Route Button.')
+            .openPopup();
+
+            seed2 = L.marker([10.991865,  -74.773420], { icon: APPicon }).addTo(map)
+                    .bindPopup('To search a place, click <br>' + 'on the search button. <br>' + 'Or you can click on <br>' + 'Select on map.')
+                    .openPopup();
+                                        
+        }
+        isSearchEnabled = !isSearchEnabled;
+    });
+
+
+    function addMarker(e) {
+        var latitude = e.latlng.lat;
+        var longitude = e.latlng.lng;
+        console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
+        removeMarkers();
+
+        if (selectMarker === null) {
+            selectMarker = L.marker([latitude, longitude], { icon: APPicon }).addTo(map)
+                .bindPopup('Latitude: ' + latitude + '<br>Longitude: ' + longitude)
+                .openPopup();
+            map.setView([latitude, longitude]);
+        }
+
+
+        if (circle === null) {
+            circle = L.circle([latitude, longitude], { 
+                color: 'blue',
+                fillColor: 'blue',
+                fillOpacity: 0.2,
+                radius: 250 
+            }).addTo(map)
+            map.setView([latitude, longitude]);
+        }
+
+    }
+
+        function removeMarkers() {
+
+            if (seed !== null) {
+                map.removeLayer(seed);
+            }
+    
+            if (seed2 !== null) {
+                map.removeLayer(seed2);
+            }
+            
+            if (Startmarker !== null) {
+                map.removeLayer(Startmarker);
+            }
+    
+            if (Endmarker !== null) {
+                map.removeLayer(Endmarker);
+            }
+    
+            if (Errormarker !== null) {
+                map.removeLayer(Errormarker);
+            }
+    
+            if (selectMarker !== null) {
+                map.removeLayer(selectMarker);
+                selectMarker = null;
+            }
+    
+            if (circle !== null) {
+                map.removeLayer(circle);
+                circle = null;
+            }
+    
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Polyline) {
+                    map.removeLayer(layer);
+                }
+            });
+        }

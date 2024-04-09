@@ -13,6 +13,7 @@
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <!-- <link rel="stylesheet" href="custom.css"> -->
     <style>
         #map {
@@ -35,6 +36,7 @@
             text-decoration: none !important;
             font-weight: bold !important;
         }
+        #toggleButton { position: absolute; top: 2%; right: 1%; z-index: 1000; }
     </style>
 
     <meta name="timezone" content="America/Bogota">
@@ -67,6 +69,7 @@
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
+                <button id="toggleButton">Select on map</button>
             </div>
         </div>
     </div>
@@ -74,6 +77,7 @@
   
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="src/Route_Records.js"></script>
     <!--<script src="src/maxTime.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
