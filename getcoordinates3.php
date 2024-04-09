@@ -43,7 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'type' => 'Point',
                     'coordinates' => array(floatval($coordenada['longitude']), floatval($coordenada['latitude']))
                 ),
-                'properties' => array($coordenada['timestamp'])
+                'properties' => array(
+                    'timestamp' => $coordenada['timestamp']
+                )
             );
             array_push($geojson['features'], $feature);
         }
