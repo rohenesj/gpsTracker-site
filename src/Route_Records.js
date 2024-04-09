@@ -324,5 +324,9 @@ $('#fetchButton').click(function() {
                 if (layer instanceof L.Polyline) {
                     map.removeLayer(layer);
                 }
+            
+            if (marker !== null){
+                map.removeLayer(marker);
+            }
             });
         }
