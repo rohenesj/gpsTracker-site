@@ -36,7 +36,6 @@
             text-decoration: none !important;
             font-weight: bold !important;
         }
-        #toggleButton { position: absolute; top: 2%; right: 1%; z-index: 1000; }
     </style>
 
     <meta name="timezone" content="America/Bogota">
@@ -63,13 +62,14 @@
                 <form id="searchForm" method="post" action="getcoordinates2.php">
                     <input type="text" name="datetimes" class="form-control" />
                     <button disabled type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
-                </form>
+                </form> 
+                <button disabled id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
                 <div id="timestamps"></div>
                 <div id="Error"></div>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
-                <button id="toggleButton">Select on map</button>
+                
             </div>
         </div>
     </div>
