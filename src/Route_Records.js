@@ -166,12 +166,13 @@ var toggleButton = document.getElementById('toggleButton');
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
                 console.log(coords);
-                if (coords[0] >= (longRange - 0.00225) && coords[0] <= (longRange + 0.00225)
-                && coords[1] >= (latRange - 0.00225) && coords[1] <= (latRange - 0.00225)) {
-                    console.log("In Range",coords);
+                if ((coords[0] >= (longRange - 0.00225)) && (coords[0] <= (longRange + 0.00225))) {
+                    console.log("In Longitud Range",coords[0]);
+                    if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
+                        console.log("In Latitud Range",coords[1]);
+                    }
                 }
             });
-
         }
     });
 });
