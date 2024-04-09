@@ -116,7 +116,7 @@ $('#fetchButton').click(function() {
 });
 
 
-if (!toggleButton.disabled) {
+
     control.on('markgeocode', function(e) {
         var location = e.geocode.center;
         latitude = location.lat;
@@ -188,9 +188,9 @@ if (!toggleButton.disabled) {
         }
     });
 });
-}
 
-if (!toggleButton.disabled){
+
+
     let isSearchEnabled = true;
 
     document.getElementById('toggleButton').addEventListener('click', function() {
@@ -221,7 +221,7 @@ if (!toggleButton.disabled){
         }
         isSearchEnabled = !isSearchEnabled;
     });
-}
+
 
     function addMarker(e) {
         var latitude = e.latlng.lat;
