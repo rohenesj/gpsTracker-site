@@ -11,6 +11,7 @@ const fetchButton = document.getElementById("fetchButton");
 var latRange = 0.0;
 var longRange = 0.0;
 var timeMarker = null;
+var windowCoords = [];
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -39,8 +40,8 @@ if (seed2 === null) {
         .openPopup();
 }
 
-var startTimestamp = 0.0;
-var endTimestamp = 0.0;
+var startTimestamp = Math.floor(Date.now() / 1000) - 3600;
+var endTimestamp = Math.floor(Date.now() / 1000);
 $(function() {
     $('input[name="datetimes"]').daterangepicker({
       timePicker: true,
@@ -146,6 +147,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 map.removeLayer(layer);
                 }
             });
+            windowCoords = [];
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
                 var tstamp = parseFloat(feature.properties.timestamp);
@@ -157,12 +159,12 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                         console.log("In Latitud Range",coords[1]);
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-
+                        var point = [coords[1], coords[0]];
+                        windowCoords.push(point)
                     }
                 }
             });
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
-            //map.fitBounds(route.getBounds());
         }
     });
 }
