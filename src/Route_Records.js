@@ -171,35 +171,37 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
     });
 }
 
-control.on('markgeocode', function(e) {
-    var location = e.geocode.center;
-    latitude = location.lat;
-    longitude = location.lng;
-    removeMarkers();
+if ((startTimestamp != 0.0) && (endTimestamp != 0.0)) {
+    control.on('markgeocode', function(e) {
+        var location = e.geocode.center;
+        latitude = location.lat;
+        longitude = location.lng;
+        removeMarkers();
 
-    if (selectMarker === null) {
-        selectMarker = L.marker([latitude, longitude], { icon: APPicon }).addTo(map)
-            .bindPopup('Latitude: ' + latitude + '<br>Longitude: ' + longitude)
-            .openPopup();
-        map.setView([latitude, longitude], 16);
-    }
+        if (selectMarker === null) {
+            selectMarker = L.marker([latitude, longitude], { icon: APPicon }).addTo(map)
+                .bindPopup('Latitude: ' + latitude + '<br>Longitude: ' + longitude)
+                .openPopup();
+            map.setView([latitude, longitude], 16);
+        }
 
-    console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
-    latRange = latitude;
-    longRange = longitude;
+        console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
+        latRange = latitude;
+        longRange = longitude;
 
-    leftCorner = [latRange - 0.00225, longRange - 0.00225];
-    rightCorner = [latRange + 0.00225, longRange + 0.00225];
-    var bounds = [leftCorner, rightCorner];
+        leftCorner = [latRange - 0.00225, longRange - 0.00225];
+        rightCorner = [latRange + 0.00225, longRange + 0.00225];
+        var bounds = [leftCorner, rightCorner];
 
-    L.rectangle(bounds, {
-        color: "blue", 
-        fillColor:"blue",
-        fillOpacity: 0.2
-    }).addTo(map);
-    map.fitBounds(bounds);
-    fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange);
-});
+        L.rectangle(bounds, {
+            color: "blue", 
+            fillColor:"blue",
+            fillOpacity: 0.2
+        }).addTo(map);
+        map.fitBounds(bounds);
+        fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange);
+    });
+}
 
 function addMarker(e) {
     var latitude = e.latlng.lat;
@@ -268,4 +270,6 @@ function removeMarkers() {
     });
 }
 
-map.on('click',addMarker)
+if ((startTimestamp != 0.0) && (endTimestamp != 0.0)) {
+    map.on('click',addMarker);
+}
