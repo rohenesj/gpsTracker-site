@@ -223,5 +223,49 @@ function addMarker(e) {
     fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange);
 }
 
+function removeMarkers() {
 
-map.on('click',addMarker);
+    if (seed !== null) {
+        map.removeLayer(seed);
+    }
+
+    if (seed2 !== null) {
+        map.removeLayer(seed2);
+    }
+    
+    if (Startmarker !== null) {
+        map.removeLayer(Startmarker);
+    }
+
+    if (Endmarker !== null) {
+        map.removeLayer(Endmarker);
+    }
+
+    if (Errormarker !== null) {
+        map.removeLayer(Errormarker);
+    }
+
+    if (selectMarker !== null) {
+        map.removeLayer(selectMarker);
+        selectMarker = null;
+    }
+
+    if (circle !== null) {
+        map.removeLayer(circle);
+        circle = null;
+    }
+
+    map.eachLayer(function(layer) {
+        if (layer instanceof L.Polyline) {
+            map.removeLayer(layer);
+        }
+    });
+
+    map.eachLayer(function(layer) {
+        if (layer instanceof L.marker) {
+            map.removeLayer(timeMarker)
+        }
+    });
+}
+
+map.on('click',addMarker)
