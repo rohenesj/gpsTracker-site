@@ -164,8 +164,10 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSliderLabel').empty();
                 $('#windowSlider').empty();
             } else {
-                $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Example range</label>");
-                var slider = $('<input type="range" id="myRange" min="0" max="' + windowCoords.length + '" value="50">');
+                $('#windowSliderLabel').empty();
+                $('#windowSlider').empty();
+                $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+                var slider = $('<input type="range" class="form-range "id="myRange" min="0" max="' + windowCoords.length + '" value="50">');
                 $('#windowSlider').append(slider);
             }
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
