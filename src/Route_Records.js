@@ -165,7 +165,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSlider').empty();
             } else {
                 $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Example range</label>");
-                var slider = $('<input type="range" id="myRange" min="0" max="' + maxSliderValue + '" value="50">');
+                var slider = $('<input type="range" id="myRange" min="0" max="' + windowCoords.length + '" value="50">');
                 $('#windowSlider').append(slider);
             }
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
@@ -274,7 +274,6 @@ $(document).ready(function() {
     $('#windowSlider').on('input', '#myRange', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
-        $('body').css('background-color', 'rgb(' + sliderValue + ', 100, 100)');
     });
 });
 
