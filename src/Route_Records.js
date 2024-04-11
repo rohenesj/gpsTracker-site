@@ -13,6 +13,23 @@ var longRange = 0.0;
 var timeMarker = null;
 var windowCoords = [];
 
+function timeMessage(unixTimeSeconds) {
+    const unixTimeMilliseconds = unixTimeSeconds * 1000;
+    const date = new Date(unixTimeMilliseconds);
+    const options = {
+        timeZone: 'America/Bogota',
+        weekday: 'short',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    };
+    const formattedDate = date.toLocaleString('en-US', options);
+    return formattedDate;
+}
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
@@ -168,7 +185,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSliderLabel').empty();
                 $('#windowSlider').empty();
                 $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-                var slider = $('<input type="range" class="form-range "id="myRange" min="0" max="' + maxValue + '" value="50">');
+                var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
                 $('#windowSlider').append(slider);
             }
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
@@ -282,8 +299,9 @@ $(document).ready(function() {
             map.removeLayer(layer);
             }
         });
-        var marker = L.marker([windowCoords[sliderValue][0],windowCoords[sliderValue][1]]).addTo(map)
-        .bindPopup('Marked at ' + windowCoords[sliderValue][2]);
+        var marker = L.marker([windowCoords[sliderValue][0],windowCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
+        .bindPopup('Marked at ' + timeMessage(windowCoords[sliderValue][2]))
+        .openPopup();
     });
 });
 
