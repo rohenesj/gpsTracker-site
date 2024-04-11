@@ -167,7 +167,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSliderLabel').empty();
                 $('#windowSlider').empty();
                 $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-                var slider = $('<input type="range" class="form-range "id="myRange" min="0" max="' + windowCoords.length + '" value="50">');
+                var slider = $('<input type="range" class="form-range "id="myRange" min="0" max="' + windowCoords.length - 1 + '" value="50">');
                 $('#windowSlider').append(slider);
             }
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
@@ -276,7 +276,13 @@ $(document).ready(function() {
     $('#windowSlider').on('input', '#myRange', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
-        console.log(windowCoords);
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+            }
+        });
+        var marker = L.marker([windowCoords[sliderValue][0],windowCoords[sliderValue][1]]).addTo(map)
+        .bindPopup('Marked at ' + windowCoords[sliderValue][2]);
     });
 });
 
