@@ -164,8 +164,9 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSliderLabel').empty();
                 $('#windowSlider').empty();
             } else {
-                $('#windowSliderLabel').html("<label for=\"customRange2\" class=\"form-label\">Example range</label>");
-                $('#windowSlider').html("<input type=\"range\" class=\"form-range\" value=\"0\" min=\"0\" max=\""+ windowCoords.length + "\" id=\"customRange2\">");
+                $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Example range</label>");
+                var slider = $('<input type="range" id="myRange" min="0" max="' + maxSliderValue + '" value="50">');
+                $('#windowSlider').append(slider);
             }
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
         }
@@ -270,10 +271,10 @@ function removeMarkers() {
 }
 
 $(document).ready(function() {
-    $('#customRange2').on('input', function() {
+    $('#windowSlider').on('input', '#myRange', function() {
         var sliderValue = $(this).val();
-        console.log("Slider =",sliderValue)
-        $('#Debug').html("<p>" + sliderValue + "</p>");
+        console.log(sliderValue);
+        $('body').css('background-color', 'rgb(' + sliderValue + ', 100, 100)');
     });
 });
 
