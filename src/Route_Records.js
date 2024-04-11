@@ -155,7 +155,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                     if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-                        var point = [coords[1], coords[0]];
+                        var point = [coords[1], coords[0], tstamp];
                         windowCoords.push(point)
                     }
                 }
@@ -276,6 +276,7 @@ $(document).ready(function() {
     $('#windowSlider').on('input', '#myRange', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
+        console.log(windowCoords);
     });
 });
 
