@@ -164,7 +164,10 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                     }
                 }
             });
-            if (windowCoords.length != 0){
+            if (windowCoords.length > 1){
+                $('#windowSliderLabel').empty();
+                $('#windowSlider').empty();
+            } else {
                 $('#windowSliderLabel').html("<label for=\"customRange2\" class=\"form-label\">Example range</label>");
                 $('#windowSlider').html("<input type=\"range\" class=\"form-range\" min=\"0\" max=\"5\" id=\"customRange2\">");
             }
