@@ -270,10 +270,11 @@ function removeMarkers() {
 }
 
 $(document).ready(function() {
-    $('#windowSlider').on('input', function() {
-        var sliderValue = $('customRange2').val(); 
-        console.log("sliderValue",sliderValue);
+    $('#customRange2').on('input', function() {
+        var sliderValue = $(this).val();
+        console.log("Slider =",sliderValue)
         $('#Debug').html("<p>" + sliderValue + "</p>");
     });
 });
+
 map.on('click',addMarker);
