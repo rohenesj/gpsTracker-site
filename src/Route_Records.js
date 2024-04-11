@@ -72,7 +72,6 @@ $('#fetchButton').click(function() {
             endTime: endTimestamp
         },
         success: function(response) {
-            $('#timestamps').html("<p>Start Timestamp: " + startTimestamp + "</p><p>End Timestamp: " + endTimestamp + "</p>");
             $('#Error').empty();
             var coordinates = response;
             var latLngs = [];
@@ -130,7 +129,6 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
             endTime: endTimestamp
         },
         success: function(response) {
-            $('#timestamps').html("<p>Start Timestamp: " + startTimestamp + "</p><p>End Timestamp: " + endTimestamp + "</p>");
             $('#Error').empty();
             var coordinates = response;
             console.log(coordinates);
@@ -160,13 +158,12 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                         console.log("In Latitud Range",coords[1]);
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-                        var timeMarker = L.marker([coords[1],coords[0]]).addTo(map)
-                        .bindPopup('Marked at ' + date);
+
                     }
                 }
             });
-
-
+            route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
+            //map.fitBounds(route.getBounds());
         }
     });
 }

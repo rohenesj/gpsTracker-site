@@ -63,8 +63,7 @@
                     <input type="text" name="datetimes" class="form-control" />
                     <button disabled type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
                 </form> 
-                <button disabled id="toggleButton" class="btn btn-outline-primary mt-3">Select on map</button>
-                <div id="timestamps"></div>
+
                 <div id="Error"></div>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
