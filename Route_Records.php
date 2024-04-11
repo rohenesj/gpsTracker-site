@@ -66,6 +66,7 @@
                 <div id="windowSliderLabel" class="mt-3"></div>
                 <div id="windowSlider"></div>
                 <div id="Error"></div>
+                <div id="Debug"></div>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-10">
                 <div id="map"></div>
