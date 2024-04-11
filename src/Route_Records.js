@@ -271,7 +271,7 @@ function removeMarkers() {
 
 $(document).ready(function() {
     $('#windowSlider').on('input', function() {
-        var sliderValue = $(this).prop('value'); 
+        var sliderValue = $('customRange2').val(); 
         console.log("sliderValue",sliderValue);
         $('#Debug').html("<p>" + sliderValue + "</p>");
     });
