@@ -164,6 +164,8 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                     }
                 }
             });
+            $('#windowSliderLabel').html("<label for=\"customRange2\" class=\"form-label\">Example range</label>");
+            $('#windowSlider').html("<input type=\"range\" class=\"form-range\" min=\"0\" max=\"5\" id=\"customRange2\">");
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
         }
     });
