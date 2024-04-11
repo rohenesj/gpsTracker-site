@@ -63,7 +63,7 @@
                     <input type="text" name="datetimes" class="form-control" />
                     <button disabled type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
                 </form> 
-                <div id="windowSliderLabel"></div>
+                <div id="windowSliderLabel" class="mt-3"></div>
                 <div id="windowSlider"></div>
                 <div id="Error"></div>
             </div>
