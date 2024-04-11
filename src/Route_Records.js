@@ -269,5 +269,10 @@ function removeMarkers() {
     });
 }
 
-
+$(document).ready(function() {
+    $('#myRange').on('input', function() {
+        var sliderValue = $(this).val(); 
+        console.log("sliderValue",sliderValue);
+    });
+});
 map.on('click',addMarker);
