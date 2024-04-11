@@ -144,6 +144,8 @@ $('#fetchButton').click(function() {
         rightCorner = [latRange + 0.00225, longRange + 0.00225];
         var bounds = [leftCorner, rightCorner]
 
+        map.on('click', onlyaddMarker);
+
         L.rectangle(bounds, {
             color: "blue", 
             fillColor:"blue",
@@ -264,7 +266,7 @@ $('#fetchButton').click(function() {
         }).addTo(map);
         map.fitBounds(bounds);
 
-        map.on('click', onlyaddMarker);
+        
 
         $.ajax({
         url: 'getcoordinates3.php',
