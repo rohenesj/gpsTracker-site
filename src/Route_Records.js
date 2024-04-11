@@ -160,6 +160,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                     }
                 }
             });
+            var maxValue = windowCoords.length - 1;
             if (windowCoords.length < 2){
                 $('#windowSliderLabel').empty();
                 $('#windowSlider').empty();
@@ -167,7 +168,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSliderLabel').empty();
                 $('#windowSlider').empty();
                 $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-                var slider = $('<input type="range" class="form-range "id="myRange" min="0" max="' + windowCoords.length - 1 + '" value="50">');
+                var slider = $('<input type="range" class="form-range "id="myRange" min="0" max="' + maxValue + '" value="50">');
                 $('#windowSlider').append(slider);
             }
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
