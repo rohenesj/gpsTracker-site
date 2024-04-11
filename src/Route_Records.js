@@ -131,7 +131,6 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
         success: function(response) {
             $('#Error').empty();
             var coordinates = response;
-            console.log(coordinates);
             if (!coordinates || coordinates.features.length === 0) {
                 map.setView([10.983594, -74.804334], 15)
                 $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
@@ -152,11 +151,8 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 var coords = feature.geometry.coordinates;
                 var tstamp = parseFloat(feature.properties.timestamp);
                 var date = feature.properties.date;
-                console.log(coords);
                 if ((coords[0] >= (longRange - 0.00225)) && (coords[0] <= (longRange + 0.00225))) {
-                    console.log("In Longitud Range",coords[0]);
                     if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
-                        console.log("In Latitud Range",coords[1]);
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
                         var point = [coords[1], coords[0]];
@@ -169,7 +165,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSlider').empty();
             } else {
                 $('#windowSliderLabel').html("<label for=\"customRange2\" class=\"form-label\">Example range</label>");
-                $('#windowSlider').html("<input type=\"range\" class=\"form-range\" min=\"0\" max="+ windowCoords.length + "id=\"customRange2\">");
+                $('#windowSlider').html("<input type=\"range\" class=\"form-range\" min=\"0\" max=\""+ windowCoords.length + "\" id=\"customRange2\">");
             }
             route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
         }
@@ -190,7 +186,6 @@ control.on('markgeocode', function(e) {
         map.setView([latitude, longitude], 16);
     }
 
-    console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
     latRange = latitude;
     longRange = longitude;
 
@@ -211,7 +206,6 @@ control.on('markgeocode', function(e) {
 function addMarker(e) {
     var latitude = e.latlng.lat;
     var longitude = e.latlng.lng;
-    console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
     removeMarkers();
 
     latRange = latitude;
