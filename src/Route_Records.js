@@ -264,6 +264,8 @@ $('#fetchButton').click(function() {
         }).addTo(map);
         map.fitBounds(bounds);
 
+        map.on('click', onlyaddMarker);
+
         $.ajax({
         url: 'getcoordinates3.php',
         method: 'POST',
@@ -357,4 +359,24 @@ $('#fetchButton').click(function() {
                     map.removeLayer(timeMarker)
                 }
             });
+        }
+        function onlyAddMarker(e) {
+            var latitude = e.latlng.lat;
+            var longitude = e.latlng.lng;
+            console.log("Las coordenadas de la ubicación son: Latitud =", latitude, ", Longitud =", longitude);
+            removeMarkers();
+    
+            latRange = latitude;
+            longRange = longitude;
+    
+            leftCorner = [latRange - 0.00225, longRange - 0.00225];
+            rightCorner = [latRange + 0.00225, longRange + 0.00225];
+            var bounds = [leftCorner, rightCorner]
+    
+            L.rectangle(bounds, {
+                color: "blue", 
+                fillColor:"blue",
+                fillOpacity: 0.2
+            }).addTo(map);
+            map.fitBounds(bounds);
         }
