@@ -48,7 +48,7 @@
                 <h1 style="color:white;"><img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">GPS Tracker</h1>
             </div>
             <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-8">
-                <a href="/Route_Records.php" class="btn btn-light header-link-style" role="button">Fetch Data</a>
+                <a href="/Route_Records.php" class="btn btn-light header-link-style" role="button">Historical Data</a>
             </div>
         </div>
         <div class="row custom-row pt-3">
