@@ -25,12 +25,12 @@
           background-color: #0d6efd
         }
         .header-link-style {
-            color: white !important;
+            color: black !important;
             text-decoration: none !important;
             font-weight: bold !important;
         }
         .header-link-style:visited {
-            color: white !important;
+            color: black !important;
             text-decoration: none !important;
             font-weight: bold !important;
         }
@@ -47,8 +47,8 @@
             <div class="col-sm-12 col-md-3 col-lg-3">
                 <h1 style="color:white;"><img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">GPS Tracker</h1>
             </div>
-            <div class="col-sm-1 col-md-1 col-lg-1">
-                <a href="/Route_Records.php" class="btn btn-link header-link-style" role="button">Fetch Data</a>
+            <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-8">
+                <a href="/Route_Records.php" class="btn btn-light header-link-style" role="button">Fetch Data</a>
             </div>
         </div>
         <div class="row custom-row pt-3">
