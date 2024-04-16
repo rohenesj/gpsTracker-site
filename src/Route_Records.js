@@ -45,15 +45,10 @@ var control = L.Control.geocoder({
     defaultMarkGeocode: false
 }).addTo(map);
 
-if (seed === null) {
-    seed = L.marker([10.991865,  -74.833637], { icon: APPicon }).addTo(map)
-        .bindPopup('Select time range <br>' + 'and click the <br>' + 'Fetch Route Button.')
-        .openPopup();
-}
 
 if (seed2 === null) {
     seed2 = L.marker([10.991865,  -74.773420], { icon: APPicon }).addTo(map)
-        .bindPopup('To search a place, click <br>' + 'on the search button. <br>' + 'Or you can click on <br>' + 'Select on map.')
+        .bindPopup('Select a time window, then <br>' + 'search or select a location <br>' + 'on the map')
         .openPopup();
 }
 
@@ -149,9 +144,9 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
             $('#Error').empty();
             var coordinates = response;
             if (!coordinates || coordinates.features.length === 0) {
-                map.setView([10.983594, -74.804334], 15)
+                map.setView([latRange, longRange])
                 $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
-                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                Errormarker = L.marker([latRange, longRange], { icon: APPicon }).addTo(map)
                 .bindPopup('No coordinates in the selected time range')
                 .openPopup();
                 
