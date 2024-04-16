@@ -144,7 +144,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
             $('#Error').empty();
             var coordinates = response;
             if (!coordinates || coordinates.features.length === 0) {
-                map.setView([longRange, latRange])
+                map.setView([latRange, longRange])
                 $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
                 Errormarker = L.marker([latRange, longRange], { icon: APPicon }).addTo(map)
                 .bindPopup('No coordinates in the selected time range')
