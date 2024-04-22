@@ -7,7 +7,6 @@ function openNav() {
     let size = screenWidth.toString() + 'px';
     console.log(size);
     document.getElementById("mySidebar").style.width = size;
-    document.getElementById("main").style.marginLeft = size;
   }
 }
 
