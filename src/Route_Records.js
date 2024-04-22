@@ -7,7 +7,6 @@ var Startmarker = null;
 var Endmarker = null;
 var selectMarker = null;
 var circle = null;
-const fetchButton = document.getElementById("fetchButton");
 var latRange = 0.0;
 var longRange = 0.0;
 var timeMarker = null;
@@ -69,7 +68,6 @@ $(function() {
       endTimestamp = end.unix();
       console.log("Start", startTimestamp);
       console.log("End",endTimestamp);
-      fetchButton.disabled = false;
       applyCalendar();
       $('#windowSliderLabel').empty();
       $('#windowSlider').empty();  
