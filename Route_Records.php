@@ -20,15 +20,20 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <div id="main" class="container-fluid">
         <div class="row custom-header align-items-center">
-            <div class="col-sm-12 col-md-5 col-lg-5">
+            <div class="col-sm-12 col-md-3 col-lg-3">
                 <h1 style="color:white;">
                     <button class="btn btn-outline-light" onclick="openNav()">☰</button>  
                     <img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">
                     GPS Tracker
                 </h1>
             </div>
-            <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-6 offset-md-6">
-                <a href="/Route_Records.php" class="btn btn-outline-light" role="button">Real Time</a>
+            <div class="col-sm-1 col-md-5 col-lg-5">
+                <form id="searchForm" method="post" action="getcoordinates2.php">
+                    <input type="text" name="datetimes" class="form-control" />
+                </form> 
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-3 offset-md-3">
+                <a href="/index.php" class="btn btn-outline-light" role="button">Real Time</a>
             </div>
         </div>
         <div class="row custom-row">
