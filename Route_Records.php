@@ -27,12 +27,12 @@
                     GPS Tracker
                 </h1>
             </div>
-            <div class="col-sm-1 col-md-5 col-lg-5">
+            <div class="col-sm-1 col-md-6 col-lg-6">
                 <form id="searchForm" method="post" action="getcoordinates2.php">
                     <input type="text" name="datetimes" class="form-control" />
                 </form> 
             </div>
-            <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-3 offset-md-3">
+            <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-2 offset-md-2">
                 <a href="/index.php" class="btn btn-outline-light" role="button">Real Time</a>
             </div>
         </div>

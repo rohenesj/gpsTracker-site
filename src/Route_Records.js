@@ -70,7 +70,9 @@ $(function() {
       console.log("Start", startTimestamp);
       console.log("End",endTimestamp);
       fetchButton.disabled = false;
-
+      applyCalendar();
+      $('#windowSliderLabel').empty();
+      $('#windowSlider').empty();  
 
     });
 });
@@ -131,6 +133,63 @@ $('#fetchButton').click(function() {
         }
     });
 });
+
+function applyCalendar() {
+    $.ajax({
+        url: 'getcoordinates2.php',
+        method: 'POST',
+        data: {
+            startTime: startTimestamp,
+            endTime: endTimestamp
+        },
+        success: function(response) {
+            $('#Error').empty();
+            var coordinates = response;
+            var latLngs = [];
+            removeMarkers();
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });            
+
+            if (!coordinates || coordinates.features.length === 0) {
+                map.setView([10.983594, -74.804334], 15)
+                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                .bindPopup('No coordinates in the selected time range')
+                .openPopup();
+                
+            return; 
+            }
+
+
+            coordinates.features.forEach(function(feature, index) {
+                var coords = feature.geometry.coordinates;
+                var latLng = L.latLng(coords[1], coords[0]);
+                latLngs.push(latLng);
+                
+                if (index === 0) {
+                    Startmarker = L.marker(L.latLng(coords[1], coords[0]), { icon: APPicon }).addTo(map)
+                        .bindPopup('Start of route. <br> ' + 'Latitude: ' + coords[1] + '<br> Latitude: ' + coords[0]);
+                } 
+
+                if (index === coordinates.features.length - 1) {
+                    Endmarker = L.marker(latLng, { icon: APPicon }).addTo(map)
+                        .bindPopup('End of route. <br> ' + 'Latitude: ' + coords[1] + '<br> Longitude: ' + coords[0]);
+                }
+
+            });
+
+            route = L.polyline(latLngs, {color: 'blue'}).addTo(map);
+            map.fitBounds(route.getBounds());
+            
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
 
 function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
     $.ajax({
