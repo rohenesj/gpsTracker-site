@@ -44,11 +44,7 @@
 
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <h2>Track vehicle in a given time:</h2>
-    <form id="searchForm" method="post" action="getcoordinates2.php">
-        <input type="text" name="datetimes" class="form-control" />
-        <button disabled type="button" id="fetchButton" class="btn btn-outline-primary mt-3">Fetch Route</button>
-    </form> 
+    <h2>Select a Datapoint:</h2> 
     <div id="windowSliderLabel" class="mt-3"></div>
     <div id="windowSlider"></div>
     <div id="Error"></div>
