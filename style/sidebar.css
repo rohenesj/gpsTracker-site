@@ -83,6 +83,12 @@
     
   }
 
+  .sidebar p {
+    opacity: 1;
+    color: white;
+    font-weight: bold;
+  }
+
   .sidebar .timeSlider {
     position: absolute;
     bottom: 1px;
