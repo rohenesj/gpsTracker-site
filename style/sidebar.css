@@ -106,6 +106,10 @@
     font-size: 70px;
     color: white;
   }
+
+  .sidebar .mobileHidden {
+    color:black;
+  }
   
   .openbtn {
     font-size: 20px;
