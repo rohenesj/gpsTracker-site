@@ -1,0 +1,126 @@
+@media (min-width: 768px) {
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #f2f2f2;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidebar p {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #000000;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    background-color: #000000;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    opacity: 0.6;
+  }
+  
+  .sidebar p {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #000000;
+    display: block;
+    transition: 0.3s;
+    opacity: 1;
+  }
+
+  .sidebar h2 {
+    opacity: 1;
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    right: 1px;
+    left: 1px;
+    text-align: center;
+    
+  }
+
+  .sidebar p {
+    opacity: 1;
+    color: white;
+    font-weight: bold;
+  }
+
+  .sidebar .timeSlider {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    left: 1px;
+    padding: 50px;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    font-size: 70px;
+    color: white;
+  }
+
+  .sidebar .mobileHidden {
+    color:black;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+  }
+}
