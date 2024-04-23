@@ -14,3 +14,9 @@ body {
 .custom-header {
     background-color: #0d6efd
 }
+
+#main {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
