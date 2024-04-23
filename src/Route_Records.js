@@ -7,7 +7,6 @@ var Startmarker = null;
 var Endmarker = null;
 var selectMarker = null;
 var circle = null;
-const fetchButton = document.getElementById("fetchButton");
 var latRange = 0.0;
 var longRange = 0.0;
 var timeMarker = null;
@@ -69,13 +68,15 @@ $(function() {
       endTimestamp = end.unix();
       console.log("Start", startTimestamp);
       console.log("End",endTimestamp);
-      fetchButton.disabled = false;
-
+      applyCalendar();
+      $('#windowSliderLabel').empty();
+      $('#windowSlider').empty();  
 
     });
 });
 
-$('#fetchButton').click(function() {
+
+function applyCalendar() {
     $.ajax({
         url: 'getcoordinates2.php',
         method: 'POST',
@@ -130,7 +131,7 @@ $('#fetchButton').click(function() {
             console.error(xhr.responseText);
         }
     });
-});
+}
 
 function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
     $.ajax({
@@ -207,14 +208,19 @@ control.on('markgeocode', function(e) {
 
     leftCorner = [latRange - 0.00225, longRange - 0.00225];
     rightCorner = [latRange + 0.00225, longRange + 0.00225];
+
+    viewLeftCorner = [latRange - 0.00450, longRange - 0.00450];
+    viewRightCorner = [latRange + 0.00450, longRange + 0.00450];
+
     var bounds = [leftCorner, rightCorner];
+    var boundView = [viewLeftCorner, viewRightCorner];
 
     L.rectangle(bounds, {
         color: "blue", 
         fillColor:"blue",
         fillOpacity: 0.2
     }).addTo(map);
-    map.fitBounds(bounds);
+    map.fitBounds(boundView);
     fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange);
 });
 
@@ -229,14 +235,19 @@ function addMarker(e) {
 
     leftCorner = [latRange - 0.00225, longRange - 0.00225];
     rightCorner = [latRange + 0.00225, longRange + 0.00225];
-    var bounds = [leftCorner, rightCorner]
+
+    viewLeftCorner = [latRange - 0.00450, longRange - 0.00450];
+    viewRightCorner = [latRange + 0.00450, longRange + 0.00450];
+
+    var bounds = [leftCorner, rightCorner];
+    var boundView = [viewLeftCorner, viewRightCorner];
 
     L.rectangle(bounds, {
         color: "blue", 
         fillColor:"blue",
         fillOpacity: 0.2
     }).addTo(map);
-    map.fitBounds(bounds);
+    map.fitBounds(boundView);
     fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange);
 }
 
