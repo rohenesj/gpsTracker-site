@@ -164,6 +164,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 var coords = feature.geometry.coordinates;
                 var tstamp = parseFloat(feature.properties.timestamp);
                 var date = feature.properties.date;
+                var carData = feature.properties.car_data;
                 if ((coords[0] >= (longRange - 0.00225)) && (coords[0] <= (longRange + 0.00225))) {
                     if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
                         var latLng = L.latLng(coords[1], coords[0]);

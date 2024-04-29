@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
  
-        $query = "SELECT longitude, latitude, timestamp, date FROM coordinates WHERE timestamp >= :start AND timestamp <= :end";
+        $query = "SELECT longitude, latitude, timestamp, date, car_data FROM coordinates WHERE timestamp >= :start AND timestamp <= :end";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':start', $startTimestamp, PDO::PARAM_INT);
         $stmt->bindParam(':end', $endTimestamp, PDO::PARAM_INT);
@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ),
                 'properties' => array(
                     'timestamp' => $coordenada['timestamp'],
-                    'date' => $coordenada['date']
+                    'date' => $coordenada['date'],
+                    'car_data' => $coordenada['car_data']
                 )
             );
             array_push($geojson['features'], $feature);
