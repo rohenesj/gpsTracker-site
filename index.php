@@ -39,6 +39,7 @@
     <p id="altitude">Altitude: </p>
     <p id="date">Date: </p>
     <p id="time">Time: </p>
+    <p id="carData">RPM: </p>
     <button type="button" id="gpsTrackerButton" class="btn btn-outline-primary">Erase Route</button>
   </div>
 
