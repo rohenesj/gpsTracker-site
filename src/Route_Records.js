@@ -169,7 +169,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                     if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
                         var latLng = L.latLng(coords[1], coords[0]);
                         latLngs.push(latLng);
-                        var point = [coords[1], coords[0], tstamp];
+                        var point = [coords[1], coords[0], tstamp, carData];
                         windowCoords.push(point)
                     }
                 }
@@ -307,7 +307,7 @@ $(document).ready(function() {
             }
         });
         var marker = L.marker([windowCoords[sliderValue][0],windowCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
-        .bindPopup('Marked at ' + timeMessage(windowCoords[sliderValue][2]))
+        .bindPopup('Marked at ' + timeMessage(windowCoords[sliderValue][2]) + '<br>RPM: ' + windowCoords[sliderValue][3])
         .openPopup();
     });
 });
