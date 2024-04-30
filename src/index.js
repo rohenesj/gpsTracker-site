@@ -23,6 +23,8 @@ function updateMarker() {
             var data = JSON.parse(response);
             let hour = data.date.split(" ");
 
+            drawSpeedometer(data.car_data, steps, minVal, maxVal);
+
             function convertToTimeZone(dateString) {
                 var date = new Date(dateString);
                 return date.toLocaleTimeString('en-US', { timeZone: timezone });
@@ -40,7 +42,7 @@ function updateMarker() {
             $("#altitude").text("Altitude: " + data.altitude);
             $("#date").text("Date: " + convertDateToTimeZone(data.date));
             $("#time").text("Time: " + convertToTimeZone(data.date));
-            $("#timestamp").text("Timestamp: " + data.timestamp);
+            $("#carData").text("RPM: " + data.car_data);
             var latlng = [parseFloat(data.latitude), parseFloat(data.longitude)];
             if (marker === null) {
                 marker = L.marker(latlng, { icon: APPicon }).addTo(map)
@@ -48,7 +50,7 @@ function updateMarker() {
                     .openPopup();
             } else {
                 marker.setLatLng(latlng);
-                marker.closePopup().bindPopup('Latitude: ' + data.latitude + '<br>Longitude: ' + data.longitude);
+                marker.closePopup().bindPopup('Latitude: ' + data.latitude + '<br>Longitude: ' + data.longitude + '<br>RPM: ' + data.car_data);
             }
             map.setView(latlng);
 

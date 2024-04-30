@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPS Tracker!</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="style/tachometer.css">
     <link rel="stylesheet" href="style/sidebar.css" />
     <link rel="stylesheet" href="style/custom.css">
     <meta name="timezone" content="America/Bogota">
@@ -23,7 +24,7 @@
                 </h1>
             </div>
             <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-6 offset-md-6">
-                <a href="/Route_Records.php" class="btn btn-outline-light" role="button">Historical</a>
+                <a href="/Route_Records.php" id="historicalButton" class="btn btn-outline-light" role="button" style="margin-right: 0px;">Historical</a>
             </div>
         </div>
         <div class="row custom-row">
@@ -39,8 +40,10 @@
     <p id="altitude">Altitude: </p>
     <p id="date">Date: </p>
     <p id="time">Time: </p>
+    <p id="carData">RPM: </p>
+    <canvas id="canvas-speedometer" width="250" height="250"></canvas>  
     <button type="button" id="gpsTrackerButton" class="btn btn-outline-primary">Erase Route</button>
-  </div>
+</div>
 
 
   
@@ -48,6 +51,7 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="src/index.js"></script>
     <script src="src/sidebar.js"></script>
+    <script src="src/tachometer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" 
