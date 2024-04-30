@@ -23,6 +23,8 @@ function updateMarker() {
             var data = JSON.parse(response);
             let hour = data.date.split(" ");
 
+            drawSpeedometer(data.car_data, steps, minVal, maxVal);
+
             function convertToTimeZone(dateString) {
                 var date = new Date(dateString);
                 return date.toLocaleTimeString('en-US', { timeZone: timezone });
