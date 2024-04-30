@@ -1,0 +1,6 @@
+{
+    "pg_endpoint": "proyecto-de2024.c5c6kg2wg94c.us-east-2.rds.amazonaws.com",
+    "pg_user": "postgres",
+    "pg_password": "Diseno123",
+    "pg_db": "postgres"
+}
