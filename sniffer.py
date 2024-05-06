@@ -18,6 +18,10 @@ class Coordinates:
         self.alt = dataArray[2]
         self.tstamp = int(dataArray[3]) / 1000.0
         self.carData = dataArray[4]
+        if dataArray[5] == "2":
+            self.table = "coordinates2"
+        else:
+            self.table = "coordinates"
 
 def connectToDatabasepg():
     conn = psycopg2.connect(host=cred["pg_endpoint"], dbname=cred["pg_db"], user=cred["pg_user"],
@@ -25,7 +29,7 @@ def connectToDatabasepg():
     return conn
 
 def sqlInstructionpg(conn,cur,coordinates):
-    cur.execute(f""" INSERT INTO coordinates (longitude, latitude , altitude, date, timestamp, car_data)
+    cur.execute(f""" INSERT INTO {coordinates.table} (longitude, latitude , altitude, date, timestamp, car_data)
                     values ('{coordinates.long}','{coordinates.lat}','{coordinates.alt}',to_timestamp({coordinates.tstamp}),{coordinates.tstamp},'{coordinates.carData}')
                     on conflict ("timestamp") do nothing;
 """)
