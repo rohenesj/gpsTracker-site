@@ -80,3 +80,14 @@ $('#gpsTrackerButton').click(function() {
         }
     });
 });
+
+$(document).ready(function() {
+    $('#truck1').change(function() {
+        truckMode = "1";
+        console.log("Mode " + truckMode);
+    });
+    $('#truck2').change(function() {
+        truckMode = "2";
+        console.log("Mode " + truckMode);
+    });
+  });
