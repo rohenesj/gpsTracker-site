@@ -192,6 +192,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
 
 
 control.on('markgeocode', function(e) {
+    openNav()
     var location = e.geocode.center;
     latitude = location.lat;
     longitude = location.lng;
@@ -227,6 +228,7 @@ control.on('markgeocode', function(e) {
 
 
 function addMarker(e) {
+    openNav()
     var latitude = e.latlng.lat;
     var longitude = e.latlng.lng;
     removeMarkers();
