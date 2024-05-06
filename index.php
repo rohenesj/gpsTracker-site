@@ -16,14 +16,14 @@
 <body>
     <div id="main" class="container-fluid">
         <div class="row custom-header align-items-center">
-            <div class="col-sm-12 col-md-5 col-lg-5">
+            <div class="col-sm-11 col-md-5 col-lg-5">
                 <h1 style="color:white;">
                     <button class="btn btn-outline-light" onclick="openNav()">☰</button>  
                     <img src="gpsmarker.png" alt="gpsTracker logo" style="width:45px;height:45px;">
                     GPS Tracker
                 </h1>
             </div>
-            <div class="col-sm-1 col-md-1 col-lg-1 offset-lg-6 offset-md-6">
+            <div class="col-sm-1 col-md-7 col-lg-7 d-flex justify-content-end">
                 <a href="/Route_Records.php" id="historicalButton" class="btn btn-outline-light" role="button" style="margin-right: 0px;">Historical</a>
             </div>
         </div>
