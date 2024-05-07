@@ -88,6 +88,11 @@ $('#gpsTrackerButton').click(function() {
 
 $(document).ready(function() {
     $('#truck1').change(function() {
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Polyline) {
+                map.removeLayer(layer);
+            }
+        });
         truckMode = "1";
         console.log("Mode " + truckMode);
         lineColor = 'blue';
@@ -95,6 +100,11 @@ $(document).ready(function() {
         
     });
     $('#truck2').change(function() {
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Polyline) {
+                map.removeLayer(layer);
+            }
+        });
         truckMode = "2";
         console.log("Mode " + truckMode);
         lineColor = 'green';
