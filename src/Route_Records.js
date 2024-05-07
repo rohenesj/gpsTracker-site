@@ -48,8 +48,8 @@ var control = L.Control.geocoder({
 
 
 if (seed2 === null) {
-    seed2 = L.marker([10.991865,  -74.773420], { icon: APPicon }).addTo(map)
-        .bindPopup('Select a time window, then <br>' + 'search or select a location <br>' + 'on the map')
+    seed2 = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+        .bindPopup('Select the time range in <br>' + 'the upper-center calendar 📅 <br>' + '<br>' + 'Then, you can search <br>' + 'a place in the upper <br>' + 'right corner of the map  🔎 <br>' +  '<br>' + 'Or just click on the map 👆🏻 <br>' + '<br>' + 'You can click the upper <br>' + 'left button ☰ to select <br>' + 'the vehicle, and use the<br>' + 'slide to see the timeline ⌚'  )
         .openPopup();
 }
 
