@@ -44,18 +44,18 @@
 
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <h2>Select a Datapoint:</h2> 
+    <h2 id="locationTitle">Select a location:</h2> 
     <div id="windowSliderLabel" class="mt-3 mobileHidden"></div>
     <div id="windowSlider" class="timeSlider"></div>
     <div id="Error"></div>
     <div id="Debug"></div>
-    <div class="form-check">
+    <div class="form-check" id="check1">
         <input id="truck1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
         <label class="form-check-label" for="flexRadioDefault1">
             Truck #1
         </label>
     </div>
-    <div class="form-check">
+    <div class="form-check" id="check2">
         <input id="truck2" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
         <label class="form-check-label" for="flexRadioDefault2">
             Truck #2

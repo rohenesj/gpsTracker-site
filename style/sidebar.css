@@ -10,6 +10,20 @@
     padding: 8px 30px;
   }
 
+  .sidebar #locationTitle {
+    font-weight: bold;
+    padding: 8px 32px;
+  }
+
+  .sidebar #windowSliderLabel {
+    font-size: 25px;
+    padding: 8px 32px;
+  }
+
+  .sidebar #windowSlider {
+    padding: 0px 30px;
+  }
+
   .sidebar {
     height: 100%;
     width: 0;
@@ -93,6 +107,23 @@
   }
 
 
+  .sidebar #locationTitle {
+    font-weight: bold;
+    position: absolute;
+    padding: 0px 30px;
+    bottom: 100px; 
+    right: 0px;
+  }
+
+  .sidebar #windowSliderLabel {
+    font-size: 25px;
+    position: absolute;
+    padding: 0px 30px;
+    bottom: 10px; 
+    right: 130px;
+    color: white;
+  }
+
   .sidebar {
     height: 100%;
     width: 0;
@@ -121,6 +152,7 @@
     font-weight: bold;
     padding: 8px 100px;
     margin: 0 auto; 
+    color: white;
   }
 
   .sidebar h2 {
@@ -178,10 +210,12 @@
   .sidebar #check1 {
     padding: 40px 70px 20px;
     font-size: 25px;
+    color: white;
   }
 
   .sidebar #check2 {
     padding: 0px 70px;
     font-size: 25px;
+    color: white;
   }
 }
