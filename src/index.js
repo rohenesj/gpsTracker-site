@@ -47,7 +47,6 @@ function updateMarker() {
             $("#altitude").text("Altitude: " + data.altitude);
             $("#date").text("Date: " + convertDateToTimeZone(data.date));
             $("#time").text("Time: " + convertToTimeZone(data.date));
-            $("#carData").text("RPM: " + data.car_data);
             var latlng = [parseFloat(data.latitude), parseFloat(data.longitude)];
             if (marker === null) {
                 marker = L.marker(latlng, { icon: APPicon }).addTo(map)

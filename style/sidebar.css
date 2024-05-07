@@ -5,6 +5,11 @@
     margin-top: 30px;
   }
 
+  .sidebar #coordinatesTitle {
+    font-weight: bold;
+    padding: 8px 30px;
+  }
+
   .sidebar {
     height: 100%;
     width: 0;
@@ -26,6 +31,14 @@
     display: block;
     transition: 0.3s;
   }
+
+  .sidebar #carData {
+    font-weight: bold;
+    padding: 2px 0px 20px;
+    text-align: center; 
+    margin: 0 auto; 
+}
+
   
   .sidebar a:hover {
     color: #f1f1f1;
@@ -51,6 +64,17 @@
   .openbtn:hover {
     background-color: #444;
   }
+
+  .sidebar #check1 {
+    padding: 40px 70px 20px;
+    font-size: 25px;
+  }
+
+  .sidebar #check2 {
+    padding: 0px 70px;
+    font-size: 25px;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -59,6 +83,15 @@
     margin-left: 70px; 
     margin-top: 30px;
   }
+
+  .sidebar #coordinatesTitle {
+    font-weight: bold;
+    position: absolute;
+    padding: 0px 30px;
+    top: 20px; 
+    right: 210px;
+  }
+
 
   .sidebar {
     height: 100%;
@@ -82,6 +115,12 @@
     display: block;
     transition: 0.3s;
     opacity: 1;
+  }
+
+  .sidebar #carData {
+    font-weight: bold;
+    padding: 8px 100px;
+    margin: 0 auto; 
   }
 
   .sidebar h2 {
@@ -134,5 +173,15 @@
   
   .openbtn:hover {
     background-color: #444;
+  }
+
+  .sidebar #check1 {
+    padding: 40px 70px 20px;
+    font-size: 25px;
+  }
+
+  .sidebar #check2 {
+    padding: 0px 70px;
+    font-size: 25px;
   }
 }
