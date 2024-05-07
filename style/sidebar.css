@@ -3,6 +3,7 @@
   .sidebar #gpsTrackerButton {
     margin-left: 70px; 
     margin-top: 30px;
+    margin-bottom: 30px;
   }
 
   .sidebar {
@@ -12,7 +13,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #f2f2f2;
+    background-color: #f2efe9;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -121,6 +122,11 @@
 
   .sidebar .mobileHidden {
     color:black;
+  }
+
+  .sidebar .form-check-label {
+    color: white;
+    font-weight: bold;
   }
   
   .openbtn {

@@ -2,6 +2,8 @@ var map = L.map('map').setView([10.983594, -74.804334], 15);
 var marker = null;
 var route = null; 
 var lastCoordinate = null; 
+let truckMode = "1";
+let lineColor = 'blue';
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -17,7 +19,10 @@ var APPicon = L.icon({
 function updateMarker() {
     $.ajax({
         url: 'getcoordinates.php',
-        type: 'GET',
+        method: 'POST',
+        data: {
+            truck: truckMode
+        },
         success: function(response){
             console.log(response)
             var data = JSON.parse(response);
@@ -65,7 +70,7 @@ function updateMarker() {
 function drawRoute(newCoordinate) {
 
 if (lastCoordinate !== null) {
-    route = L.polyline([lastCoordinate, newCoordinate], {color: 'blue'}).addTo(map);
+    route = L.polyline([lastCoordinate, newCoordinate], {color: lineColor}).addTo(map);
 }
 lastCoordinate = newCoordinate;
 }
@@ -80,3 +85,33 @@ $('#gpsTrackerButton').click(function() {
         }
     });
 });
+
+$(document).ready(function() {
+    $('#truck1').change(function() {
+        truckMode = "1";
+        console.log("Mode " + truckMode);
+        lineColor = 'blue';
+        updateMarker();
+        setTimeout(function() {
+            map.eachLayer(function(layer) {
+            if (layer instanceof L.Polyline) {
+                map.removeLayer(layer);
+            }
+        });
+        },500);
+        
+    });
+    $('#truck2').change(function() {
+        truckMode = "2";
+        console.log("Mode " + truckMode);
+        lineColor = 'green';
+        updateMarker();
+        setTimeout(function() {
+            map.eachLayer(function(layer) {
+            if (layer instanceof L.Polyline) {
+                map.removeLayer(layer);
+            }
+        });
+        },500);
+    });
+  });

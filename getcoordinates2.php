@@ -13,6 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $startTimestamp = $_POST['startTime'];
     $endTimestamp = $_POST['endTime'];
+    $truck = $_POST['truck'];
+    if ($truck == "2") {
+        $table = "coordinates2";
+    } else {
+        $table = "coordinates";
+    }
 
 
     try {
@@ -21,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
  
-        $query = "SELECT longitude, latitude FROM coordinates WHERE timestamp >= :start AND timestamp <= :end";
+        $query = "SELECT longitude, latitude FROM $table WHERE timestamp >= :start AND timestamp <= :end";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':start', $startTimestamp, PDO::PARAM_INT);
         $stmt->bindParam(':end', $endTimestamp, PDO::PARAM_INT);

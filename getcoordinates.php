@@ -9,26 +9,35 @@ $pgsql_user = $db->pg_user;
 $pgsql_password = $db->pg_password;
 $pgsql_db = $db->pg_db;
 
-try {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $pgsql_connection = new PDO("pgsql:host=$pgsql_server;dbname=$pgsql_db", $pgsql_user, $pgsql_password);
-    $pgsql_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $pgsql_query = "SELECT longitude, latitude, altitude, date, timestamp, car_data FROM coordinates ORDER BY timestamp DESC LIMIT 1";
-    $pgsql_statement = $pgsql_connection->query($pgsql_query);
-    $row = $pgsql_statement->fetch(PDO::FETCH_ASSOC);
-
-    if ($row) {
-        echo json_encode($row);
+    $truck = $_POST['truck'];
+    if ($truck == "2") {
+        $table = "coordinates2";
     } else {
-        echo "No se encontraron coordenadas en la base de datos PostgreSQL.";
+        $table = "coordinates";
     }
 
-} catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    try {
 
-} finally {
-    $pgsql_connection = null;
+        $pgsql_connection = new PDO("pgsql:host=$pgsql_server;dbname=$pgsql_db", $pgsql_user, $pgsql_password);
+        $pgsql_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $pgsql_query = "SELECT longitude, latitude, altitude, date, timestamp, car_data FROM $table ORDER BY timestamp DESC LIMIT 1";
+        $pgsql_statement = $pgsql_connection->query($pgsql_query);
+        $row = $pgsql_statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            echo json_encode($row);
+        } else {
+            echo "No se encontraron coordenadas en la base de datos PostgreSQL.";
+        }
+
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+
+    } finally {
+        $pgsql_connection = null;
+    }
 }
-
 ?>
