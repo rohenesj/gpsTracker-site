@@ -2,6 +2,7 @@ var map = L.map('map').setView([10.983594, -74.804334], 15);
 var marker = null;
 var route = null; 
 var lastCoordinate = null; 
+let truckMode = "1";
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -17,7 +18,10 @@ var APPicon = L.icon({
 function updateMarker() {
     $.ajax({
         url: 'getcoordinates.php',
-        type: 'GET',
+        method: 'POST',
+        data: {
+            truck: truckMode
+        },
         success: function(response){
             console.log(response)
             var data = JSON.parse(response);
