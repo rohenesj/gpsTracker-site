@@ -49,6 +49,18 @@
     <div id="windowSlider" class="timeSlider"></div>
     <div id="Error"></div>
     <div id="Debug"></div>
+    <div class="form-check">
+        <input id="truck1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+        <label class="form-check-label" for="flexRadioDefault1">
+            Truck #1
+        </label>
+    </div>
+    <div class="form-check">
+        <input id="truck2" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+        <label class="form-check-label" for="flexRadioDefault2">
+            Truck #2
+        </label>
+    </div>
 </div>
   </div>
 

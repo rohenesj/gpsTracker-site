@@ -11,6 +11,7 @@ var latRange = 0.0;
 var longRange = 0.0;
 var timeMarker = null;
 var windowCoords = [];
+let truckMode = "1";
 
 function timeMessage(unixTimeSeconds) {
     const unixTimeMilliseconds = unixTimeSeconds * 1000;
@@ -82,6 +83,7 @@ function applyCalendar() {
         method: 'POST',
         data: {
             startTime: startTimestamp,
+            truck: truckMode,
             endTime: endTimestamp
         },
         success: function(response) {
@@ -139,6 +141,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
         method: 'POST',
         data: {
             startTime: startTimestamp,
+            truck: truckMode,
             endTime: endTimestamp
         },
         success: function(response) {
@@ -313,5 +316,27 @@ $(document).ready(function() {
         .openPopup();
     });
 });
+
+$(document).ready(function() {
+    $('#truck1').change(function() {
+        removeMarkers();
+        truckMode = "1";
+        console.log("Mode " + truckMode);
+        lineColor = 'blue';
+        applyCalendar();
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty(); 
+        
+    });
+    $('#truck2').change(function() {
+        removeMarkers();
+        truckMode = "2";
+        console.log("Mode " + truckMode);
+        lineColor = 'green';
+        applyCalendar();
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty(); 
+    });
+  });
 
 map.on('click',addMarker);
