@@ -30,14 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':truck', $table, PDO::PARAM_INT);
         $stmt->execute();
 
-
-        $coordenadas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if ($coordenadas) {
-            echo json_encode($coordenadas);
-        } else {
-            echo "No se encontraron coordenadas en la base de datos PostgreSQL.";
-        }
+        $coordenadas = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($coordenadas);
 
     } catch(PDOException $e) {
         echo "Error: " . $e->getMessage();
