@@ -3,6 +3,7 @@ var marker = null;
 var route = null; 
 var lastCoordinate = null; 
 let truckMode = "1";
+let lineColor = 'blue';
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -69,7 +70,7 @@ function updateMarker() {
 function drawRoute(newCoordinate) {
 
 if (lastCoordinate !== null) {
-    route = L.polyline([lastCoordinate, newCoordinate], {color: 'blue'}).addTo(map);
+    route = L.polyline([lastCoordinate, newCoordinate], {color: lineColor}).addTo(map);
 }
 lastCoordinate = newCoordinate;
 }
@@ -89,9 +90,14 @@ $(document).ready(function() {
     $('#truck1').change(function() {
         truckMode = "1";
         console.log("Mode " + truckMode);
+        lineColor = 'blue';
+        updateMarker();
+        
     });
     $('#truck2').change(function() {
         truckMode = "2";
         console.log("Mode " + truckMode);
+        lineColor = 'green';
+        updateMarker();
     });
   });
