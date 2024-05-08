@@ -91,11 +91,13 @@ $(document).ready(function() {
         console.log("Mode " + truckMode);
         lineColor = 'blue';
         updateMarker();
-        map.eachLayer(function(layer) {
+        setTimeout(function() {
+            map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
                 map.removeLayer(layer);
             }
         });
+        },500);
         
     });
     $('#truck2').change(function() {
@@ -103,10 +105,12 @@ $(document).ready(function() {
         console.log("Mode " + truckMode);
         lineColor = 'green';
         updateMarker();
-        map.eachLayer(function(layer) {
+        setTimeout(function() {
+            map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
                 map.removeLayer(layer);
             }
         });
+        },500);
     });
   });
