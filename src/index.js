@@ -4,6 +4,7 @@ var route = null;
 var lastCoordinate = null; 
 let truckMode = "1";
 let lineColor = 'blue';
+let lastCoordinateTruck2 = null;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -16,7 +17,12 @@ var APPicon = L.icon({
     popupAnchor: [0, -38]
 });
 
-function updateMarker() {
+function updateMarker(truckMode) {
+    if (truckMode == "1") {
+        lineColor = 'blue';
+    } else {
+        lineColor = ' green';
+    }
     $.ajax({
         url: 'getcoordinates.php',
         method: 'POST',
@@ -59,15 +65,19 @@ function updateMarker() {
             }
             map.setView(latlng);
 
-            if (JSON.stringify(latlng) !== JSON.stringify(lastCoordinate)) {
-                drawRoute(latlng);
+            if (JSON.stringify(latlng) !== JSON.stringify(lastCoordinate) || (JSON.stringify(latlng) !== JSON.stringify(lastCoordinateTruck2))) {
+                if (truckMode == "1"){
+                    drawRoute(lastCoordinate,latlng,lineColor);
+                } else {
+                    drawRoute(lastCoordinateTruck2,latlng,lineColor)
+                }
                 map.setView(latlng);
             }
         }
     });
 }
 
-function drawRoute(newCoordinate) {
+function drawRoute(lastCoordinate, newCoordinate,lineColor) {
 
 if (lastCoordinate !== null) {
     route = L.polyline([lastCoordinate, newCoordinate], {color: lineColor}).addTo(map);
@@ -75,8 +85,10 @@ if (lastCoordinate !== null) {
 lastCoordinate = newCoordinate;
 }
 
-updateMarker();
-setInterval(updateMarker, 3000);
+updateMarker("1");
+updateMarker("2");
+setInterval(updateMarker("1"), 3000);
+setInterval(updateMarker("2"), 3000);
 
 $('#gpsTrackerButton').click(function() {
     map.eachLayer(function(layer) {
