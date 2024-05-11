@@ -103,7 +103,7 @@ $(document).ready(function() {
         truckMode = "1";
         console.log("Mode " + truckMode);
         lineColor = 'blue';
-        updateMarker();
+        updateMarker(truckMode);
         setTimeout(function() {
             map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
@@ -117,7 +117,7 @@ $(document).ready(function() {
         truckMode = "2";
         console.log("Mode " + truckMode);
         lineColor = 'green';
-        updateMarker();
+        updateMarker(truckMode);
         setTimeout(function() {
             map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
