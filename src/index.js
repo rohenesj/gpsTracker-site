@@ -4,7 +4,6 @@ var route = null;
 var lastCoordinate = null; 
 let truckMode = "1";
 let lineColor = 'blue';
-let lastCoordinateTruck2 = null;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -17,12 +16,7 @@ var APPicon = L.icon({
     popupAnchor: [0, -38]
 });
 
-function updateMarker(truckMode) {
-    if (truckMode == "1") {
-        lineColor = 'blue';
-    } else {
-        lineColor = ' green';
-    }
+function updateMarker() {
     $.ajax({
         url: 'getcoordinates.php',
         method: 'POST',
@@ -65,19 +59,15 @@ function updateMarker(truckMode) {
             }
             map.setView(latlng);
 
-            if (JSON.stringify(latlng) !== JSON.stringify(lastCoordinate) || (JSON.stringify(latlng) !== JSON.stringify(lastCoordinateTruck2))) {
-                if (truckMode == "1"){
-                    drawRoute(lastCoordinate,latlng,lineColor);
-                } else {
-                    drawRoute(lastCoordinateTruck2,latlng,lineColor)
-                }
+            if (JSON.stringify(latlng) !== JSON.stringify(lastCoordinate)) {
+                drawRoute(latlng);
                 map.setView(latlng);
             }
         }
     });
 }
 
-function drawRoute(lastCoordinate, newCoordinate,lineColor) {
+function drawRoute(newCoordinate) {
 
 if (lastCoordinate !== null) {
     route = L.polyline([lastCoordinate, newCoordinate], {color: lineColor}).addTo(map);
@@ -85,10 +75,8 @@ if (lastCoordinate !== null) {
 lastCoordinate = newCoordinate;
 }
 
-updateMarker("1");
-updateMarker("2");
-setInterval(updateMarker("1"), 3000);
-setInterval(updateMarker("2"), 3000);
+updateMarker();
+setInterval(updateMarker, 3000);
 
 $('#gpsTrackerButton').click(function() {
     map.eachLayer(function(layer) {
@@ -103,7 +91,7 @@ $(document).ready(function() {
         truckMode = "1";
         console.log("Mode " + truckMode);
         lineColor = 'blue';
-        updateMarker(truckMode);
+        updateMarker();
         setTimeout(function() {
             map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
@@ -117,7 +105,7 @@ $(document).ready(function() {
         truckMode = "2";
         console.log("Mode " + truckMode);
         lineColor = 'green';
-        updateMarker(truckMode);
+        updateMarker();
         setTimeout(function() {
             map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
