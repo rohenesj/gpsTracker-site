@@ -115,6 +115,20 @@ function updateMarker2() {
                 marker1.closePopup().bindPopup('Latitude: ' + data1.latitude + '<br>Longitude: ' + data1.longitude + '<br>RPM: ' + data1.car_data);
             }
             map.setView(latlng);
+            if (truck1Enabled.checked) {
+                drawSpeedometer(rpm1, steps, minVal, maxVal);
+                $("#longitude").text("Longitude: " + data1.longitude);
+                $("#latitude").text("Latitude: " + data1.latitude);
+                $("#altitude").text("Altitude: " + data1.altitude);
+                $("#date").text("Date: " + convertDateToTimeZone(data1.date));
+                $("#time").text("Time: " + convertToTimeZone(data1.date));
+                $("#carData").text("RPM: " + data1.car_data);
+            }
+            if (polylineLayer1 === null) {
+                polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
+            }
+            polylineLayer1.setLatLngs(polylineCoords1);
+            
         }
     });
     truckMode = "2"
@@ -139,35 +153,23 @@ function updateMarker2() {
                 marker2.setLatLng(latlng);
                 marker2.closePopup().bindPopup('Latitude: ' + data2.latitude + '<br>Longitude: ' + data2.longitude + '<br>RPM: ' + data2.car_data);
             }
+            if (truck2Enabled.checked) {
+                drawSpeedometer(rpm2, steps, minVal, maxVal);
+                $("#longitude").text("Longitude: " + data2.longitude);
+                $("#latitude").text("Latitude: " + data2.latitude);
+                $("#altitude").text("Altitude: " + data2.altitude);
+                $("#date").text("Date: " + convertDateToTimeZone(data2.date));
+                $("#time").text("Time: " + convertToTimeZone(data2.date));
+                $("#carData").text("RPM: " + data2.car_data);
+            }
+            if (polylineLayer2 === null) {
+                polylineLayer2 = L.polyline(polylineCoords2, { color: 'green' }).addTo(map);
+            }
+            polylineLayer2.setLatLngs(polylineCoords2);
         }
     });
-    
-    if (truck1Enabled.checked) {
-        //drawSpeedometer(rpm1, steps, minVal, maxVal);
-        $("#longitude").text("Longitude: " + data1.longitude);
-        $("#latitude").text("Latitude: " + data1.latitude);
-        $("#altitude").text("Altitude: " + data1.altitude);
-        $("#date").text("Date: " + convertDateToTimeZone(data1.date));
-        $("#time").text("Time: " + convertToTimeZone(data1.date));
-        $("#carData").text("RPM: " + data1.car_data);
-    } else {
-        //drawSpeedometer(rpm2, steps, minVal, maxVal);
-        $("#longitude").text("Longitude: " + data2.longitude);
-        $("#latitude").text("Latitude: " + data2.latitude);
-        $("#altitude").text("Altitude: " + data2.altitude);
-        $("#date").text("Date: " + convertDateToTimeZone(data2.date));
-        $("#time").text("Time: " + convertToTimeZone(data2.date));
-        $("#carData").text("RPM: " + data2.car_data);
-    }
-
-    if (polylineLayer1 === null) {
-        polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
-    }
-    if (polylineLayer2 === null) {
-        polylineLayer2 = L.polyline(polylineCoords2, { color: 'green' }).addTo(map);
-    }
-    polylineLayer1.setLatLngs(polylineCoords1);
-    polylineLayer2.setLatLngs(polylineCoords2);
+   
+   
 
 
 }
