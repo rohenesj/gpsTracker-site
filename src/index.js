@@ -201,7 +201,7 @@ $('#gpsTrackerButton').click(function() {
 $(document).ready(function() {
     $('#truck1').change(function() {
         updateMarker2();
-        map.setView(polylineCoords2[polylineCoords2.length - 1]);
+        map.setView(polylineCoords1[polylineCoords1.length - 1]);
         
     });
     $('#truck2').change(function() {
