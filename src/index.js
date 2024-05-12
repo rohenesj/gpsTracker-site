@@ -114,7 +114,7 @@ function updateMarker2() {
                 marker1.setLatLng(latlng);
                 marker1.closePopup().bindPopup('Latitude: ' + data1.latitude + '<br>Longitude: ' + data1.longitude + '<br>RPM: ' + data1.car_data);
             }
-            map.setView(latlng);
+            
             if (truck1Enabled.checked) {
                 drawSpeedometer(rpm1, steps, minVal, maxVal);
                 $("#longitude").text("Longitude: " + data1.longitude);
@@ -123,6 +123,7 @@ function updateMarker2() {
                 $("#date").text("Date: " + convertDateToTimeZone(data1.date));
                 $("#time").text("Time: " + convertToTimeZone(data1.date));
                 $("#carData").text("RPM: " + data1.car_data);
+                //map.setView(latlng);
             }
             if (polylineLayer1 === null) {
                 polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
@@ -161,6 +162,7 @@ function updateMarker2() {
                 $("#date").text("Date: " + convertDateToTimeZone(data2.date));
                 $("#time").text("Time: " + convertToTimeZone(data2.date));
                 $("#carData").text("RPM: " + data2.car_data);
+                //map.setView(latlng);
             }
             if (polylineLayer2 === null) {
                 polylineLayer2 = L.polyline(polylineCoords2, { color: 'green' }).addTo(map);
@@ -188,35 +190,22 @@ updateMarker2();
 setInterval(updateMarker2,3000);
 
 $('#gpsTrackerButton').click(function() {
-    map.eachLayer(function(layer) {
-        if (layer instanceof L.Polyline) {
-            map.removeLayer(layer);
-        }
+        map.removeLayer(polylineLayer1);
+        map.removeLayer(polylineLayer2);
+        polylineLayer1 = null;
+        polylineLayer2 = null;
         polylineCoords1 = [];
         polylineCoords2 = [];
-    });
 });
 
 $(document).ready(function() {
     $('#truck1').change(function() {
         updateMarker2();
-        setTimeout(function() {
-            map.eachLayer(function(layer) {
-            if (layer instanceof L.Polyline) {
-                map.removeLayer(layer);
-            }
-        });
-        },500);
+        map.setView(polylineCoords2[polylineCoords2.length - 1]);
         
     });
     $('#truck2').change(function() {
         updateMarker2();
-        setTimeout(function() {
-            map.eachLayer(function(layer) {
-            if (layer instanceof L.Polyline) {
-                map.removeLayer(layer);
-            }
-        });
-        },500);
+        map.setView(polylineCoords2[polylineCoords2.length - 1]);
     });
   });
