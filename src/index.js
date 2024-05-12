@@ -192,15 +192,14 @@ $('#gpsTrackerButton').click(function() {
         if (layer instanceof L.Polyline) {
             map.removeLayer(layer);
         }
+        polylineCoords1 = [];
+        polylineCoords2 = [];
     });
 });
 
 $(document).ready(function() {
     $('#truck1').change(function() {
-        truckMode = "1";
-        console.log("Mode " + truckMode);
-        lineColor = 'blue';
-        updateMarker();
+        updateMarker2();
         setTimeout(function() {
             map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
@@ -211,10 +210,7 @@ $(document).ready(function() {
         
     });
     $('#truck2').change(function() {
-        truckMode = "2";
-        console.log("Mode " + truckMode);
-        lineColor = 'green';
-        updateMarker();
+        updateMarker2();
         setTimeout(function() {
             map.eachLayer(function(layer) {
             if (layer instanceof L.Polyline) {
