@@ -1,5 +1,6 @@
 var map = L.map('map').setView([10.983594, -74.804334], 15);
-var marker = null;
+var marker1 = null;
+let marker2 = null;
 var route = null; 
 var lastCoordinate = null; 
 let truckMode = "1";
@@ -12,6 +13,10 @@ let rpm1 = null;
 let rpm2 = null;
 let data1 = null;
 let data2 = null;
+let polylineLayer1 = null;
+let polylineLayer2 = null;
+
+
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -97,7 +102,7 @@ function updateMarker2() {
         success: function(response) {
             data1 = JSON.parse(response);
             let latlng = [parseFloat(data1.latitude), parseFloat(data1.longitude)];
-            rpm1 = data.car_data;
+            rpm1 = data1.car_data;
             if (!polylineCoords1.includes(latlng)) {
                 polylineCoords1.push(latlng)
             }
@@ -122,7 +127,7 @@ function updateMarker2() {
         success: function(response) {
             data2 = JSON.parse(response);
             let latlng = [parseFloat(data2.latitude), parseFloat(data2.longitude)];
-            rpm2 = data.car_data;
+            rpm2 = data2.car_data;
             if (!polylineCoords2.includes(latlng)) {
                 polylineCoords2.push(latlng)
             }
@@ -156,10 +161,10 @@ function updateMarker2() {
     }
 
     if (polylineLayer1 === null) {
-        let polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
+        polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
     }
     if (polylineLayer2 === null) {
-        let polylineLayer2 = L.polyline(polylineCoords2, { color: 'red' }).addTo(map);
+        polylineLayer2 = L.polyline(polylineCoords2, { color: 'red' }).addTo(map);
     }
     polylineLayer1.setLatLngs(polylineCoords1);
     polylineLayer2.setLatLngs(polylineCoords2);
