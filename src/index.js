@@ -4,10 +4,29 @@ var route = null;
 var lastCoordinate = null; 
 let truckMode = "1";
 let lineColor = 'blue';
+let polylineCoords1 = [];
+let polylineCoords2 = [];
+let truck1Enabled = document.getElementById("truck1");
+let truck2Enabled = document.getElementById("truck2");
+let rpm1 = null;
+let rpm2 = null;
+let data1 = null;
+let data2 = null;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+
+function convertToTimeZone(dateString) {
+    var date = new Date(dateString);
+    return date.toLocaleTimeString('en-US', { timeZone: timezone });
+}
+
+function convertDateToTimeZone(dateString) {
+    var date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { timeZone: timezone });
+}
+let timezone = document.querySelector('meta[name="timezone"]').getAttribute('content');
 
 var APPicon = L.icon({
     iconUrl: '/gpsmarker.png',
@@ -67,6 +86,87 @@ function updateMarker() {
     });
 }
 
+function updateMarker2() {
+    truckMode = "1"
+    $.ajax({
+        url: 'getcoordinates.php',
+        method: 'POST',
+        data: {
+            truck: truckMode
+        },
+        success: function(response) {
+            data1 = JSON.parse(response);
+            let latlng = [parseFloat(data1.latitude), parseFloat(data1.longitude)];
+            rpm1 = data.car_data;
+            if (!polylineCoords1.includes(latlng)) {
+                polylineCoords1.push(latlng)
+            }
+            if (marker1 === null) {
+                marker1 = L.marker(latlng, { icon: APPicon }).addTo(map)
+                    .bindPopup('Connecting to Data Base...')
+                    .openPopup();
+            } else {
+                marker1.setLatLng(latlng);
+                marker1.closePopup().bindPopup('Latitude: ' + data1.latitude + '<br>Longitude: ' + data1.longitude + '<br>RPM: ' + data1.car_data);
+            }
+            map.setView(latlng);
+        }
+    });
+    truckMode = "2"
+    $.ajax({
+        url: 'getcoordinates.php',
+        method: 'POST',
+        data: {
+            truck: truckMode
+        },
+        success: function(response) {
+            data2 = JSON.parse(response);
+            let latlng = [parseFloat(data2.latitude), parseFloat(data2.longitude)];
+            rpm2 = data.car_data;
+            if (!polylineCoords2.includes(latlng)) {
+                polylineCoords2.push(latlng)
+            }
+            if (marker2 === null) {
+                marker2 = L.marker(latlng, { icon: APPicon }).addTo(map)
+                    .bindPopup('Connecting to Data Base...')
+                    .openPopup();
+            } else {
+                marker2.setLatLng(latlng);
+                marker2.closePopup().bindPopup('Latitude: ' + data2.latitude + '<br>Longitude: ' + data2.longitude + '<br>RPM: ' + data2.car_data);
+            }
+        }
+    });
+    
+    if (truck1Enabled.checked) {
+        drawSpeedometer(rpm1, steps, minVal, maxVal);
+        $("#longitude").text("Longitude: " + data1.longitude);
+        $("#latitude").text("Latitude: " + data1.latitude);
+        $("#altitude").text("Altitude: " + data1.altitude);
+        $("#date").text("Date: " + convertDateToTimeZone(data1.date));
+        $("#time").text("Time: " + convertToTimeZone(data1.date));
+        $("#carData").text("RPM: " + data1.car_data);
+    } else {
+        drawSpeedometer(rpm2, steps, minVal, maxVal);
+        $("#longitude").text("Longitude: " + data2.longitude);
+        $("#latitude").text("Latitude: " + data2.latitude);
+        $("#altitude").text("Altitude: " + data2.altitude);
+        $("#date").text("Date: " + convertDateToTimeZone(data2.date));
+        $("#time").text("Time: " + convertToTimeZone(data2.date));
+        $("#carData").text("RPM: " + data2.car_data);
+    }
+
+    if (polylineLayer1 === null) {
+        let polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
+    }
+    if (polylineLayer2 === null) {
+        let polylineLayer2 = L.polyline(polylineCoords2, { color: 'red' }).addTo(map);
+    }
+    polylineLayer1.setLatLngs(polylineCoords1);
+    polylineLayer2.setLatLngs(polylineCoords2);
+
+
+}
+
 function drawRoute(newCoordinate) {
 
 if (lastCoordinate !== null) {
@@ -75,8 +175,8 @@ if (lastCoordinate !== null) {
 lastCoordinate = newCoordinate;
 }
 
-updateMarker();
-setInterval(updateMarker, 3000);
+//updateMarker();
+//setInterval(updateMarker, 3000);
 
 $('#gpsTrackerButton').click(function() {
     map.eachLayer(function(layer) {
