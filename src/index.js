@@ -164,7 +164,7 @@ function updateMarker2() {
         polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
     }
     if (polylineLayer2 === null) {
-        polylineLayer2 = L.polyline(polylineCoords2, { color: 'red' }).addTo(map);
+        polylineLayer2 = L.polyline(polylineCoords2, { color: 'green' }).addTo(map);
     }
     polylineLayer1.setLatLngs(polylineCoords1);
     polylineLayer2.setLatLngs(polylineCoords2);
@@ -182,6 +182,8 @@ lastCoordinate = newCoordinate;
 
 //updateMarker();
 //setInterval(updateMarker, 3000);
+updateMarker2();
+setInterval(updateMarker2,3000);
 
 $('#gpsTrackerButton').click(function() {
     map.eachLayer(function(layer) {
