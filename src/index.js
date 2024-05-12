@@ -103,7 +103,7 @@ function updateMarker2() {
             data1 = JSON.parse(response);
             let latlng = [parseFloat(data1.latitude), parseFloat(data1.longitude)];
             rpm1 = data1.car_data;
-            if (!polylineCoords1.includes(latlng)) {
+            if (JSON.stringify(latlng) !== JSON.stringify(polylineCoords1)) {
                 polylineCoords1.push(latlng)
             }
             if (marker1 === null) {
@@ -142,7 +142,7 @@ function updateMarker2() {
             data2 = JSON.parse(response);
             let latlng = [parseFloat(data2.latitude), parseFloat(data2.longitude)];
             rpm2 = data2.car_data;
-            if (!polylineCoords2.includes(latlng)) {
+            if (JSON.stringify(latlng) !== JSON.stringify(polylineCoords1))  {
                 polylineCoords2.push(latlng)
             }
             if (marker2 === null) {
