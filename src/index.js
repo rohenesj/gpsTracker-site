@@ -143,7 +143,7 @@ function updateMarker2() {
     });
     
     if (truck1Enabled.checked) {
-        drawSpeedometer(rpm1, steps, minVal, maxVal);
+        //drawSpeedometer(rpm1, steps, minVal, maxVal);
         $("#longitude").text("Longitude: " + data1.longitude);
         $("#latitude").text("Latitude: " + data1.latitude);
         $("#altitude").text("Altitude: " + data1.altitude);
@@ -151,7 +151,7 @@ function updateMarker2() {
         $("#time").text("Time: " + convertToTimeZone(data1.date));
         $("#carData").text("RPM: " + data1.car_data);
     } else {
-        drawSpeedometer(rpm2, steps, minVal, maxVal);
+        //drawSpeedometer(rpm2, steps, minVal, maxVal);
         $("#longitude").text("Longitude: " + data2.longitude);
         $("#latitude").text("Latitude: " + data2.latitude);
         $("#altitude").text("Altitude: " + data2.altitude);
