@@ -1,10 +1,8 @@
 function drawSpeedometer(val, steps, minVal, maxVal) {
   const canvas = document.getElementById('canvas-speedometer');
   const ctx = canvas.getContext("2d");
-  //dimensions
   const W = canvas.width;
   const H = canvas.height;
-  //Clear the canvas everytime a chart is drawn
   ctx.clearRect(0, 0, W, H);
   ctx.scale(1,1);
   const outerRingWidth = W * 0.04;
@@ -33,7 +31,7 @@ function drawSpeedometer(val, steps, minVal, maxVal) {
 
     ctx.restore();
   }
-  drawBackground('#f2f2f2');
+  drawBackground('#dadada');
 
   function drawMiniNeedle(rotation, width, speed) {
     ctx.save();
@@ -89,7 +87,7 @@ function drawSpeedometer(val, steps, minVal, maxVal) {
     ctx.save();
     ctx.beginPath();
     ctx.strokeStyle = "#41dcf4";
-    ctx.lineWidth = outerRingWidth + (W * 0.01); //Add a bit of width to make sure we overlap the other lines
+    ctx.lineWidth = outerRingWidth + (W * 0.01); 
     ctx.shadowBlur = W * 0.035;
     ctx.shadowColor = "#00c6ff";
 
@@ -126,7 +124,6 @@ const minVal = Math.min(...steps);
 const maxVal = Math.max(...steps);
 
 $(document).ready(function () {
-  //canvas init
   drawSpeedometer(0, steps, minVal, maxVal);
 
   var speedInput = document.querySelector('#speed');
