@@ -43,16 +43,15 @@ UDP_PORT = 7000 #Changes depending on your open port
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 sock.bind((UDP_IP,UDP_PORT))
 
+conn = connectToDatabasepg()
+cur = conn.cursor()
+
 while True:
     data, addr = sock.recvfrom(1024) 
     data = data.decode("utf-8")
     print("received message: %s" % data)
     if data != "":
         coordinates = Coordinates(data)
-        conn = connectToDatabasepg()
-        cur = conn.cursor()
         sqlInstructionpg(conn,cur,coordinates)
-        cur.close()
-        conn.close()
 
 
