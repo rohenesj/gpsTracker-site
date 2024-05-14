@@ -61,8 +61,9 @@
             Truck #2
         </label>
     </div>
+    <button type="button" id="gpsTrackerButton" class="btn btn-outline-primary">Full Route</button>
+    </div>
 </div>
-  </div>
 
 
   

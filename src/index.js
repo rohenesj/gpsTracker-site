@@ -121,8 +121,6 @@ function updateMarker2() {
                 $("#altitude").text("Altitude: " + data1.altitude);
                 $("#date").text("Date: " + convertDateToTimeZone(data1.date));
                 $("#time").text("Time: " + convertToTimeZone(data1.date));
-                $("#carData").text("RPM: " + data1.car_data);
-                //map.setView(latlng);
             }
             if (polylineLayer1 === null) {
                 polylineLayer1 = L.polyline(polylineCoords1, { color: 'blue' }).addTo(map);
@@ -160,8 +158,6 @@ function updateMarker2() {
                 $("#altitude").text("Altitude: " + data2.altitude);
                 $("#date").text("Date: " + convertDateToTimeZone(data2.date));
                 $("#time").text("Time: " + convertToTimeZone(data2.date));
-                $("#carData").text("RPM: " + data2.car_data);
-                //map.setView(latlng);
             }
             if (polylineLayer2 === null) {
                 polylineLayer2 = L.polyline(polylineCoords2, { color: 'green' }).addTo(map);
@@ -183,8 +179,6 @@ if (lastCoordinate !== null) {
 lastCoordinate = newCoordinate;
 }
 
-//updateMarker();
-//setInterval(updateMarker, 3000);
 updateMarker2();
 setInterval(updateMarker2,3000);
 

@@ -2,8 +2,8 @@
 
   .sidebar #gpsTrackerButton {
     margin-left: 70px; 
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 5px;
+    margin-bottom: 0px;
   }
 
   .sidebar #coordinatesTitle {
@@ -32,14 +32,14 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #f2efe9;
+    background-color: #dadada;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
   }
   
   .sidebar p {
-    padding: 8px 8px 8px 32px;
+    padding: 5px 8px 8px 32px;
     text-decoration: none;
     font-size: 16px;
     color: #000000;
@@ -81,12 +81,12 @@
   }
 
   .sidebar #check1 {
-    padding: 40px 70px 20px;
+    padding: 20px 70px 20px;
     font-size: 25px;
   }
 
   .sidebar #check2 {
-    padding: 0px 70px;
+    padding: 0px 70px 20px;
     font-size: 25px;
   }
 

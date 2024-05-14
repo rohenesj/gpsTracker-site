@@ -49,38 +49,42 @@ var control = L.Control.geocoder({
 
 if (seed2 === null) {
     seed2 = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
-        .bindPopup('Select the time range in <br>' + 'the upper-center calendar 📅 <br>' + '<br>' + 'Then, you can search <br>' + 'a place in the upper <br>' + 'right corner of the map  🔎 <br>' +  '<br>' + 'Or just click on the map 👆🏻 <br>' + '<br>' + 'You can click the upper <br>' + 'left button ☰ to select <br>' + 'the vehicle, and use the<br>' + 'slide to see the timeline ⌚'  )
+        .bindPopup('Select the time range in <br>' + 'the upper-center calendar 📅 <br>' + '<br>' + 'Then, you can search <br>' + 'a place in the upper <br>' + 'right corner of the map  🔎 <br>' +  '<br>' + 'Or just click on the map 📍👆🏻 <br>' + '<br>' + 'In the sidebar ☰ you can <br>' + 'select the vehicle 🚚,  use the<br>' + 'slide to see the timeline ⌚<br>' + 'and use the Full Route Button 🔵 <br>' + 'to restore the route.')
         .openPopup();
 }
 
 var startTimestamp = Math.floor(Date.now() / 1000) - 3600;
 var endTimestamp = Math.floor(Date.now() / 1000);
+
+
 $(function() {
     $('input[name="datetimes"]').daterangepicker({
-      timePicker: true,
-      startDate: moment().startOf('hour'),
-      endDate: moment().startOf('hour').add(32, 'hour'),
-      maxDate: new Date(),
-      locale: {
-        format: 'M/DD hh:mm A'
-      }
-    }, function(start, end, label){
+        timePicker: true,
+        startDate: moment().startOf('hour'),
+        endDate: moment().startOf('hour').add(32, 'hour'),
+        maxDate: new Date(),
+        locale: {
+            format: 'M/DD hh:mm A'
+        }
+    });
 
-      startTimestamp = start.unix();
-      endTimestamp = end.unix();
-      console.log("Start", startTimestamp);
-      console.log("End",endTimestamp);
-      applyCalendar();
-      $('#windowSliderLabel').empty();
-      $('#windowSlider').empty();  
-
+    $('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
+        startTimestamp = picker.startDate.unix();
+        endTimestamp = picker.endDate.unix();
+        console.log("Start", startTimestamp);
+        console.log("End", endTimestamp);
+        applyCalendar();
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        openNav()
     });
 });
 
 
+
 function applyCalendar() {
     $.ajax({
-        url: 'getcoordinates2.php',
+        url: 'getcoordinates3.php',
         method: 'POST',
         data: {
             startTime: startTimestamp,
@@ -91,6 +95,7 @@ function applyCalendar() {
             $('#Error').empty();
             var coordinates = response;
             var latLngs = [];
+            windowCoords = [];
             removeMarkers();
             map.eachLayer(function(layer) {
                 if (layer instanceof L.Marker) {
@@ -111,8 +116,13 @@ function applyCalendar() {
 
             coordinates.features.forEach(function(feature, index) {
                 var coords = feature.geometry.coordinates;
+                var tstamp = parseFloat(feature.properties.timestamp);
                 var latLng = L.latLng(coords[1], coords[0]);
+                var date = feature.properties.date;
+                var carData = feature.properties.car_data;
                 latLngs.push(latLng);
+                var point = [coords[1], coords[0], tstamp, carData];
+                windowCoords.push(point)
                 
                 if (index === 0) {
                     Startmarker = L.marker(L.latLng(coords[1], coords[0]), { icon: APPicon }).addTo(map)
@@ -125,9 +135,21 @@ function applyCalendar() {
                 }
 
             });
-
+            removeMarkers()
             route = L.polyline(latLngs, {color: lineColor}).addTo(map);
             map.fitBounds(route.getBounds());
+
+            var maxValue = windowCoords.length - 1;
+            if (windowCoords.length < 2){
+                $('#windowSliderLabel').empty();
+                $('#windowSlider').empty();
+            } else {
+                $('#windowSliderLabel').empty();
+                $('#windowSlider').empty();
+                $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+                var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+                $('#windowSlider').append(slider);
+            }
             
         },
         error: function(xhr, status, error) {
@@ -169,6 +191,7 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 var tstamp = parseFloat(feature.properties.timestamp);
                 var date = feature.properties.date;
                 var carData = feature.properties.car_data;
+
                 if ((coords[0] >= (longRange - 0.00225)) && (coords[0] <= (longRange + 0.00225))) {
                     if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
                         var latLng = L.latLng(coords[1], coords[0]);
@@ -190,6 +213,8 @@ function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
                 $('#windowSlider').append(slider);
             }
             route = L.polyline(latLngs, {color: lineColor}).addTo(map);
+
+            //CHekcpoiunt
         }
     });
 }
@@ -341,3 +366,12 @@ $(document).ready(function() {
   });
 
 map.on('click',addMarker);
+
+$('#gpsTrackerButton').on('click', function() {
+    var startDate = $('input[name="datetimes"]').data('daterangepicker').startDate;
+    var endDate = $('input[name="datetimes"]').data('daterangepicker').endDate;
+    $('input[name="datetimes"]').trigger('apply.daterangepicker', {
+        startDate: startDate,
+        endDate: endDate
+    });
+});
