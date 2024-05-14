@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="style/custom.css">
     <meta name="timezone" content="America/Bogota">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
 </head>
 
 <body>
@@ -35,21 +34,22 @@
 
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <h2 id="coordinatesTitle"> Coordinates</h2>
     <p id="longitude">Longitude: </p>
     <p id="latitude">Latitude: </p>
     <p id="altitude">Altitude: </p>
     <p id="date">Date: </p>
     <p id="time">Time: </p>
-    <p id="carData">RPM: </p>
+    <h4 id="carData">RPM</h4>
     <canvas id="canvas-speedometer" width="250" height="250"></canvas>  
     <button type="button" id="gpsTrackerButton" class="btn btn-outline-primary">Erase Route</button>
-    <div class="form-check">
+    <div class="form-check" id="check1">
         <input id="truck1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
         <label class="form-check-label" for="flexRadioDefault1">
             Truck #1
         </label>
     </div>
-    <div class="form-check">
+    <div class="form-check" id="check2">
         <input id="truck2" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
         <label class="form-check-label" for="flexRadioDefault2">
             Truck #2

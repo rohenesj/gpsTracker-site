@@ -2,8 +2,27 @@
 
   .sidebar #gpsTrackerButton {
     margin-left: 70px; 
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+  }
+
+  .sidebar #coordinatesTitle {
+    font-weight: bold;
+    padding: 8px 30px;
+  }
+
+  .sidebar #locationTitle {
+    font-weight: bold;
+    padding: 8px 32px;
+  }
+
+  .sidebar #windowSliderLabel {
+    font-size: 25px;
+    padding: 8px 32px;
+  }
+
+  .sidebar #windowSlider {
+    padding: 0px 30px;
   }
 
   .sidebar {
@@ -20,13 +39,21 @@
   }
   
   .sidebar p {
-    padding: 8px 8px 8px 32px;
+    padding: 5px 8px 8px 32px;
     text-decoration: none;
     font-size: 16px;
     color: #000000;
     display: block;
     transition: 0.3s;
   }
+
+  .sidebar #carData {
+    font-weight: bold;
+    padding: 2px 0px 20px;
+    text-align: center; 
+    margin: 0 auto; 
+}
+
   
   .sidebar a:hover {
     color: #f1f1f1;
@@ -52,6 +79,17 @@
   .openbtn:hover {
     background-color: #444;
   }
+
+  .sidebar #check1 {
+    padding: 20px 70px 20px;
+    font-size: 25px;
+  }
+
+  .sidebar #check2 {
+    padding: 0px 70px 20px;
+    font-size: 25px;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -59,6 +97,32 @@
   .sidebar #gpsTrackerButton {
     margin-left: 70px; 
     margin-top: 30px;
+  }
+
+  .sidebar #coordinatesTitle {
+    font-weight: bold;
+    position: absolute;
+    padding: 0px 30px;
+    top: 20px; 
+    right: 210px;
+  }
+
+
+  .sidebar #locationTitle {
+    font-weight: bold;
+    position: absolute;
+    padding: 0px 30px;
+    bottom: 100px; 
+    right: 0px;
+  }
+
+  .sidebar #windowSliderLabel {
+    font-size: 25px;
+    position: absolute;
+    padding: 0px 30px;
+    bottom: 10px; 
+    right: 130px;
+    color: white;
   }
 
   .sidebar {
@@ -83,6 +147,13 @@
     display: block;
     transition: 0.3s;
     opacity: 1;
+  }
+
+  .sidebar #carData {
+    font-weight: bold;
+    padding: 8px 100px;
+    margin: 0 auto; 
+    color: white;
   }
 
   .sidebar h2 {
@@ -140,5 +211,17 @@
   
   .openbtn:hover {
     background-color: #444;
+  }
+
+  .sidebar #check1 {
+    padding: 40px 70px 20px;
+    font-size: 25px;
+    color: white;
+  }
+
+  .sidebar #check2 {
+    padding: 0px 70px;
+    font-size: 25px;
+    color: white;
   }
 }
