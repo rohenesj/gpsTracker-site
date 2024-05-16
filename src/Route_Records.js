@@ -16,7 +16,7 @@ let lineColor = 'blue';
 var windowCoords2 = [];
 let route2 = null;
 var windowCoords1 = [];
-let bothTrucks = [];
+var bothTrucks = [];
 
 
 function clearCoordinates() {
