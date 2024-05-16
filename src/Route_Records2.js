@@ -94,7 +94,7 @@ $(function() {
         console.log("Start", startTimestamp);
         console.log("End", endTimestamp);
         applyToCalendar();
-        $('#windowSliderLabel').empty();
+        $('#windowSliderLabel1').empty();
         $('#windowSlider').empty();
         openNav();
     });
@@ -105,7 +105,7 @@ $(document).ready(function() {
         truckMode = "1";
         console.log("Mode " + truckMode);
         selectPolyline();
-        $('#windowSliderLabel').empty();
+        $('#windowSliderLabel1').empty();
         $('#windowSlider').empty(); 
         
     });
@@ -113,14 +113,14 @@ $(document).ready(function() {
         truckMode = "2";
         console.log("Mode " + truckMode);
         selectPolyline();
-        $('#windowSliderLabel').empty();
+        $('#windowSliderLabel1').empty();
         $('#windowSlider').empty(); 
     });
     $('#truck3').change(function() {
         truckMode = "3";
         console.log("Mode " + truckMode);
         selectPolyline();
-        $('#windowSliderLabel').empty();
+        $('#windowSliderLabel1').empty();
         $('#windowSlider').empty(); 
 
     });
@@ -249,31 +249,38 @@ function applyToCalendar() {
 }
 
 function selectPolyline() {
-    $('#windowSliderLabel').empty();
-    $('#windowSlider').empty();
     if (polylineLayer1 === null || polylineLayer2 === null) {
         polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
         polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
     }
     if (truckMode == "1") {
+        let maxValue = polylineData1.length - 1;
         polylineLayer2.setLatLngs([]);
         polylineLayer1.setLatLngs(polylineData1);
-        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + (polylineData1.length - 1) + '" value="50">');
+        $('#windowSliderLabel1').empty();
+        $('#windowSlider1').empty();
+        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider').append(slider);
     } else if (truckMode == "2") {
+        let maxValue = polylineData2.length - 1;
         polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs(polylineData2); 
-        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + (polylineData2.length - 1) + '" value="50">');
+        $('#windowSliderLabel1').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider').append(slider);
     } else {
+        let maxValue = bothTrucks.length - 1;
         polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs([]);
         polylineLayer1.setLatLngs(polylineData1);
         polylineLayer2.setLatLngs(polylineData2);
-        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + (bothTrucks.length - 1) + '" value="50">');
+        $('#windowSliderLabel1').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider').append(slider);
     }
 }

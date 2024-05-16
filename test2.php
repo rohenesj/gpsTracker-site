@@ -45,8 +45,8 @@
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <h2 id="locationTitle">Select a location:</h2> 
-    <div id="windowSliderLabel" class="mt-3 mobileHidden"></div>
-    <div id="windowSlider" class="timeSlider"></div>
+    <div id="windowSliderLabel1" class="mt-3 mobileHidden"></div>
+    <div id="windowSlider1" class="timeSlider"></div>
     <div id="Error"></div>
     <div id="Debug"></div>
     <div class="form-check" id="check1">
