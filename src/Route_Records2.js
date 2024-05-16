@@ -93,17 +93,10 @@ $(function() {
         endTimestamp = picker.endDate.unix();
         console.log("Start", startTimestamp);
         console.log("End", endTimestamp);
-        clearCoordinates();
-        if (truckMode == "1"){
-            applyCalendar("1",route,true,'blue');
-        } else if (truckMode == "2") {
-            applyCalendar("2",route2,true,'green');
-        } else {
-            getBothCoordinates();
-        }
+        applyToCalendar();
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty();
-        openNav()
+        openNav();
     });
 });
 
