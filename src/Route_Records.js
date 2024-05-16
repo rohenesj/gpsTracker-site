@@ -16,6 +16,14 @@ let lineColor = 'blue';
 let windowCoords2 = [];
 let route2 = null;
 let windowCoords1 = [];
+let bothTrucks = [];
+
+
+function clearCoordinates() {
+    windowCoords1 = [];
+    windowCoords2 = [];
+    bothTrucks = [];
+}
 
 function timeMessage(unixTimeSeconds) {
     const unixTimeMilliseconds = unixTimeSeconds * 1000;
@@ -76,7 +84,14 @@ $(function() {
         endTimestamp = picker.endDate.unix();
         console.log("Start", startTimestamp);
         console.log("End", endTimestamp);
-        if (truckMode == "1"){applyCalendar("1",route,true,'blue');} else {applyCalendar("2",route2,true,'green');}
+        clearCoordinates();
+        if (truckMode == "1"){
+            applyCalendar("1",route,true,'blue');
+        } else if (truckMode == "2") {
+            applyCalendar("2",route2,true,'green');
+        } else {
+            getBothCoordinates();
+        }
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty();
         openNav()
@@ -345,6 +360,13 @@ $(document).ready(function() {
             map.removeLayer(layer);
             }
         });
+        if (truckmode == "1") {
+            windowCoords = windowCoords1;
+        } else if (truckMode == "2") {
+            windowCoords = windowCoords2;
+        } else {
+            windowCoords = bothTrucks;
+        }
         var marker = L.marker([windowCoords[sliderValue][0],windowCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
         .bindPopup('Marked at ' + timeMessage(windowCoords[sliderValue][2]) + '<br>RPM: ' + windowCoords[sliderValue][3])
         .openPopup();
@@ -354,6 +376,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#truck1').change(function() {
         removeMarkers();
+        clearCoordinates();
         truckMode = "1";
         console.log("Mode " + truckMode);
         lineColor = 'blue';
@@ -364,10 +387,20 @@ $(document).ready(function() {
     });
     $('#truck2').change(function() {
         removeMarkers();
+        clearCoordinates();
         truckMode = "2";
         console.log("Mode " + truckMode);
         lineColor = 'green';
         applyCalendar("2",route2,true,'green');
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty(); 
+    });
+    $('#truck3').change(function() {
+        removeMarkers();
+        clearCoordinates();
+        truckMode = "3";
+        console.log("Mode " + truckMode);
+        getBothCoordinates();
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty(); 
     });
@@ -385,6 +418,20 @@ $('#gpsTrackerButton').on('click', function() {
 });
 
 function getBothCoordinates() {
+    clearCoordinates();
     applyCalendar("1",route,true,'blue');
-    applyCalendar("2",route,false,'green');
+    setTimeout(function() {applyCalendar("2",route,false,'green');},100);
+    bothTrucks = windowCoords1.concat(windowCoords2);
+    bothTrucks.sort((a, b) => a[1] - b[1]);
+    var maxValue = bothTrucks.length - 1;
+    if (bothTrucks.length < 2){
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+    } else {
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider').append(slider);
+    }
 }
