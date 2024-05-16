@@ -21,6 +21,8 @@ var truckRequest1 = null;
 var truckRequest2 = null;
 var polylineData1 = [];
 var polylineData2 = [];
+var polylineLayer1 = null;
+var polylineLayer2 = null;
 
 function clearCoordinates() {
     windowCoords1 = [];
@@ -105,6 +107,34 @@ $(function() {
     });
 });
 
+$(document).ready(function() {
+    $('#truck1').change(function() {
+        truckMode = "1";
+        console.log("Mode " + truckMode);
+        selectPolyline();
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty(); 
+        
+    });
+    $('#truck2').change(function() {
+        truckMode = "2";
+        console.log("Mode " + truckMode);
+        selectPolyline();
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty(); 
+    });
+    $('#truck3').change(function() {
+        removeMarkers();
+        clearCoordinates();
+        truckMode = "3";
+        console.log("Mode " + truckMode);
+        getBothCoordinates(function() {
+            superSlider();
+        });
+
+    });
+  });
+
 function getCoordinates() {
     truckMode = "1";
 
@@ -121,7 +151,6 @@ function getCoordinates() {
             var coordinates = response;
             var latLngs = [];
             windowCoords = [];
-                removeMarkers();
                 map.eachLayer(function(layer) {
                     if (layer instanceof L.Marker) {
                         map.removeLayer(layer);
@@ -168,7 +197,6 @@ function getCoordinates() {
             var coordinates = response;
             var latLngs = [];
             windowCoords = [];
-                removeMarkers();
                 map.eachLayer(function(layer) {
                     if (layer instanceof L.Marker) {
                         map.removeLayer(layer);
@@ -204,7 +232,7 @@ function getCoordinates() {
     });
 }
 
-function fetchTruckData() {
+function fetchTruckData(callback) {
     windowCoords1 = [];
     windowCoords2 = [];
     bothTrucks = [];
@@ -218,5 +246,42 @@ function fetchTruckData() {
         polylineData2 = windowCoords2.map(function(row){
             return [row[0],row[1]];
         })
+        callback();
     });
+
+}
+
+function applyToCalendar() {
+    fetchTruckData(function() {
+        selectPolyline();
+    });
+}
+
+function selectPolyline() {
+    if (truckMode == "1") {
+        if (polylineLayer1 === null) {
+            polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
+        }
+        polylineLayer1.setLatLngs([]);
+        polylineLayer2.setLatLngs([]);
+        polylineLayer1.setLatLngs(polylineData1);
+    } else if (truckMode == "2") {
+        if (polylineLayer2 === null) {
+            polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
+        }
+        polylineLayer1.setLatLngs([]);
+        polylineLayer2.setLatLngs([]);
+        polylineLayer2.setLatLngs(polylineData2);
+    } else {
+        if (polylineLayer1 === null) {
+            polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
+        }
+        if (polylineLayer2 === null) {
+            polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
+        }
+        polylineLayer1.setLatLngs([]);
+        polylineLayer2.setLatLngs([]);
+        polylineLayer1.setLatLngs(polylineData1);
+        polylineLayer2.setLatLngs(polylineData2);
+    }
 }
