@@ -13,8 +13,9 @@ var timeMarker = null;
 var windowCoords = [];
 let truckMode = "1";
 let lineColor = 'blue';
-let windowCoords2 = null;
+let windowCoords2 = [];
 let route2 = null;
+let windowCoords1 = [];
 
 function timeMessage(unixTimeSeconds) {
     const unixTimeMilliseconds = unixTimeSeconds * 1000;
@@ -75,7 +76,7 @@ $(function() {
         endTimestamp = picker.endDate.unix();
         console.log("Start", startTimestamp);
         console.log("End", endTimestamp);
-        if (truckMode == "1"){applyCalendar("1",windowCoords,route);} else {applyCalendar("2",windowCoords2,route2);}
+        if (truckMode == "1"){applyCalendar("1",route);} else {applyCalendar("2",route2);}
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty();
         openNav()
@@ -84,7 +85,7 @@ $(function() {
 
 
 
-function applyCalendar(truckMode,windowCoords,route) {
+function applyCalendar(truckMode,route) {
     $.ajax({
         url: 'getcoordinates3.php',
         method: 'POST',
@@ -152,6 +153,7 @@ function applyCalendar(truckMode,windowCoords,route) {
                 var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
                 $('#windowSlider').append(slider);
             }
+            if (truckMode == "1") {windowCoords1 = windowCoords;} else {windowCoords2 = windowCoords;}
             
         },
         error: function(xhr, status, error) {
@@ -351,7 +353,7 @@ $(document).ready(function() {
         truckMode = "1";
         console.log("Mode " + truckMode);
         lineColor = 'blue';
-        applyCalendar("1",windowCoords,route);
+        applyCalendar("1",route);
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty(); 
         
@@ -361,7 +363,7 @@ $(document).ready(function() {
         truckMode = "2";
         console.log("Mode " + truckMode);
         lineColor = 'green';
-        applyCalendar("2",windowCoords2,route2);
+        applyCalendar("2",route2);
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty(); 
     });
