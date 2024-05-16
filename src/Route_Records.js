@@ -137,7 +137,7 @@ function applyCalendar(truckMode,windowCoords,route) {
                 }
 
             });
-            map.removeLayer(route);
+            if (route !== null){map.removeLayer(route);}
             route = L.polyline(latLngs, {color: lineColor}).addTo(map);
             map.fitBounds(route.getBounds());
 
