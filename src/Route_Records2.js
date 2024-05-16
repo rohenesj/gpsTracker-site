@@ -19,7 +19,8 @@ var windowCoords1 = [];
 var bothTrucks = [];
 var truckRequest1 = null;
 var truckRequest2 = null;
-
+var polylineData1 = [];
+var polylineData2 = [];
 
 function clearCoordinates() {
     windowCoords1 = [];
@@ -203,12 +204,19 @@ function getCoordinates() {
     });
 }
 
-function fetchTest() {
+function fetchTruckData() {
+    windowCoords1 = [];
+    windowCoords2 = [];
+    bothTrucks = [];
     getCoordinates();
-    truckRequest1.done(function(response) {
-        console.log(windowCoords1);
+    $.when(truckRequest1,truckRequest2).done(function () {
+        bothTrucks = windowCoords1.concat(windowCoords2);
+        bothTrucks.sort((a, b) => a[1] - b[1]);
+        polylineData1 = windowCoords1.map(function(row){
+            return [row[0],row[1]];
+        })
+        polylineData2 = windowCoords2.map(function(row){
+            return [row[0],row[1]];
+        })
     });
-    truckRequest2.done(function(response) {
-        console.log(windowCoords2);
-    })
 }
