@@ -117,13 +117,11 @@ $(document).ready(function() {
         $('#windowSlider').empty(); 
     });
     $('#truck3').change(function() {
-        removeMarkers();
-        clearCoordinates();
         truckMode = "3";
         console.log("Mode " + truckMode);
-        getBothCoordinates(function() {
-            superSlider();
-        });
+        selectPolyline();
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty(); 
 
     });
   });
@@ -251,27 +249,17 @@ function applyToCalendar() {
 }
 
 function selectPolyline() {
+    if (polylineLayer1 === null || polylineLayer2 === null) {
+        polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
+        polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
+    }
     if (truckMode == "1") {
-        if (polylineLayer1 === null) {
-            polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
-        }
-        polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs([]);
         polylineLayer1.setLatLngs(polylineData1);
     } else if (truckMode == "2") {
-        if (polylineLayer2 === null) {
-            polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
-        }
         polylineLayer1.setLatLngs([]);
-        polylineLayer2.setLatLngs([]);
-        polylineLayer2.setLatLngs(polylineData2);
+        polylineLayer2.setLatLngs(polylineData2); 
     } else {
-        if (polylineLayer1 === null) {
-            polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
-        }
-        if (polylineLayer2 === null) {
-            polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
-        }
         polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs([]);
         polylineLayer1.setLatLngs(polylineData1);
