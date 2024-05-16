@@ -249,6 +249,8 @@ function applyToCalendar() {
 }
 
 function selectPolyline() {
+    $('#windowSliderLabel').empty();
+    $('#windowSlider').empty();
     if (polylineLayer1 === null || polylineLayer2 === null) {
         polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
         polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
