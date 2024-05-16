@@ -256,13 +256,22 @@ function selectPolyline() {
     if (truckMode == "1") {
         polylineLayer2.setLatLngs([]);
         polylineLayer1.setLatLngs(polylineData1);
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + (polylineData1.length - 1) + '" value="50">');
+        $('#windowSlider').append(slider);
     } else if (truckMode == "2") {
         polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs(polylineData2); 
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + (polylineData2.length - 1) + '" value="50">');
+        $('#windowSlider').append(slider);
     } else {
         polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs([]);
         polylineLayer1.setLatLngs(polylineData1);
         polylineLayer2.setLatLngs(polylineData2);
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + (bothTrucks.length - 1) + '" value="50">');
+        $('#windowSlider').append(slider);
     }
 }
