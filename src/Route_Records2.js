@@ -17,6 +17,8 @@ var windowCoords2 = [];
 let route2 = null;
 var windowCoords1 = [];
 var bothTrucks = [];
+var truckRequest1 = null;
+var truckRequest2 = null;
 
 
 function clearCoordinates() {
@@ -67,6 +69,10 @@ if (seed2 === null) {
 var startTimestamp = Math.floor(Date.now() / 1000) - 3600;
 var endTimestamp = Math.floor(Date.now() / 1000);
 
+
+
+
+
 // Cambiar esto dependiendo de como va la funcion esa
 $(function() {
     $('input[name="datetimes"]').daterangepicker({
@@ -97,3 +103,112 @@ $(function() {
         openNav()
     });
 });
+
+function getCoordinates() {
+    truckMode = "1";
+
+    truckRequest1 = $.ajax({
+        url: 'getcoordinates3.php',
+        method: 'POST',
+        data: {
+            startTime: startTimestamp,
+            truck: truckMode,
+            endTime: endTimestamp
+        },
+        success: function(response) {
+            $('#Error').empty();
+            var coordinates = response;
+            var latLngs = [];
+            windowCoords = [];
+                removeMarkers();
+                map.eachLayer(function(layer) {
+                    if (layer instanceof L.Marker) {
+                        map.removeLayer(layer);
+                    }
+                });      
+
+            if (!coordinates || coordinates.features.length === 0) {
+                map.setView([10.983594, -74.804334], 15)
+                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                .bindPopup('No coordinates in the selected time range')
+                .openPopup();
+                
+            return; 
+            }
+
+
+            coordinates.features.forEach(function(feature, index) {
+                var coords = feature.geometry.coordinates;
+                var tstamp = parseFloat(feature.properties.timestamp);
+                var latLng = L.latLng(coords[1], coords[0]);
+                var date = feature.properties.date;
+                var carData = feature.properties.car_data;
+                latLngs.push(latLng);
+                var point = [coords[1], coords[0], tstamp, carData];
+                windowCoords1.push(point)
+
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+    truckRequest2 = $.ajax({
+        url: 'getcoordinates3.php',
+        method: 'POST',
+        data: {
+            startTime: startTimestamp,
+            truck: "2",
+            endTime: endTimestamp
+        },
+        success: function(response) {
+            $('#Error').empty();
+            var coordinates = response;
+            var latLngs = [];
+            windowCoords = [];
+                removeMarkers();
+                map.eachLayer(function(layer) {
+                    if (layer instanceof L.Marker) {
+                        map.removeLayer(layer);
+                    }
+                });           
+
+            if (!coordinates || coordinates.features.length === 0) {
+                map.setView([10.983594, -74.804334], 15)
+                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                .bindPopup('No coordinates in the selected time range')
+                .openPopup();
+                
+            return; 
+            }
+
+
+            coordinates.features.forEach(function(feature, index) {
+                var coords = feature.geometry.coordinates;
+                var tstamp = parseFloat(feature.properties.timestamp);
+                var latLng = L.latLng(coords[1], coords[0]);
+                var date = feature.properties.date;
+                var carData = feature.properties.car_data;
+                latLngs.push(latLng);
+                var point = [coords[1], coords[0], tstamp, carData];
+                windowCoords2.push(point)
+
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+function fetchTest() {
+    getCoordinates();
+    truckRequest1.done(function(response) {
+        console.log(windowCoords1);
+    });
+    truckRequest2.done(function(response) {
+        console.log(windowCoords2);
+    })
+}
