@@ -76,7 +76,7 @@ $(function() {
         endTimestamp = picker.endDate.unix();
         console.log("Start", startTimestamp);
         console.log("End", endTimestamp);
-        if (truckMode == "1"){applyCalendar("1",route);} else {applyCalendar("2",route2);}
+        if (truckMode == "1"){applyCalendar("1",route,true);} else {applyCalendar("2",route2,true);}
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty();
         openNav()
@@ -85,7 +85,7 @@ $(function() {
 
 
 
-function applyCalendar(truckMode,route) {
+function applyCalendar(truckMode,route,remove) {
     $.ajax({
         url: 'getcoordinates3.php',
         method: 'POST',
@@ -138,7 +138,9 @@ function applyCalendar(truckMode,route) {
                 }
 
             });
-            if (route !== null){map.removeLayer(route);}
+            if (remove){
+                if (route !== null){map.removeLayer(route);}
+            }
             route = L.polyline(latLngs, {color: lineColor}).addTo(map);
             map.fitBounds(route.getBounds());
 
@@ -353,7 +355,7 @@ $(document).ready(function() {
         truckMode = "1";
         console.log("Mode " + truckMode);
         lineColor = 'blue';
-        applyCalendar("1",route);
+        applyCalendar("1",route,true);
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty(); 
         
@@ -363,7 +365,7 @@ $(document).ready(function() {
         truckMode = "2";
         console.log("Mode " + truckMode);
         lineColor = 'green';
-        applyCalendar("2",route2);
+        applyCalendar("2",route2,true);
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty(); 
     });
