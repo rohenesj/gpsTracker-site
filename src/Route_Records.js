@@ -13,6 +13,8 @@ var timeMarker = null;
 var windowCoords = [];
 let truckMode = "1";
 let lineColor = 'blue';
+let windowCoords2 = null;
+let route2 = null;
 
 function timeMessage(unixTimeSeconds) {
     const unixTimeMilliseconds = unixTimeSeconds * 1000;
@@ -73,7 +75,7 @@ $(function() {
         endTimestamp = picker.endDate.unix();
         console.log("Start", startTimestamp);
         console.log("End", endTimestamp);
-        applyCalendar();
+        if (truckMode == "1"){applyCalendar("1",windowCoords,route);} else {applyCalendar("2",windowCoords2,route2);}
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty();
         openNav()
@@ -82,7 +84,7 @@ $(function() {
 
 
 
-function applyCalendar() {
+function applyCalendar(truckMode,windowCoords,route) {
     $.ajax({
         url: 'getcoordinates3.php',
         method: 'POST',
@@ -135,7 +137,7 @@ function applyCalendar() {
                 }
 
             });
-            removeMarkers()
+            map.removeLayer(route);
             route = L.polyline(latLngs, {color: lineColor}).addTo(map);
             map.fitBounds(route.getBounds());
 
@@ -349,7 +351,7 @@ $(document).ready(function() {
         truckMode = "1";
         console.log("Mode " + truckMode);
         lineColor = 'blue';
-        applyCalendar();
+        applyCalendar("1",windowCoords,route);
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty(); 
         
@@ -359,7 +361,7 @@ $(document).ready(function() {
         truckMode = "2";
         console.log("Mode " + truckMode);
         lineColor = 'green';
-        applyCalendar();
+        applyCalendar("2",windowCoords2,route2);
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty(); 
     });
@@ -375,3 +377,7 @@ $('#gpsTrackerButton').on('click', function() {
         endDate: endDate
     });
 });
+
+function getBothCoordinates() {
+    
+}
