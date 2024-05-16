@@ -400,9 +400,10 @@ $(document).ready(function() {
         clearCoordinates();
         truckMode = "3";
         console.log("Mode " + truckMode);
-        getBothCoordinates();
-        $('#windowSliderLabel').empty();
-        $('#windowSlider').empty(); 
+        getBothCoordinates(function() {
+            superSlider();
+        });
+
     });
   });
 
@@ -417,12 +418,16 @@ $('#gpsTrackerButton').on('click', function() {
     });
 });
 
-function getBothCoordinates() {
+function getBothCoordinates(callback) {
     clearCoordinates();
-    applyCalendar("1",route,true,'blue');
+    setTimeout(function() {applyCalendar("1",route,false,'blue');},50);
     setTimeout(function() {applyCalendar("2",route,false,'green');},100);
     bothTrucks = windowCoords1.concat(windowCoords2);
     bothTrucks.sort((a, b) => a[1] - b[1]);
+    callback();
+}
+
+function superSlider() {
     var maxValue = bothTrucks.length - 1;
     if (bothTrucks.length < 2){
         $('#windowSliderLabel').empty();
