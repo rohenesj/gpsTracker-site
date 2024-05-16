@@ -13,9 +13,9 @@ var timeMarker = null;
 var windowCoords = [];
 let truckMode = "1";
 let lineColor = 'blue';
-let windowCoords2 = [];
+var windowCoords2 = [];
 let route2 = null;
-let windowCoords1 = [];
+var windowCoords1 = [];
 let bothTrucks = [];
 
 
@@ -360,7 +360,7 @@ $(document).ready(function() {
             map.removeLayer(layer);
             }
         });
-        if (truckmode == "1") {
+        if (truckMode == "1") {
             windowCoords = windowCoords1;
         } else if (truckMode == "2") {
             windowCoords = windowCoords2;
