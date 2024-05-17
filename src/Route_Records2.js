@@ -402,10 +402,7 @@ $(document).ready(function() {
     $('#windowSlider1').on('input', '#myRange1', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
-        if (seed !== null) {
-            map.removeLayer(seed);
-            seed = null;
-        }
+        removeMarkers();
         var marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
         .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
         .openPopup();
