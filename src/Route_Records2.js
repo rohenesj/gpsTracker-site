@@ -103,6 +103,7 @@ $(function() {
 $(document).ready(function() {
     $('#truck1').change(function() {
         truckMode = "1";
+        lineColor = 'blue';
         console.log("Mode " + truckMode);
         selectPolyline();
         $('#windowSliderLabel1').empty();
@@ -111,6 +112,7 @@ $(document).ready(function() {
     });
     $('#truck2').change(function() {
         truckMode = "2";
+        lineColor = 'green';
         console.log("Mode " + truckMode);
         selectPolyline();
         $('#windowSliderLabel1').empty();
@@ -283,4 +285,76 @@ function selectPolyline() {
         var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
     }
+}
+
+function addMarker(e) {
+    openNav()
+    var latitude = e.latlng.lat;
+    var longitude = e.latlng.lng;
+    removeMarkers();
+
+    latRange = latitude;
+    longRange = longitude;
+
+    leftCorner = [latRange - 0.00225, longRange - 0.00225];
+    rightCorner = [latRange + 0.00225, longRange + 0.00225];
+
+    viewLeftCorner = [latRange - 0.00450, longRange - 0.00450];
+    viewRightCorner = [latRange + 0.00450, longRange + 0.00450];
+
+    var bounds = [leftCorner, rightCorner];
+    var boundView = [viewLeftCorner, viewRightCorner];
+
+    L.rectangle(bounds, {
+        color: lineColor, 
+        fillColor: lineColor,
+        fillOpacity: 0.2
+    }).addTo(map);
+    map.fitBounds(boundView);
+    let truck1Filtered = sortCoordinates(windowCoords1);
+    let truck2Filtered = sortCoordinates(windowCoords2);
+    let truckFiltered = sortCoordinates(bothTrucks);
+    if (truckMode == "1") {
+        maxValue = truck1Filtered.length - 1;
+        polylineLayer1.setLatLngs([]);
+        polylineLayer1.setLatLngs(truck1Filtered);
+        $('#windowSliderLabel1').empty();
+        $('#windowSlider1').empty();
+        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider1').append(slider);
+    } else if (truckMode == "2") {
+        maxValue = truck2Filtered.length - 1;
+        polylineLayer2.setLatLngs([]);
+        polylineLayer2.setLatLngs(truck2Filtered);
+        $('#windowSliderLabel1').empty();
+        $('#windowSlider1').empty();
+        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider1').append(slider);
+    } else {
+        maxValue = truckFiltered.length - 1;
+        polylineLayer1.setLatLngs([]);
+        polylineLayer1.setLatLngs(truck1Filtered);
+        polylineLayer2.setLatLngs([]);
+        polylineLayer2.setLatLngs(truck2Filtered);
+        $('#windowSliderLabel1').empty();
+        $('#windowSlider1').empty();
+        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider1').append(slider);
+    }
+}
+
+function sortCoordinates(windowCoords) {
+    let filteredCoords = [];
+    for (let i = 0; i < windowCoords.length; i++) {
+        let coords = windowCoords[i];
+        if ((coords[1] >= (longRange - 0.00225)) && (coords[1] <= (longRange + 0.00225))) {
+            if ((coords[0] >= (latRange - 0.00225)) && (coords[0] <= (latRange + 0.00225))) {
+                filteredCoords.append(coords);
+            }
+        }
+    }
+    return filteredCoords;
 }
