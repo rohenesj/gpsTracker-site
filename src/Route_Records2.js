@@ -24,6 +24,7 @@ var polylineData2 = [];
 var polylineLayer1 = null;
 var polylineLayer2 = null;
 
+
 function clearCoordinates() {
     windowCoords1 = [];
     windowCoords2 = [];
@@ -288,10 +289,13 @@ function selectPolyline() {
 }
 
 function addMarker(e) {
+    if (seed !== null) {
+        map.removeLayer(seed);
+        seed = null;
+    }
     openNav()
     var latitude = e.latlng.lat;
     var longitude = e.latlng.lng;
-    removeMarkers();
 
     latRange = latitude;
     longRange = longitude;
@@ -305,7 +309,7 @@ function addMarker(e) {
     var bounds = [leftCorner, rightCorner];
     var boundView = [viewLeftCorner, viewRightCorner];
 
-    L.rectangle(bounds, {
+    seed = L.rectangle(bounds, {
         color: lineColor, 
         fillColor: lineColor,
         fillOpacity: 0.2
@@ -314,10 +318,16 @@ function addMarker(e) {
     let truck1Filtered = sortCoordinates(windowCoords1);
     let truck2Filtered = sortCoordinates(windowCoords2);
     let truckFiltered = sortCoordinates(bothTrucks);
+    let polyline1Filtered = truck1Filtered.map(function(row){
+        return [row[0],row[1]];
+    });
+    let polyline2Filtered = truck2Filtered.map(function(row){
+        return [row[0],row[1]];
+    });
     if (truckMode == "1") {
         maxValue = truck1Filtered.length - 1;
         polylineLayer1.setLatLngs([]);
-        polylineLayer1.setLatLngs(truck1Filtered);
+        polylineLayer1.setLatLngs(polyline1Filtered);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
         $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
@@ -326,7 +336,7 @@ function addMarker(e) {
     } else if (truckMode == "2") {
         maxValue = truck2Filtered.length - 1;
         polylineLayer2.setLatLngs([]);
-        polylineLayer2.setLatLngs(truck2Filtered);
+        polylineLayer2.setLatLngs(polyline2Filtered);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
         $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
@@ -335,9 +345,9 @@ function addMarker(e) {
     } else {
         maxValue = truckFiltered.length - 1;
         polylineLayer1.setLatLngs([]);
-        polylineLayer1.setLatLngs(truck1Filtered);
+        polylineLayer1.setLatLngs(polyline1Filtered);
         polylineLayer2.setLatLngs([]);
-        polylineLayer2.setLatLngs(truck2Filtered);
+        polylineLayer2.setLatLngs(polyline2Filtered);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
         $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
@@ -352,7 +362,7 @@ function sortCoordinates(windowCoords) {
         let coords = windowCoords[i];
         if ((coords[1] >= (longRange - 0.00225)) && (coords[1] <= (longRange + 0.00225))) {
             if ((coords[0] >= (latRange - 0.00225)) && (coords[0] <= (latRange + 0.00225))) {
-                filteredCoords.append(coords);
+                filteredCoords.push(coords);
             }
         }
     }
