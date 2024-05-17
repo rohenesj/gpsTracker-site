@@ -6,7 +6,6 @@ var Errormarker = null;
 var Startmarker = null;
 var Endmarker = null;
 var selectMarker = null;
-var circle = null;
 var latRange = 0.0;
 var longRange = 0.0;
 var timeMarker = null;
@@ -23,6 +22,10 @@ var polylineData1 = [];
 var polylineData2 = [];
 var polylineLayer1 = null;
 var polylineLayer2 = null;
+var truck1Filtered = null;
+var truck2Filtered = null;
+var truckFiltered = null;
+var focusedCoords = null;
 
 
 function clearCoordinates() {
@@ -257,24 +260,27 @@ function selectPolyline() {
         polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
     }
     if (truckMode == "1") {
+        focusedCoords = windowCoords1;
         let maxValue = polylineData1.length - 1;
         polylineLayer2.setLatLngs([]);
         polylineLayer1.setLatLngs(polylineData1);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
-        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
     } else if (truckMode == "2") {
+        focusedCoords = windowCoords2;
         let maxValue = polylineData2.length - 1;
         polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs(polylineData2); 
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
-        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
     } else {
+        focusedCoords = bothTrucks;
         let maxValue = bothTrucks.length - 1;
         polylineLayer1.setLatLngs([]);
         polylineLayer2.setLatLngs([]);
@@ -282,8 +288,8 @@ function selectPolyline() {
         polylineLayer2.setLatLngs(polylineData2);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
-        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
     }
 }
@@ -315,9 +321,9 @@ function addMarker(e) {
         fillOpacity: 0.2
     }).addTo(map);
     map.fitBounds(boundView);
-    let truck1Filtered = sortCoordinates(windowCoords1);
-    let truck2Filtered = sortCoordinates(windowCoords2);
-    let truckFiltered = sortCoordinates(bothTrucks);
+    truck1Filtered = sortCoordinates(windowCoords1);
+    truck2Filtered = sortCoordinates(windowCoords2);
+    truckFiltered = sortCoordinates(bothTrucks);
     let polyline1Filtered = truck1Filtered.map(function(row){
         return [row[0],row[1]];
     });
@@ -325,24 +331,27 @@ function addMarker(e) {
         return [row[0],row[1]];
     });
     if (truckMode == "1") {
+        focusedCoords = truck1Filtered;
         maxValue = truck1Filtered.length - 1;
         polylineLayer1.setLatLngs([]);
         polylineLayer1.setLatLngs(polyline1Filtered);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
-        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
     } else if (truckMode == "2") {
+        focusedCoords = truck2Filtered;
         maxValue = truck2Filtered.length - 1;
         polylineLayer2.setLatLngs([]);
         polylineLayer2.setLatLngs(polyline2Filtered);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
-        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
     } else {
+        focusedCoords = truckFiltered;
         maxValue = truckFiltered.length - 1;
         polylineLayer1.setLatLngs([]);
         polylineLayer1.setLatLngs(polyline1Filtered);
@@ -350,8 +359,8 @@ function addMarker(e) {
         polylineLayer2.setLatLngs(polyline2Filtered);
         $('#windowSliderLabel1').empty();
         $('#windowSlider1').empty();
-        $('#windowSliderLabel1').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
     }
 }
@@ -368,5 +377,20 @@ function sortCoordinates(windowCoords) {
     }
     return filteredCoords;
 }
+
+$(document).ready(function() {
+    $('#windowSlider1').on('input', '#myRange1', function() {
+        var sliderValue = $(this).val();
+        console.log(sliderValue);
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+            }
+        });
+        var marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
+        .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
+        .openPopup();
+    });
+});
 
 map.on('click',addMarker);
