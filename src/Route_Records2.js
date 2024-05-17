@@ -26,7 +26,7 @@ var truck1Filtered = null;
 var truck2Filtered = null;
 var truckFiltered = null;
 var focusedCoords = null;
-var group = null;
+
 
 function clearCoordinates() {
     windowCoords1 = [];
@@ -269,7 +269,6 @@ function selectPolyline() {
             smoothFactor: '2',
             weight: '5' 
         }).addTo(map);
-        group = new L.featureGroup([polylineData1,polylineData2]);
     }
     if (truckMode == "1") {
         focusedCoords = windowCoords1;
@@ -280,7 +279,6 @@ function selectPolyline() {
         $('#windowSlider1').empty();
         $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
         var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
-        map.fitBounds(polylineLayer1.getBounds());
         $('#windowSlider1').append(slider);
     } else if (truckMode == "2") {
         focusedCoords = windowCoords2;
@@ -292,7 +290,6 @@ function selectPolyline() {
         $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
         var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
-        map.fitBounds(polylineLayer2.getBounds());
     } else {
         focusedCoords = bothTrucks;
         let maxValue = bothTrucks.length - 1;
@@ -305,7 +302,6 @@ function selectPolyline() {
         $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
         var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
-        map.fitBounds(group.getBounds());
     }
 }
 
