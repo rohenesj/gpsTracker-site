@@ -259,8 +259,16 @@ function applyToCalendar() {
 
 function selectPolyline() {
     if (polylineLayer1 === null || polylineLayer2 === null) {
-        polylineLayer1 = L.polyline(polylineData1, { color: 'blue' }).addTo(map);
-        polylineLayer2 = L.polyline(polylineData2, { color: 'green' }).addTo(map);
+        polylineLayer1 = L.polyline(polylineData1, { 
+            color: 'blue', 
+            smoothFactor: '2',
+            weight: '5'
+        }).addTo(map);
+        polylineLayer2 = L.polyline(polylineData2, {
+            color: 'green',
+            smoothFactor: '2',
+            weight: '5' 
+        }).addTo(map);
     }
     if (truckMode == "1") {
         focusedCoords = windowCoords1;
@@ -394,7 +402,10 @@ $(document).ready(function() {
     $('#windowSlider1').on('input', '#myRange1', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
-        removeMarkers();
+        if (seed !== null) {
+            map.removeLayer(seed);
+            seed = null;
+        }
         var marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
         .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
         .openPopup();
