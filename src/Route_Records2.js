@@ -358,3 +358,5 @@ function sortCoordinates(windowCoords) {
     }
     return filteredCoords;
 }
+
+map.on('click',addMarker);
