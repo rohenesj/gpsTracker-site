@@ -106,6 +106,7 @@ $(function() {
 
 $(document).ready(function() {
     $('#truck1').change(function() {
+        removeMarkers();
         truckMode = "1";
         lineColor = 'blue';
         console.log("Mode " + truckMode);
@@ -115,6 +116,7 @@ $(document).ready(function() {
         
     });
     $('#truck2').change(function() {
+        removeMarkers();
         truckMode = "2";
         lineColor = 'green';
         console.log("Mode " + truckMode);
@@ -123,6 +125,7 @@ $(document).ready(function() {
         $('#windowSlider').empty(); 
     });
     $('#truck3').change(function() {
+        removeMarkers();
         truckMode = "3";
         console.log("Mode " + truckMode);
         selectPolyline();
@@ -236,7 +239,7 @@ function fetchTruckData(callback) {
     getCoordinates();
     $.when(truckRequest1,truckRequest2).done(function () {
         bothTrucks = windowCoords1.concat(windowCoords2);
-        bothTrucks.sort((a, b) => a[1] - b[1]);
+        bothTrucks.sort((a, b) => a[2] - b[2]);
         polylineData1 = windowCoords1.map(function(row){
             return [row[0],row[1]];
         })
@@ -294,11 +297,20 @@ function selectPolyline() {
     }
 }
 
-function addMarker(e) {
+function removeMarkers() {
     if (seed !== null) {
         map.removeLayer(seed);
         seed = null;
     }
+    map.eachLayer(function(layer) {
+        if (layer instanceof L.Marker) {
+        map.removeLayer(layer);
+        }
+    });
+}
+
+function addMarker(e) {
+    removeMarkers();
     openNav()
     var latitude = e.latlng.lat;
     var longitude = e.latlng.lng;
@@ -382,15 +394,19 @@ $(document).ready(function() {
     $('#windowSlider1').on('input', '#myRange1', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
-        map.eachLayer(function(layer) {
-            if (layer instanceof L.Marker) {
-            map.removeLayer(layer);
-            }
-        });
+        removeMarkers();
         var marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
         .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
         .openPopup();
     });
 });
 
+$('#fullRoute').on('click', function() {
+    removeMarkers();
+    selectPolyline();
+});
+
+fetchTruckData(function() {
+    console.log("Fetched Initial Coordinates");
+});
 map.on('click',addMarker);
