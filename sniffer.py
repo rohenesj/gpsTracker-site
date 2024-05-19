@@ -23,7 +23,10 @@ class Coordinates:
         self.long = dataArray[1]
         self.alt = dataArray[2]
         self.tstamp = int(dataArray[3]) / 1000.0
-        self.carData = convertToRPM(dataArray[4])
+        if dataArray != "No Data":
+            self.carData = convertToRPM(dataArray[4])
+        else:
+            self.carData = dataArray[4]
         if dataArray[5] == "2":
             self.table = "coordinates2"
         else:
