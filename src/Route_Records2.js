@@ -280,6 +280,7 @@ function selectPolyline() {
         $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
         var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
+        map.fitBounds(polylineLayer1.getBounds());
     } else if (truckMode == "2") {
         focusedCoords = windowCoords2;
         let maxValue = polylineData2.length - 1;
@@ -290,6 +291,7 @@ function selectPolyline() {
         $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
         var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
+        map.fitBounds(polylineLayer2.getBounds());
     } else {
         focusedCoords = bothTrucks;
         let maxValue = bothTrucks.length - 1;
@@ -302,6 +304,8 @@ function selectPolyline() {
         $('#windowSliderLabel1').html("<label for=\"myRange1\" class=\"form-label\">Timeline</label>");
         var slider = $('<input type="range" class="form-range "id="myRange1" value="0" min="0" max="' + maxValue + '" value="50">');
         $('#windowSlider1').append(slider);
+        let combinedBounds = polylineLayer1.getBounds().extend(polylineLayer2.getBounds());
+        map.fitBounds(combinedBounds);
     }
 }
 

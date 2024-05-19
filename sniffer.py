@@ -8,7 +8,13 @@ try:
 except FileNotFoundError:
     sys.exit("ERROR: this module does not work without credentials.json file, please create it!")
 
-
+def convertToRPM(rawData):
+    bytes = rawData.split(" ")
+    A = int(bytes[0],16)
+    B = int(bytes[1],16)
+    RPM = ((256*A) + B)/4
+    data = str(RPM)
+    return data
 
 class Coordinates:
     def __init__(self,message):
@@ -17,7 +23,7 @@ class Coordinates:
         self.long = dataArray[1]
         self.alt = dataArray[2]
         self.tstamp = int(dataArray[3]) / 1000.0
-        self.carData = dataArray[4]
+        self.carData = convertToRPM(dataArray[4])
         if dataArray[5] == "2":
             self.table = "coordinates2"
         else:
