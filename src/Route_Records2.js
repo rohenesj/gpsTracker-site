@@ -26,7 +26,8 @@ var truck1Filtered = null;
 var truck2Filtered = null;
 var truckFiltered = null;
 var focusedCoords = null;
-
+var marker2 = null;
+var marker = null;
 
 function clearCoordinates() {
     windowCoords1 = [];
@@ -406,14 +407,21 @@ $(document).ready(function() {
     $('#windowSlider1').on('input', '#myRange1', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
-        map.eachLayer(function(layer) {
-            if (layer instanceof L.Marker) {
-            map.removeLayer(layer);
+        if (focusedCoords[sliderValue][4] == 1) {
+            if (marker !== null){
+                map.removeLayer(marker)
             }
-        });
-        var marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
+            marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
+            .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
+            .openPopup();
+    }   else {
+        if (marker2 !== null) {
+            map.removeLayer(marker2)
+        }
+        marker2 = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
         .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
         .openPopup();
+    }
     });
 });
 
