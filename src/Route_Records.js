@@ -1,6 +1,5 @@
 var map = L.map('map').setView([10.983594, -74.804334], 15);
 var seed = null;
-var seed1 = null;
 var seed2 = null;
 var route = null;
 var Errormarker = null;
@@ -160,9 +159,9 @@ function getCoordinates() {
                 });      
 
             if (!coordinates || coordinates.features.length === 0) {
-                map.setView([10.9865277, -74.8117941], 15)
+                map.setView([10.983594, -74.804334], 15)
                 $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
-                Errormarker = L.marker([10.9865277, -74.8117941], { icon: APPicon }).addTo(map)
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
                 .bindPopup('No coordinates in the selected time range')
                 .openPopup();
                 
@@ -341,7 +340,7 @@ function addMarker(e) {
     var bounds = [leftCorner, rightCorner];
     var boundView = [viewLeftCorner, viewRightCorner];
 
-    seed1 = L.rectangle(bounds, {
+    seed = L.rectangle(bounds, {
         color: lineColor, 
         fillColor: lineColor,
         fillOpacity: 0.2
