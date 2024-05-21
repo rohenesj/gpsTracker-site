@@ -3,7 +3,7 @@
   .sidebar #gpsTrackerButton {
     margin-left: 70px; 
     margin-top: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 64px;
   }
 
   .sidebar #coordinatesTitle {
@@ -89,7 +89,17 @@
     padding: 0px 70px 20px;
     font-size: 25px;
   }
-
+  .sidebar #check3 {
+    padding: 0px 70px 20px;
+    font-size: 25px;
+  }
+  .sidebar #radiusValue {
+    padding: 0px 30px;
+  }
+  .sidebar #radiusLabel {
+    font-size: 25px;
+    padding: 8px 32px,8px;
+  }
 }
 
 @media (max-width: 768px) {

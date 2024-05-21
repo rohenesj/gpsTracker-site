@@ -64,10 +64,12 @@
     <div class="form-check" id="check3">
         <input id="truck3" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
         <label class="form-check-label" for="flexRadioDefault3">
-            Both Trucks
+            Both
         </label>
     </div>
     <button type="button" id="gpsTrackerButton" class="btn btn-outline-primary">Full Route</button>
+    <label id="radiusLabel" for="radius" class="form-label">Window Size: </label>
+    <input id="radiusValue" type="range" class="form-range "id="radius" value="0" min="0" max="4" value="0">
     </div>
 </div>
 

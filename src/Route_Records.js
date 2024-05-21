@@ -111,10 +111,7 @@ $(document).ready(function() {
         truckMode = "1";
         lineColor = 'blue';
         console.log("Mode " + truckMode);
-        selectPolyline();
-        $('#windowSliderLabel').empty();
-        $('#windowSlider').empty(); 
-        
+        selectPolyline();       
     });
     $('#truck2').change(function() {
         removeMarkers();
@@ -122,20 +119,14 @@ $(document).ready(function() {
         lineColor = 'green';
         console.log("Mode " + truckMode);
         selectPolyline();
-        $('#windowSliderLabel').empty();
-        $('#windowSlider').empty(); 
     });
     $('#truck3').change(function() {
         removeMarkers();
         truckMode = "3";
         console.log("Mode " + truckMode);
         selectPolyline();
-        $('#windowSliderLabel').empty();
-        $('#windowSlider').empty(); 
-
     });
   });
-
 function getCoordinates() {
     truckMode = "1";
 
@@ -414,6 +405,7 @@ $(document).ready(function() {
             marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
             .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
             .openPopup();
+            map.setView([focusedCoords[sliderValue][0], focusedCoords[sliderValue][1]]);
     }   else {
         if (marker2 !== null) {
             map.removeLayer(marker2)
@@ -421,6 +413,7 @@ $(document).ready(function() {
         marker2 = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
         .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
         .openPopup();
+        map.setView([focusedCoords[sliderValue][0], focusedCoords[sliderValue][1]]);
     }
     });
 });
