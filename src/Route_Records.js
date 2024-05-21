@@ -64,10 +64,6 @@ var APPicon = L.icon({
     popupAnchor: [0, -38]
 });
 
-var control = L.Control.geocoder({
-    defaultMarkGeocode: false
-}).addTo(map);
-
 
 if (seed2 === null) {
     seed2 = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
@@ -430,7 +426,7 @@ $(document).ready(function() {
         var currentValueInM = 250 * 2**sliderValue;
         console.log(currentValueInM);
         radiusinLatLong = 0.00225 * 2**sliderValue;
-        $("#currentRadius").text(currentValueInM + "km");
+        $("#currentRadius").text(currentValueInM + "m");
     })
 });
 map.on('click',addMarker);
