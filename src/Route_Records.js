@@ -419,7 +419,7 @@ $(document).ready(function() {
     });
 });
 
-$('#fullRoute').on('click', function() {
+$('#gpsTrackerButton').on('click', function() {
     removeMarkers();
     selectPolyline();
 });
