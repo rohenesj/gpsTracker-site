@@ -160,7 +160,7 @@ function getCoordinates() {
                 });      
 
             if (!coordinates || coordinates.features.length === 0) {
-                map.setView([10.9865277,, -74.8117941], 15)
+                map.setView([10.9865277, -74.8117941], 15)
                 $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
                 Errormarker = L.marker([10.9865277, -74.8117941], { icon: APPicon }).addTo(map)
                 .bindPopup('No coordinates in the selected time range')
