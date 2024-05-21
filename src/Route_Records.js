@@ -1,4 +1,5 @@
 var map = L.map('map').setView([10.983594, -74.804334], 15);
+var radiusinLatLong = 0.00225;
 var seed = null;
 var seed2 = null;
 var route = null;
@@ -322,11 +323,11 @@ function addMarker(e) {
     latRange = latitude;
     longRange = longitude;
 
-    leftCorner = [latRange - 0.00225, longRange - 0.00225];
-    rightCorner = [latRange + 0.00225, longRange + 0.00225];
+    leftCorner = [latRange - radiusinLatLong, longRange - radiusinLatLong];
+    rightCorner = [latRange + radiusinLatLong, longRange + radiusinLatLong];
 
-    viewLeftCorner = [latRange - 0.00450, longRange - 0.00450];
-    viewRightCorner = [latRange + 0.00450, longRange + 0.00450];
+    viewLeftCorner = [latRange - (radiusinLatLong*2), longRange - (radiusinLatLong*2)];
+    viewRightCorner = [latRange + (radiusinLatLong*2), longRange + (radiusinLatLong*2)];
 
     var bounds = [leftCorner, rightCorner];
     var boundView = [viewLeftCorner, viewRightCorner];
@@ -385,8 +386,8 @@ function sortCoordinates(windowCoords) {
     let filteredCoords = [];
     for (let i = 0; i < windowCoords.length; i++) {
         let coords = windowCoords[i];
-        if ((coords[1] >= (longRange - 0.00225)) && (coords[1] <= (longRange + 0.00225))) {
-            if ((coords[0] >= (latRange - 0.00225)) && (coords[0] <= (latRange + 0.00225))) {
+        if ((coords[1] >= (longRange - radiusinLatLong)) && (coords[1] <= (longRange + radiusinLatLong))) {
+            if ((coords[0] >= (latRange - radiusinLatLong)) && (coords[0] <= (latRange + radiusinLatLong))) {
                 filteredCoords.push(coords);
             }
         }
@@ -423,7 +424,13 @@ $('#fullRoute').on('click', function() {
     selectPolyline();
 });
 
-fetchTruckData(function() {
-    console.log("Fetched Initial Coordinates");
+$(document).ready(function() {
+    $('#radius').on('input', '#radiusValue', function() {
+        var sliderValue = $(this).val();
+        var currentValueInM = 250 * 2**sliderValue;
+        console.log(currentValueInM);
+        radiusinLatLong = 0.00225 * 2**sliderValue;
+        $("#currentRadius").text(currentValueInM + "km");
+    })
 });
 map.on('click',addMarker);

@@ -68,8 +68,11 @@
         </label>
     </div>
     <button type="button" id="gpsTrackerButton" class="btn btn-outline-primary">Full Route</button>
-    <label id="radiusLabel" for="radius" class="form-label">Window Size: </label>
-    <input id="radiusValue" type="range" class="form-range "id="radius" value="0" min="0" max="4" value="0">
+    <div id="radius">
+        <label id="radiusLabel" for="radius" class="form-label">Window Size: </label>
+        <input id="radiusValue" type="range" class="form-range "id="radius" value="0" min="0" max="4">
+        <div id="currentRadius">250km</div>
+    </div>
     </div>
 </div>
 
