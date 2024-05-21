@@ -1,4 +1,5 @@
 var map = L.map('map').setView([10.983594, -74.804334], 15);
+var radiusinLatLong = 0.00225;
 var seed = null;
 var seed2 = null;
 var route = null;
@@ -6,13 +7,34 @@ var Errormarker = null;
 var Startmarker = null;
 var Endmarker = null;
 var selectMarker = null;
-var circle = null;
 var latRange = 0.0;
 var longRange = 0.0;
 var timeMarker = null;
 var windowCoords = [];
 let truckMode = "1";
 let lineColor = 'blue';
+var windowCoords2 = [];
+let route2 = null;
+var windowCoords1 = [];
+var bothTrucks = [];
+var truckRequest1 = null;
+var truckRequest2 = null;
+var polylineData1 = [];
+var polylineData2 = [];
+var polylineLayer1 = null;
+var polylineLayer2 = null;
+var truck1Filtered = null;
+var truck2Filtered = null;
+var truckFiltered = null;
+var focusedCoords = null;
+var marker2 = null;
+var marker = null;
+
+function clearCoordinates() {
+    windowCoords1 = [];
+    windowCoords2 = [];
+    bothTrucks = [];
+}
 
 function timeMessage(unixTimeSeconds) {
     const unixTimeMilliseconds = unixTimeSeconds * 1000;
@@ -42,10 +64,6 @@ var APPicon = L.icon({
     popupAnchor: [0, -38]
 });
 
-var control = L.Control.geocoder({
-    defaultMarkGeocode: false
-}).addTo(map);
-
 
 if (seed2 === null) {
     seed2 = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
@@ -57,6 +75,10 @@ var startTimestamp = Math.floor(Date.now() / 1000) - 3600;
 var endTimestamp = Math.floor(Date.now() / 1000);
 
 
+
+
+
+// Cambiar esto dependiendo de como va la funcion esa
 $(function() {
     $('input[name="datetimes"]').daterangepicker({
         timePicker: true,
@@ -73,17 +95,39 @@ $(function() {
         endTimestamp = picker.endDate.unix();
         console.log("Start", startTimestamp);
         console.log("End", endTimestamp);
-        applyCalendar();
+        applyToCalendar();
         $('#windowSliderLabel').empty();
         $('#windowSlider').empty();
-        openNav()
+        openNav();
     });
 });
 
+$(document).ready(function() {
+    $('#truck1').change(function() {
+        removeMarkers();
+        truckMode = "1";
+        lineColor = 'blue';
+        console.log("Mode " + truckMode);
+        selectPolyline();       
+    });
+    $('#truck2').change(function() {
+        removeMarkers();
+        truckMode = "2";
+        lineColor = 'green';
+        console.log("Mode " + truckMode);
+        selectPolyline();
+    });
+    $('#truck3').change(function() {
+        removeMarkers();
+        truckMode = "3";
+        console.log("Mode " + truckMode);
+        selectPolyline();
+    });
+  });
+function getCoordinates() {
+    truckMode = "1";
 
-
-function applyCalendar() {
-    $.ajax({
+    truckRequest1 = $.ajax({
         url: 'getcoordinates3.php',
         method: 'POST',
         data: {
@@ -96,12 +140,11 @@ function applyCalendar() {
             var coordinates = response;
             var latLngs = [];
             windowCoords = [];
-            removeMarkers();
-            map.eachLayer(function(layer) {
-                if (layer instanceof L.Marker) {
-                    map.removeLayer(layer);
-                }
-            });            
+                map.eachLayer(function(layer) {
+                    if (layer instanceof L.Marker) {
+                        map.removeLayer(layer);
+                    }
+                });      
 
             if (!coordinates || coordinates.features.length === 0) {
                 map.setView([10.983594, -74.804334], 15)
@@ -121,36 +164,56 @@ function applyCalendar() {
                 var date = feature.properties.date;
                 var carData = feature.properties.car_data;
                 latLngs.push(latLng);
-                var point = [coords[1], coords[0], tstamp, carData];
-                windowCoords.push(point)
-                
-                if (index === 0) {
-                    Startmarker = L.marker(L.latLng(coords[1], coords[0]), { icon: APPicon }).addTo(map)
-                        .bindPopup('Start of route. <br> ' + 'Latitude: ' + coords[1] + '<br> Latitude: ' + coords[0]);
-                } 
-
-                if (index === coordinates.features.length - 1) {
-                    Endmarker = L.marker(latLng, { icon: APPicon }).addTo(map)
-                        .bindPopup('End of route. <br> ' + 'Latitude: ' + coords[1] + '<br> Longitude: ' + coords[0]);
-                }
+                var point = [coords[1], coords[0], tstamp, carData,1];
+                windowCoords1.push(point)
 
             });
-            removeMarkers()
-            route = L.polyline(latLngs, {color: lineColor}).addTo(map);
-            map.fitBounds(route.getBounds());
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+    truckRequest2 = $.ajax({
+        url: 'getcoordinates3.php',
+        method: 'POST',
+        data: {
+            startTime: startTimestamp,
+            truck: "2",
+            endTime: endTimestamp
+        },
+        success: function(response) {
+            $('#Error').empty();
+            var coordinates = response;
+            var latLngs = [];
+            windowCoords = [];
+                map.eachLayer(function(layer) {
+                    if (layer instanceof L.Marker) {
+                        map.removeLayer(layer);
+                    }
+                });           
 
-            var maxValue = windowCoords.length - 1;
-            if (windowCoords.length < 2){
-                $('#windowSliderLabel').empty();
-                $('#windowSlider').empty();
-            } else {
-                $('#windowSliderLabel').empty();
-                $('#windowSlider').empty();
-                $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-                var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
-                $('#windowSlider').append(slider);
+            if (!coordinates || coordinates.features.length === 0) {
+                map.setView([10.983594, -74.804334], 15)
+                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
+                Errormarker = L.marker([10.983594, -74.804334], { icon: APPicon }).addTo(map)
+                .bindPopup('No coordinates in the selected time range')
+                .openPopup();
+                
+            return; 
             }
-            
+
+
+            coordinates.features.forEach(function(feature, index) {
+                var coords = feature.geometry.coordinates;
+                var tstamp = parseFloat(feature.properties.timestamp);
+                var latLng = L.latLng(coords[1], coords[0]);
+                var date = feature.properties.date;
+                var carData = feature.properties.car_data;
+                latLngs.push(latLng);
+                var point = [coords[1], coords[0], tstamp, carData,2];
+                windowCoords2.push(point)
+
+            });
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -158,220 +221,212 @@ function applyCalendar() {
     });
 }
 
-function fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange) {
-    $.ajax({
-        url: 'getcoordinates3.php',
-        method: 'POST',
-        data: {
-            startTime: startTimestamp,
-            truck: truckMode,
-            endTime: endTimestamp
-        },
-        success: function(response) {
-            $('#Error').empty();
-            var coordinates = response;
-            if (!coordinates || coordinates.features.length === 0) {
-                map.setView([latRange, longRange])
-                $('#Error').html("<p class='error-message'>No coordinates in the selected time range.</p>");
-                Errormarker = L.marker([latRange, longRange], { icon: APPicon }).addTo(map)
-                .bindPopup('No coordinates in the selected time range')
-                .openPopup();
-                
-            return; 
-            }
-            latLngs = []
-            map.eachLayer(function(layer) {
-                if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
-                }
-            });
-            windowCoords = [];
-            coordinates.features.forEach(function(feature, index) {
-                var coords = feature.geometry.coordinates;
-                var tstamp = parseFloat(feature.properties.timestamp);
-                var date = feature.properties.date;
-                var carData = feature.properties.car_data;
+function fetchTruckData(callback) {
+    windowCoords1 = [];
+    windowCoords2 = [];
+    bothTrucks = [];
+    getCoordinates();
+    $.when(truckRequest1,truckRequest2).done(function () {
+        bothTrucks = windowCoords1.concat(windowCoords2);
+        bothTrucks.sort((a, b) => a[2] - b[2]);
+        polylineData1 = windowCoords1.map(function(row){
+            return [row[0],row[1]];
+        })
+        polylineData2 = windowCoords2.map(function(row){
+            return [row[0],row[1]];
+        })
+        callback();
+    });
 
-                if ((coords[0] >= (longRange - 0.00225)) && (coords[0] <= (longRange + 0.00225))) {
-                    if ((coords[1] >= (latRange - 0.00225)) && (coords[1] <= (latRange + 0.00225))) {
-                        var latLng = L.latLng(coords[1], coords[0]);
-                        latLngs.push(latLng);
-                        var point = [coords[1], coords[0], tstamp, carData];
-                        windowCoords.push(point)
-                    }
-                }
-            });
-            var maxValue = windowCoords.length - 1;
-            if (windowCoords.length < 2){
-                $('#windowSliderLabel').empty();
-                $('#windowSlider').empty();
-            } else {
-                $('#windowSliderLabel').empty();
-                $('#windowSlider').empty();
-                $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
-                var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
-                $('#windowSlider').append(slider);
-            }
-            route = L.polyline(latLngs, {color: lineColor}).addTo(map);
+}
 
-            //CHekcpoiunt
-        }
+function applyToCalendar() {
+    fetchTruckData(function() {
+        selectPolyline();
     });
 }
 
-
-control.on('markgeocode', function(e) {
-    openNav()
-    var location = e.geocode.center;
-    latitude = location.lat;
-    longitude = location.lng;
-    removeMarkers();
-
-    if (selectMarker === null) {
-        selectMarker = L.marker([latitude, longitude], { icon: APPicon }).addTo(map)
-            .bindPopup('Latitude: ' + latitude + '<br>Longitude: ' + longitude)
-            .openPopup();
-        map.setView([latitude, longitude], 16);
+function selectPolyline() {
+    if (polylineLayer1 === null || polylineLayer2 === null) {
+        polylineLayer1 = L.polyline(polylineData1, { 
+            color: 'blue', 
+            smoothFactor: '2',
+            weight: '5'
+        }).addTo(map);
+        polylineLayer2 = L.polyline(polylineData2, {
+            color: 'green',
+            smoothFactor: '2',
+            weight: '5' 
+        }).addTo(map);
     }
-
-    latRange = latitude;
-    longRange = longitude;
-
-    leftCorner = [latRange - 0.00225, longRange - 0.00225];
-    rightCorner = [latRange + 0.00225, longRange + 0.00225];
-
-    viewLeftCorner = [latRange - 0.00450, longRange - 0.00450];
-    viewRightCorner = [latRange + 0.00450, longRange + 0.00450];
-
-    var bounds = [leftCorner, rightCorner];
-    var boundView = [viewLeftCorner, viewRightCorner];
-
-    L.rectangle(bounds, {
-        color: lineColor, 
-        fillColor: lineColor,
-        fillOpacity: 0.2
-    }).addTo(map);
-    map.fitBounds(boundView);
-    fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange);
-});
-
-
-function addMarker(e) {
-    openNav()
-    var latitude = e.latlng.lat;
-    var longitude = e.latlng.lng;
-    removeMarkers();
-
-    latRange = latitude;
-    longRange = longitude;
-
-    leftCorner = [latRange - 0.00225, longRange - 0.00225];
-    rightCorner = [latRange + 0.00225, longRange + 0.00225];
-
-    viewLeftCorner = [latRange - 0.00450, longRange - 0.00450];
-    viewRightCorner = [latRange + 0.00450, longRange + 0.00450];
-
-    var bounds = [leftCorner, rightCorner];
-    var boundView = [viewLeftCorner, viewRightCorner];
-
-    L.rectangle(bounds, {
-        color: lineColor, 
-        fillColor: lineColor,
-        fillOpacity: 0.2
-    }).addTo(map);
-    map.fitBounds(boundView);
-    fetchCoordinates(startTimestamp,endTimestamp,latRange,longRange);
+    if (truckMode == "1") {
+        focusedCoords = windowCoords1;
+        let maxValue = polylineData1.length - 1;
+        polylineLayer2.setLatLngs([]);
+        polylineLayer1.setLatLngs(polylineData1);
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider').append(slider);
+        map.fitBounds(polylineLayer1.getBounds());
+    } else if (truckMode == "2") {
+        focusedCoords = windowCoords2;
+        let maxValue = polylineData2.length - 1;
+        polylineLayer1.setLatLngs([]);
+        polylineLayer2.setLatLngs(polylineData2); 
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider').append(slider);
+        map.fitBounds(polylineLayer2.getBounds());
+    } else {
+        focusedCoords = bothTrucks;
+        let maxValue = bothTrucks.length - 1;
+        polylineLayer1.setLatLngs([]);
+        polylineLayer2.setLatLngs([]);
+        polylineLayer1.setLatLngs(polylineData1);
+        polylineLayer2.setLatLngs(polylineData2);
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider').append(slider);
+        let combinedBounds = polylineLayer1.getBounds().extend(polylineLayer2.getBounds());
+        map.fitBounds(combinedBounds);
+    }
 }
 
 function removeMarkers() {
-
     if (seed !== null) {
         map.removeLayer(seed);
+        seed = null;
     }
-
-    if (seed2 !== null) {
-        map.removeLayer(seed2);
-    }
-    
-    if (Startmarker !== null) {
-        map.removeLayer(Startmarker);
-    }
-
-    if (Endmarker !== null) {
-        map.removeLayer(Endmarker);
-    }
-
-    if (Errormarker !== null) {
-        map.removeLayer(Errormarker);
-    }
-
-    if (selectMarker !== null) {
-        map.removeLayer(selectMarker);
-        selectMarker = null;
-    }
-
-    if (circle !== null) {
-        map.removeLayer(circle);
-        circle = null;
-    }
-
     map.eachLayer(function(layer) {
-        if (layer instanceof L.Polyline) {
-            map.removeLayer(layer);
+        if (layer instanceof L.Marker) {
+        map.removeLayer(layer);
         }
     });
+}
 
-    map.eachLayer(function(layer) {
-        if (layer instanceof L.marker) {
-            map.removeLayer(timeMarker)
-        }
+function addMarker(e) {
+    removeMarkers();
+    openNav()
+    var latitude = e.latlng.lat;
+    var longitude = e.latlng.lng;
+
+    latRange = latitude;
+    longRange = longitude;
+
+    leftCorner = [latRange - radiusinLatLong, longRange - radiusinLatLong];
+    rightCorner = [latRange + radiusinLatLong, longRange + radiusinLatLong];
+
+    viewLeftCorner = [latRange - (radiusinLatLong*2), longRange - (radiusinLatLong*2)];
+    viewRightCorner = [latRange + (radiusinLatLong*2), longRange + (radiusinLatLong*2)];
+
+    var bounds = [leftCorner, rightCorner];
+    var boundView = [viewLeftCorner, viewRightCorner];
+
+    seed = L.rectangle(bounds, {
+        color: lineColor, 
+        fillColor: lineColor,
+        fillOpacity: 0.2
+    }).addTo(map);
+    map.fitBounds(boundView);
+    truck1Filtered = sortCoordinates(windowCoords1);
+    truck2Filtered = sortCoordinates(windowCoords2);
+    truckFiltered = sortCoordinates(bothTrucks);
+    let polyline1Filtered = truck1Filtered.map(function(row){
+        return [row[0],row[1]];
     });
+    let polyline2Filtered = truck2Filtered.map(function(row){
+        return [row[0],row[1]];
+    });
+    if (truckMode == "1") {
+        focusedCoords = truck1Filtered;
+        maxValue = truck1Filtered.length - 1;
+        polylineLayer1.setLatLngs([]);
+        polylineLayer1.setLatLngs(polyline1Filtered);
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider').append(slider);
+    } else if (truckMode == "2") {
+        focusedCoords = truck2Filtered;
+        maxValue = truck2Filtered.length - 1;
+        polylineLayer2.setLatLngs([]);
+        polylineLayer2.setLatLngs(polyline2Filtered);
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider').append(slider);
+    } else {
+        focusedCoords = truckFiltered;
+        maxValue = truckFiltered.length - 1;
+        polylineLayer1.setLatLngs([]);
+        polylineLayer1.setLatLngs(polyline1Filtered);
+        polylineLayer2.setLatLngs([]);
+        polylineLayer2.setLatLngs(polyline2Filtered);
+        $('#windowSliderLabel').empty();
+        $('#windowSlider').empty();
+        $('#windowSliderLabel').html("<label for=\"myRange\" class=\"form-label\">Timeline</label>");
+        var slider = $('<input type="range" class="form-range "id="myRange" value="0" min="0" max="' + maxValue + '" value="50">');
+        $('#windowSlider').append(slider);
+    }
+}
+
+function sortCoordinates(windowCoords) {
+    let filteredCoords = [];
+    for (let i = 0; i < windowCoords.length; i++) {
+        let coords = windowCoords[i];
+        if ((coords[1] >= (longRange - radiusinLatLong)) && (coords[1] <= (longRange + radiusinLatLong))) {
+            if ((coords[0] >= (latRange - radiusinLatLong)) && (coords[0] <= (latRange + radiusinLatLong))) {
+                filteredCoords.push(coords);
+            }
+        }
+    }
+    return filteredCoords;
 }
 
 $(document).ready(function() {
     $('#windowSlider').on('input', '#myRange', function() {
         var sliderValue = $(this).val();
         console.log(sliderValue);
-        map.eachLayer(function(layer) {
-            if (layer instanceof L.Marker) {
-            map.removeLayer(layer);
+        if (focusedCoords[sliderValue][4] == 1) {
+            if (marker !== null){
+                map.removeLayer(marker)
             }
-        });
-        var marker = L.marker([windowCoords[sliderValue][0],windowCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
-        .bindPopup('Marked at ' + timeMessage(windowCoords[sliderValue][2]) + '<br>RPM: ' + windowCoords[sliderValue][3])
+            marker = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
+            .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
+            .openPopup();
+            map.setView([focusedCoords[sliderValue][0], focusedCoords[sliderValue][1]]);
+    }   else {
+        if (marker2 !== null) {
+            map.removeLayer(marker2)
+        }
+        marker2 = L.marker([focusedCoords[sliderValue][0],focusedCoords[sliderValue][1]],{ icon: APPicon }).addTo(map)
+        .bindPopup('Marked at ' + timeMessage(focusedCoords[sliderValue][2]) + '<br>RPM: ' + focusedCoords[sliderValue][3])
         .openPopup();
+        map.setView([focusedCoords[sliderValue][0], focusedCoords[sliderValue][1]]);
+    }
     });
+});
+
+$('#gpsTrackerButton').on('click', function() {
+    removeMarkers();
+    selectPolyline();
 });
 
 $(document).ready(function() {
-    $('#truck1').change(function() {
-        removeMarkers();
-        truckMode = "1";
-        console.log("Mode " + truckMode);
-        lineColor = 'blue';
-        applyCalendar();
-        $('#windowSliderLabel').empty();
-        $('#windowSlider').empty(); 
-        
-    });
-    $('#truck2').change(function() {
-        removeMarkers();
-        truckMode = "2";
-        console.log("Mode " + truckMode);
-        lineColor = 'green';
-        applyCalendar();
-        $('#windowSliderLabel').empty();
-        $('#windowSlider').empty(); 
-    });
-  });
-
-map.on('click',addMarker);
-
-$('#gpsTrackerButton').on('click', function() {
-    var startDate = $('input[name="datetimes"]').data('daterangepicker').startDate;
-    var endDate = $('input[name="datetimes"]').data('daterangepicker').endDate;
-    $('input[name="datetimes"]').trigger('apply.daterangepicker', {
-        startDate: startDate,
-        endDate: endDate
-    });
+    $('#radius').on('input', '#radiusValue', function() {
+        var sliderValue = $(this).val();
+        var currentValueInM = 250 * 2**sliderValue;
+        console.log(currentValueInM);
+        radiusinLatLong = 0.00225 * 2**sliderValue;
+        $("#currentRadius").text(currentValueInM + "m");
+    })
 });
+map.on('click',addMarker);

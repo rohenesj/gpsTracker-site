@@ -40,57 +40,8 @@ var APPicon = L.icon({
     popupAnchor: [0, -38]
 });
 
+
 function updateMarker() {
-    $.ajax({
-        url: 'getcoordinates.php',
-        method: 'POST',
-        data: {
-            truck: truckMode
-        },
-        success: function(response){
-            console.log(response)
-            var data = JSON.parse(response);
-            let hour = data.date.split(" ");
-
-            drawSpeedometer(data.car_data, steps, minVal, maxVal);
-
-            function convertToTimeZone(dateString) {
-                var date = new Date(dateString);
-                return date.toLocaleTimeString('en-US', { timeZone: timezone });
-            }
-
-            function convertDateToTimeZone(dateString) {
-                var date = new Date(dateString);
-                return date.toLocaleDateString('en-US', { timeZone: timezone });
-            }
-
-            var timezone = document.querySelector('meta[name="timezone"]').getAttribute('content');
-
-            $("#longitude").text("Longitude: " + data.longitude);
-            $("#latitude").text("Latitude: " + data.latitude);
-            $("#altitude").text("Altitude: " + data.altitude);
-            $("#date").text("Date: " + convertDateToTimeZone(data.date));
-            $("#time").text("Time: " + convertToTimeZone(data.date));
-            var latlng = [parseFloat(data.latitude), parseFloat(data.longitude)];
-            if (marker === null) {
-                marker = L.marker(latlng, { icon: APPicon }).addTo(map)
-                    .bindPopup('Connecting to Data Base...')
-                    .openPopup();
-            } else {
-                marker.setLatLng(latlng);
-                marker.closePopup().bindPopup('Latitude: ' + data.latitude + '<br>Longitude: ' + data.longitude + '<br>RPM: ' + data.car_data);
-            }
-            map.setView(latlng);
-
-            if (JSON.stringify(latlng) !== JSON.stringify(lastCoordinate)) {
-                drawRoute(latlng);
-                map.setView(latlng);
-            }
-        }
-    });
-}
-
-function updateMarker2() {
     truckMode = "1"
     $.ajax({
         url: 'getcoordinates.php',
@@ -165,22 +116,14 @@ function updateMarker2() {
             polylineLayer2.setLatLngs(polylineCoords2);
         }
     });
-   
-   
-
-
 }
 
-function drawRoute(newCoordinate) {
-
-if (lastCoordinate !== null) {
-    route = L.polyline([lastCoordinate, newCoordinate], {color: lineColor}).addTo(map);
-}
-lastCoordinate = newCoordinate;
-}
-
-updateMarker2();
-setInterval(updateMarker2,3000);
+updateMarker();
+setTimeout(function () {
+    let combinedBounds = polylineLayer1.getBounds().extend(polylineLayer2.getBounds());
+    map.fitBounds(combinedBounds);
+},2000);
+setInterval(updateMarker,3000);
 
 $('#gpsTrackerButton').click(function() {
         map.removeLayer(polylineLayer1);
@@ -193,12 +136,12 @@ $('#gpsTrackerButton').click(function() {
 
 $(document).ready(function() {
     $('#truck1').change(function() {
-        updateMarker2();
+        updateMarker();
         map.setView(polylineCoords1[polylineCoords1.length - 1]);
         
     });
     $('#truck2').change(function() {
-        updateMarker2();
+        updateMarker();
         map.setView(polylineCoords2[polylineCoords2.length - 1]);
     });
   });
