@@ -176,7 +176,7 @@ function getCoordinates() {
                 var date = feature.properties.date;
                 var carData = feature.properties.car_data;
                 latLngs.push(latLng);
-                var point = [coords[1], coords[0], tstamp, carData];
+                var point = [coords[1], coords[0], tstamp, carData,1];
                 windowCoords1.push(point)
 
             });
@@ -222,7 +222,7 @@ function getCoordinates() {
                 var date = feature.properties.date;
                 var carData = feature.properties.car_data;
                 latLngs.push(latLng);
-                var point = [coords[1], coords[0], tstamp, carData];
+                var point = [coords[1], coords[0], tstamp, carData,2];
                 windowCoords2.push(point)
 
             });
